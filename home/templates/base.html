@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
@@ -9,21 +10,57 @@
     <script src="{% static 'components/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
   </head>
+
   <body>
+
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           <a class="navbar-brand" href="{% url 'home:home' %}">EnDojo</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Vocabulary</a></li>
-            <li><a href="#">Listening</a></li>
-            <li><a href="#">Transcription</a></li>
+            {% if user.is_authenticated %}
+
+            {% if current_page == 'vocabulary' %}
+            <li class="active"><a href="{% url 'home:home' %}">Vocabulary</a></li>
+            {% else %}
+            <li><a href="{% url 'home:home' %}">Vocabulary</a></li>
+            {% endif %}
+            {% if current_page == 'listening' %}
+            <li class="active"><a href="{% url 'home:home' %}">Listening</a></li>
+            {% else %}
+            <li><a href="{% url 'home:home' %}">Listening</a></li>
+            {% endif %}
+            {% if current_page == 'transcription' %}
+            <li class="active"><a href="{% url 'home:home' %}">Transcription</a></li>
+            {% else %}
+            <li><a href="{% url 'home:home' %}">Transcription</a></li>
+            {% endif %}
+
+            {% else %}
+
+            {% if current_page == 'vocabulary_document' %}
+            <li class="active"><a href="{% url 'home:vocabulary_document' %}">Vocabulary</a></li>
+            {% else %}
+            <li><a href="{% url 'home:vocabulary_document' %}">Vocabulary</a></li>
+            {% endif %}
+            {% if current_page == 'listening_document' %}
+            <li class="active"><a href="{% url 'home:listening_document' %}">Listening</a></li>
+            {% else %}
+            <li><a href="{% url 'home:listening_document' %}">Listening</a></li>
+            {% endif %}
+            {% if current_page == 'transcription_document' %}
+            <li class="active"><a href="{% url 'home:transcription_document' %}">Transcription</a></li>
+            {% else %}
+            <li><a href="{% url 'home:transcription_document' %}">Transcription</a></li>
+            {% endif %}
+
+            {% endif %}
           </ul>
+
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li><a href="#">My Page</a></li>
