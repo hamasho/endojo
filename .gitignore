@@ -1,6 +1,7 @@
 *.sqlite3
 *.pyc
 .ropeproject
+__pycache__
 
 # Sensitive information
 secret.py
