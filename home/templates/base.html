@@ -27,10 +27,10 @@
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
             <li><a href="#">My Page</a></li>
-            <li><a href="#">Log out</a></li>
+            <li><a href="{% url 'registration:logout' %}">Log out</a></li>
             {% else %}
-            <li><a href="#">Sign up</a></li>
-            <li><a href="#">Log in</a></li>
+            <li><a href="{% url 'registration:signup' %}">Sign up</a></li>
+            <li><a href="{% url 'registration:login' %}">Log in</a></li>
             {% endif %}
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>

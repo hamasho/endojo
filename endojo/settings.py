@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'core.apps.CoreConfig',
     'home.apps.HomeConfig',
     'registration.apps.RegistrationConfig',
     'game_vocabulary.apps.GameVocabularyConfig',
@@ -128,3 +129,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Home page
+LOGIN_REDIRECT_URL = '/'
