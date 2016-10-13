@@ -1,0 +1,52 @@
+# Services
+- Home (description of this page)
+- Games
+  - Vocabulary
+  - Listening
+  - Transcription
+- Score check
+- Upload problems
+- Communication forms
+
+# All urls
+- Home
+  - Home /
+  - About /about/
+  - Donate /donate/ (P)
+  - Thanks for donation /donate/thanks/
+- Users
+  - Signup /registration/signup/ (P)
+  - Login /registration/login/ (P)
+  - Logout /registration/logout/ (P)
+  - Password reset prompt /registration/password_reset/ (P)
+  - Password reset email sent /registration/password_reset/email_sent/
+  - Password reset done /registration/password_reset/done/
+  - Change password /registration/password_change/ (P)
+- Documents
+  - Vocabulary /doc/vocabulary/
+  - Listening /doc/listening/
+  - Transcription /doc/transcription/
+- Games
+  - Vocabulary
+    - Package select /game/vocabulary/packages/ (P)
+    - Word select /game/vocabulary/words/ (P)
+    - Game /game/vocabulary/game/ (P)
+    - Result /game/vocabulary/result/
+  - Listening
+    - Package select /game/listening/packages/ (P)
+    - Game /game/listening/game/ (P)
+    - Get audio data /game/listening/audios/
+    - Result /game/listening/result/
+  - Transcription
+    - Package select /game/transcription/packages/ (P)
+    - Game /game/transcription/game/ (P)
+    - Result /game/transcription/result/
+- Mypage
+  - Personal game status /mypage/
+  - Change personal info /mypage/info/ (P)
+
+# Admin tasks
+- Words package upload
+- Words status check
+- Listening package upload
+- Transcription package upload
