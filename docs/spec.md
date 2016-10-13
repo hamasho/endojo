@@ -14,6 +14,10 @@
   - About /about/
   - Donate /donate/ (P)
   - Thanks for donation /donate/thanks/
+  - Documents
+    - Vocabulary /doc/vocabulary/
+    - Listening /doc/listening/
+    - Transcription /doc/transcription/
 - Users
   - Signup /registration/signup/ (P)
   - Login /registration/login/ (P)
@@ -22,10 +26,6 @@
   - Password reset email sent /registration/password_reset/email_sent/
   - Password reset done /registration/password_reset/done/
   - Change password /registration/password_change/ (P)
-- Documents
-  - Vocabulary /doc/vocabulary/
-  - Listening /doc/listening/
-  - Transcription /doc/transcription/
 - Games
   - Vocabulary
     - Package select /game/vocabulary/packages/ (P)

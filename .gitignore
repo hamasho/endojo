@@ -4,3 +4,6 @@
 
 # Sensitive information
 secret.py
+
+# bower
+home/static/components

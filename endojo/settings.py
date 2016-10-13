@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+# Sensitive information
 import secret
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -33,6 +34,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'home.apps.HomeConfig',
+    'registration.apps.RegistrationConfig',
+    'game_vocabulary.apps.GameVocabularyConfig',
+    'game_listening.apps.GameListeningConfig',
+    'game_transcription.apps.GameTranscriptionConfig',
+    'mypage.apps.MypageConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
