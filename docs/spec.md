@@ -8,7 +8,7 @@
 - Upload problems
 - Communication forms
 
-# All urls
+# Site map
 - Home
   - Home /
   - About /about/
@@ -25,7 +25,6 @@
   - Password reset prompt /registration/password_reset/ (P)
   - Password reset email sent /registration/password_reset/email_sent/
   - Password reset done /registration/password_reset/done/
-  - Change password /registration/password_change/ (P)
 - Games
   - Vocabulary
     - Package select /game/vocabulary/packages/ (P)
@@ -44,6 +43,7 @@
 - Mypage
   - Personal game status /mypage/
   - Change personal info /mypage/info/ (P)
+  - Change password /registration/password_change/ (P)
 
 # Admin tasks
 - Words package upload
