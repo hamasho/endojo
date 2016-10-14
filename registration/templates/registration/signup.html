@@ -2,12 +2,69 @@
 
 {% block content %}
 
-<form action="{% url 'registration:signup' %}" method="post">
-  {% csrf_token %}
-  <table>
-    {{ form.as_table }}
-  </table>
-  <input type="submit" value="Sign Up">
-</form>
+<div class="vertical-space-30"></div>
+
+<div class="col-md-offset-2 col-md-8">
+  <div class="row">
+    <div class="panel panel-info">
+
+      <div class="panel-heading">Sign Up</div>
+
+      <div class="panel-body">
+        <form action="{% url 'registration:signup' %}" method="post" class="form-horizontal">
+          {% csrf_token %}
+
+          {% if form.username.errors %}
+          <div class="alert alert-danger">
+            <strong>Error: </strong>
+            {{ form.username.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_username">Username:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="text" id="id_username" class="form-control" name="username" value="{{ form.data.username }}">
+            </div>
+          </div>
+
+          {% if form.email.errors %}
+          <div class="alert alert-danger">
+            <strong>Error: </strong>
+            {{ form.email.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_password">Email Address:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="text" id="id_email" class="form-control" name="email" value="{{ form.data.email }}">
+            </div>
+          </div>
+
+          {% if form.password.errors %}
+          <div class="alert alert-danger">
+            <strong>Error: </strong>
+            {{ form.password.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_password">Password:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="password" id="id_password" class="form-control" name="password" value="{{ form.data.password }}">
+            </div>
+          </div>
+
+          <button class="btn btn-default" type="submit">Submit</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 {% endblock %}

@@ -38,6 +38,7 @@
     - Result /game/listening/result/
   - Transcription
     - Package select /game/transcription/packages/ (P)
+    - Review /game/transcription/reviewpackage/ (P)
     - Game /game/transcription/game/ (P)
     - Result /game/transcription/result/
 - Mypage

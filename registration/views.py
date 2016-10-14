@@ -27,6 +27,7 @@ class SignUpView(TemplateView):
             login(request, user)
             return redirect(reverse('home:home'))
         else:
+            print(vars(form))
             return render(request, self.template_name, {
                 'form': form,
             })

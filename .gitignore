@@ -2,6 +2,7 @@
 *.pyc
 .ropeproject
 __pycache__
+node_modules
 
 # Sensitive information
 secret.py
