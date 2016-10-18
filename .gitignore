@@ -3,10 +3,7 @@
 .ropeproject
 __pycache__
 node_modules
-core/static/components
+apps/core/static/components
 
 # Sensitive information
 secret.py
-
-# bower
-home/static/components
