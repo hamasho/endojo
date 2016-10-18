@@ -40,13 +40,21 @@ $danger1: #d32f2f;
   border-radius: 0;
   background-color: $bgcolor1;
 }
+
+// Game
+
 .answer-form {
   font-size: 18px;
   height: 40px;
 }
-
 .game-cleared {
   color: green;
+}
+.answer-right {
+}
+.answer-incorrect {
+}
+.answer-blank {
 }
 
 // Navbar config

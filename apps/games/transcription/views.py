@@ -5,7 +5,7 @@ from .models import Package, Problem
 
 
 class GameView(BaseTemplateView):
-    template_name = 'game_transcription/game.html'
+    template_name = 'transcription/game.html'
     current_page = 'transcription'
 
 

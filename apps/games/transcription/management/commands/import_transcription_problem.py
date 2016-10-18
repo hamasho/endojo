@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from endojo import settings
-from game_transcription.models import Package, Problem
+from transcription.models import Package, Problem
 
 
 class Command(BaseCommand):

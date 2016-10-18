@@ -106,6 +106,7 @@ angular.module('TranscriptionGameApp', ['ngRoute'])
   };
 
   $scope.updateGameState = function() {
+    if ( ! $scope.gameStarted) return;
     var answer = $scope.problems[$scope.gameIndex].question_text;
     var input = $scope.form.userInput;
     if (input === '') {
