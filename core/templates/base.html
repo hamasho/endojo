@@ -2,10 +2,11 @@
 <html lang="en">
 
   <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>{{ title }}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'components/bootstrap/dist/css/bootstrap.min.css' %}">
+     <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
     <!--
     <link rel="stylesheet" href="{% static 'components/bootstrap/dist/css/bootstrap-theme.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
@@ -13,6 +14,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'components/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'components/angular/angular.js' %}"></script>
+    <script src="{% static 'components/angular-route/angular-route.js' %}"></script>
+    <script src="{% static 'components/angular-animate/angular-animate.js' %}"></script>
+    <script src="{% static 'components/jsdiff/diff.min.js' %}"></script>
   </head>
 
   <body>
@@ -39,9 +44,9 @@
             <li><a href="{% url 'home:home' %}">Listening</a></li>
             {% endif %}
             {% if current_page == 'transcription' %}
-            <li class="active"><a href="{% url 'home:home' %}">Transcription</a></li>
+            <li class="active"><a href="{% url 'game_transcription:game' %}">Transcription</a></li>
             {% else %}
-            <li><a href="{% url 'home:home' %}">Transcription</a></li>
+            <li><a href="{% url 'game_transcription:game' %}">Transcription</a></li>
             {% endif %}
 
             {% else %}
@@ -86,7 +91,7 @@
     </nav>
 
     <div class="container">
-      <div class="col-md-offset-2 col-md-8">
+      <div class="row">
         {% block content %}{% endblock %}
       </div>
     </div>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-offset-2 col-md-8" ng-app="TranscriptionGameApp" ng-controller="GameController">
+
+  <ng-view></ng-view>
+
+</div>
+
+{% load static %}
+<script src="{% static 'game_transcription/js/app.js' %}"></script>
+
+{% endblock %}

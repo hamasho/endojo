@@ -3,6 +3,7 @@
 .ropeproject
 __pycache__
 node_modules
+core/static/components
 
 # Sensitive information
 secret.py

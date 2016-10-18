@@ -1,0 +1,28 @@
+<div class="row">
+
+  <div class="col-md-offset-1 col-md-10 center-block">
+
+    <h1 style="margin-bottom: 70px;" class="text-center">
+      [[ getPackage().title ]]
+    </h1>
+    <button ng-click="initializeGame()" style="width:200px;" class="btn btn-info btn-lg center-block" ng-show="gamePreStart">Start!</button>
+
+    <div ng-show="gameStarted">
+      <div ng-class="diffUserInputClass" class="well" ng-cloak>
+        [[ diffUserInput ]]
+      </div>
+      <input class="form-control answer-form" type="text" ng-change="updateGameState()" ng-model="form.userInput">
+    </div>
+
+    <div ng-show="gameCleared">
+      <table class="table">
+        <tr ng-repeat="item in getScore()">
+          <td>[[ item.question_text ]]</td>
+          <td>[[ item.clearTime ]]</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+</div>

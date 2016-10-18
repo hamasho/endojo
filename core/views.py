@@ -1,4 +1,5 @@
-from django.views.generic.base import TemplateView
+from django.views.generic.base import View, TemplateView
+from django.http import JsonResponse
 
 
 class BaseTemplateView(TemplateView):
@@ -10,3 +11,22 @@ class BaseTemplateView(TemplateView):
         except AttributeError:
             context['current_page'] = None
         return context
+
+
+class BaseListApi(View):
+    # TODO: test
+    def get(self, request):
+        try:
+            objects = self.model.objects.values(*self.values)
+        except AttributeError:
+            objects = self.model.objects.values()
+        return JsonResponse(dict(result=list(objects)))
+
+    # TODO: create
+    def post(self, request):
+        pass
+
+
+class BaseDetailApi(View):
+    # TODO: implement
+    pass

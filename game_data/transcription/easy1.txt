@@ -1,0 +1,12 @@
+Easy sentences 1
+1
+This is a dog.
+This is not a dog.
+Is this a dog?
+There is a cat.
+There are cats.
+There is a beautiful cat.
+The cat is beautiful.
+Are there cats?
+What is it?
+What color is that?

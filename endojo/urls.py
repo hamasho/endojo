@@ -16,8 +16,21 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from . import settings
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^registration/', include('registration.urls')),
+    url(r'^mypage/', include('mypage.urls')),
+    url(r'^game/vocabulary/', include('game_vocabulary.urls')),
+    url(r'^game/listening/', include('game_listening.urls')),
+    url(r'^game/transcription/', include('game_transcription.urls')),
     url(r'^', include('home.urls')),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ]
