@@ -111,7 +111,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
   $scope.solvedProblem = function() {
     $scope.diffUserInputClass = 'game-cleared';
     endTime = new Date().getTime();
-    $scope.score[$scope.problemIndex].clearTime = endTime - startTime;
+    $scope.score[$scope.problemIndex].responseTimeMs = endTime - startTime;
     $scope.problemIndex++;
     $timeout($scope.nextProblem, 1000);
   };
@@ -122,6 +122,11 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
   };
 })
 
-.controller('ResultController', function($scope, GameFactory) {
+.controller('ResultController', function($scope, $http, GameFactory) {
   $scope.score = GameFactory.getScore();
+  $http.post('/game/transcription/result/store/', {
+    score: $scope.score,
+  })
+  .then(function(response) {
+  });
 });

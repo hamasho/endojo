@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^packages/select/$', TemplateView.as_view(template_name='transcription/select_package.html')),
     url(r'^start/$', TemplateView.as_view(template_name='transcription/start.html')),
     url(r'^result/$', TemplateView.as_view(template_name='transcription/result.html')),
+    url(r'^result/store/$', views.ResultStoreApi.as_view(), name='result_store'),
 ]
