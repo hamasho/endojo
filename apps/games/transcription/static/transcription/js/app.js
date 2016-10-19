@@ -1,4 +1,4 @@
-angular.module('TranscriptionGameApp', ['ngRoute'])
+angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -40,9 +40,14 @@ angular.module('TranscriptionGameApp', ['ngRoute'])
       var result = '';
       for (var i = 0; i < diffs.length; i++) {
         if (( ! diffs[i].added) && ( ! diffs[i].removed)) {
-          result += diffs[i].value;
+          result += '<span class="answer-correct-part">' + diffs[i].value +
+            '</span>';
         } else if (diffs[i].removed) {
-          result += diffs[i].value.replace(/[a-zA-Z0-9'\.\?\!]/g, '_');
+          result += '<span class="answer-blank-part">' +
+            diffs[i].value.replace(/[a-zA-Z0-9'\.\?\!]/g, '_') + '</span>';
+        } else if (diffs[i].added) {
+          result += '<span class="answer-incorrect-part">' + diffs[i].value +
+            '</span>';
         }
       }
       return result;
@@ -53,10 +58,13 @@ angular.module('TranscriptionGameApp', ['ngRoute'])
     getScore: function() {
       return gameScore;
     },
+    trimSpace: function(str) {
+      return str.replace(/^ */, '').replace(/ *$/, '').replace(/ +/g, ' ');
+    },
   };
 })
 
-.controller('GameController', function($scope, $http, $timeout, gameFactory) {
+.controller('GameController', function($scope, $http, $timeout, $sce, gameFactory) {
   var url = 'http://localhost:8000/game/transcription/';
 
   $scope.packages = [];
@@ -108,7 +116,7 @@ angular.module('TranscriptionGameApp', ['ngRoute'])
   $scope.updateGameState = function() {
     if ( ! $scope.gameStarted) return;
     var answer = $scope.problems[$scope.gameIndex].question_text;
-    var input = $scope.form.userInput;
+    var input = gameFactory.trimSpace($scope.form.userInput);
     if (input === '') {
       $scope.diffUserInput = answer;
     } else {
@@ -119,6 +127,10 @@ angular.module('TranscriptionGameApp', ['ngRoute'])
         $scope.diffUserInput = gameFactory.diff(answer, input);
       }
     }
+  };
+
+  $scope.safeDiffUserInput = function() {
+    return $sce.trustAsHtml($scope.diffUserInput);
   };
 
   $scope.clearGame = function() {

@@ -5,6 +5,11 @@ $color2: #BBADA0;
 $color3: #8F7A66;
 $color4: #776E65;
 
+$success-bg: #DFF0D8;
+$info-bg: #D9EDF7;
+$warning-bg: #FCF8E3;
+$danger-bg: #F2DEDE;
+
 .vertical-space-30 {
   margin-top: 30px;
 }
@@ -50,11 +55,14 @@ $danger1: #d32f2f;
 .game-cleared {
   color: green;
 }
-.answer-right {
+.answer-correct-part {
+  background-color: $success-bg;
 }
-.answer-incorrect {
+.answer-incorrect-part {
+  background-color: $danger-bg;
+  text-decoration: line-through;
 }
-.answer-blank {
+.answer-blank-part {
 }
 
 // Navbar config

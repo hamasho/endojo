@@ -31,6 +31,13 @@ body {
 .game-cleared {
   color: green; }
 
+.answer-correct-part {
+  background-color: #DFF0D8; }
+
+.answer-incorrect-part {
+  background-color: #F2DEDE;
+  text-decoration: line-through; }
+
 .navbar-default {
   background-color: #8F7A66;
   border-color: #BBAAA0; }

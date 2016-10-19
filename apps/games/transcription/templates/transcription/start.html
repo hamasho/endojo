@@ -8,8 +8,7 @@
     <button ng-click="initializeGame()" style="width:200px;" class="btn btn-info btn-lg center-block" ng-show="gamePreStart">Start!</button>
 
     <div ng-show="gameStarted">
-      <div ng-class="diffUserInputClass" class="well" ng-cloak>
-        [[ diffUserInput ]]
+      <div ng-bind-html="safeDiffUserInput()" ng-class="diffUserInputClass" class="well" ng-cloak>
       </div>
       <input class="form-control answer-form" type="text" ng-change="updateGameState()" ng-model="form.userInput">
     </div>
