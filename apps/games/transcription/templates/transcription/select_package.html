@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-controller="PackageSelectController">
   <h1>Transcription Game Package List</h1>
 
   <table class="table">
@@ -12,7 +12,7 @@
     <tbody ng-repeat="package in packages">
       <tr>
         <td>
-          <a ng-href="#/start" ng-click="setPackage(package); setProblems(package);">
+          <a ng-href="#/start" ng-click="selectPackage(package);">
             [[ package.title ]]
           </a>
         </td>

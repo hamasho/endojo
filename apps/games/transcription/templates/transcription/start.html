@@ -1,25 +1,27 @@
-<div class="row">
+<div class="row" ng-controller="GameController">
 
   <div class="center-block">
 
     <h1 style="margin-bottom: 70px;" class="text-center">
       [[ getPackage().title ]]
     </h1>
-    <button ng-click="initializeGame()" style="width:200px;" class="btn btn-info btn-lg center-block" ng-show="gamePreStart">Start!</button>
+    <button ng-click="initializeGame()"
+            style="width:200px;"
+            class="btn btn-info btn-lg center-block"
+            ng-hide="started"
+            ng-disable="problems == null">
+      Start!
+    </button>
 
-    <div ng-show="gameStarted">
-      <div ng-bind-html="safeDiffUserInput()" ng-class="diffUserInputClass" class="well" ng-cloak>
+    <div ng-show="started">
+      <!-- Problem or diff with user input -->
+      <div
+         ng-bind-html="diffUserInput"
+         ng-class="diffUserInputClass" class="well" ng-cloak>
       </div>
-      <input class="form-control answer-form" type="text" ng-change="updateGameState()" ng-model="form.userInput">
-    </div>
-
-    <div ng-show="gameCleared">
-      <table class="table">
-        <tr ng-repeat="item in getScore()">
-          <td>[[ item.question_text ]]</td>
-          <td>[[ item.clearTime ]]</td>
-        </tr>
-      </table>
+      <input class="form-control answer-form"
+             ng-change="updateGameState()"
+             ng-model="form.userInput" type="text" autofocus>
     </div>
 
   </div>

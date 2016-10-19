@@ -2,13 +2,14 @@
 
 {% block content %}
 
-<div class="col-md-offset-2 col-md-8" ng-app="TranscriptionGameApp" ng-controller="GameController">
+<div class="col-md-offset-2 col-md-8" ng-app="TranscriptionGameApp">
 
   <ng-view></ng-view>
 
 </div>
 
 {% load static %}
+<script src="{% static 'js/GameLibrary.js' %}"></script>
 <script src="{% static 'transcription/js/app.js' %}"></script>
 
 {% endblock %}
