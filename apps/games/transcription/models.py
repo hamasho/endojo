@@ -13,7 +13,7 @@ class Package(models.Model):
 
 
 class Problem(models.Model):
-    question_text = models.CharField(max_length=200)
+    problem_text = models.CharField(max_length=200)
     package = models.ForeignKey(Package)
 
 

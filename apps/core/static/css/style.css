@@ -4,9 +4,12 @@
 body {
   font-family: 'Lato', arial;
   font-weight: 400;
-  font-size: 20px;
-  color: #8F7A66;
+  font-size: 18px;
+  color: #776E65;
   background-color: #FAF8EF; }
+
+a {
+  color: #261758; }
 
 .navbar.navbar-default {
   border-radius: 0px; }
@@ -28,15 +31,32 @@ body {
   font-size: 18px;
   height: 40px; }
 
-.game-cleared {
-  color: green; }
-
-.answer-correct-part {
-  background-color: #DFF0D8; }
-
 .answer-incorrect-part {
   background-color: #F2DEDE;
   text-decoration: line-through; }
+
+.view {
+  position: absolute;
+  width: 100%;
+  top: 30px; }
+
+.slide {
+  transition: 300ms; }
+
+.slide.ng-enter {
+  left: 100%; }
+
+.slide.ng-leave, .slide.ng-enter-active {
+  left: 0%; }
+
+.slide.ng-leave-active {
+  left: -100%; }
+
+.result-display {
+  font-size: 24px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 30px; }
 
 .navbar-default {
   background-color: #8F7A66;

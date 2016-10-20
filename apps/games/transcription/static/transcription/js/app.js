@@ -2,7 +2,7 @@
  * Transcription game module
  *
  */
-angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
+angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -11,6 +11,9 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
 .config(function($routeProvider) {
   $routeProvider.when('/start', {
     templateUrl: 'start/',
+  });
+  $routeProvider.when('/main', {
+    templateUrl: 'main/',
   });
   $routeProvider.when('/result', {
     templateUrl: 'result/',
@@ -47,19 +50,32 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
 })
 
 /**
- * Start game, repeat each problems and store user score to GameFactory
+ * Download and set problems
  */
-.controller('GameController', function($scope, $http, $timeout, $location, GameFactory) {
-
+.controller('InitializeController', function($scope, $http, GameFactory) {
+  $scope.package = GameFactory.getSelectedPackage();
+  if ($scope.package === null) return;
   $scope.problems = null;
-  $scope.started = false;
-  $scope.getPackage = GameFactory.getSelectedPackage;
-
-  var problemUrl = '/game/transcription/packages/' + $scope.getPackage().id + '/problems/';
+  $scope.title = $scope.package.title;
+  var problemUrl = '/game/transcription/packages/' + $scope.package.id + '/problems/';
   $http.get(problemUrl)
     .then(function(response) {
       $scope.problems = response.data.result;
+      GameFactory.setProblems($scope.problems);
     });
+})
+
+/**
+ * Start game, repeat each problems and store user score to GameFactory
+ */
+.controller('GameController', function($scope, $http, $timeout, $location, $animate, GameFactory) {
+
+  $scope.package = GameFactory.getSelectedPackage();
+  if ($scope.package === null) return;
+  $scope.problems = GameFactory.getProblems();
+  $scope.started = false;
+  $scope.cleared = false;
+  $scope.title = $scope.package.title;
 
   $scope.initializeGame = function() {
     $scope.started = true;
@@ -69,7 +85,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
     for (var i = 0; i < $scope.problems.length; i++) {
       $scope.score.push({
         id: $scope.problems[i].id,
-        question_text: $scope.problems[i].question_text,
+        problem_text: $scope.problems[i].problem_text,
       });
     }
     $scope.nextProblem();
@@ -82,14 +98,15 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
       $scope.finishGame();
       return;
     }
-    $scope.diffUserInput = $scope.problems[$scope.problemIndex].question_text;
-    $scope.diffUserInputClass = "";
+    $scope.diffUserInput = $scope.problems[$scope.problemIndex].problem_text;
+    $scope.diffUserInputClass = "alert alert-info";
     $scope.form.userInput = '';
+    $scope.cleared = false;
     startTime = new Date().getTime();
   };
 
   $scope.updateGameState = function() {
-    var answer = $scope.problems[$scope.problemIndex].question_text;
+    var answer = $scope.problems[$scope.problemIndex].problem_text;
     var input = GameFactory.trimSpace($scope.form.userInput);
     /**
      * If the user doesn't input any characters, then show the problem.
@@ -103,13 +120,16 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
         $scope.diffUserInput = answer;
         $scope.solvedProblem();
       } else {
-        $scope.diffUserInput = GameFactory.diff(answer, input);
+        result = GameFactory.diff(answer, input);
+        $scope.diffUserInput = result[1];
+        $scope.diffUserInputClass = (result[0] ? 'alert alert-info' : 'alert alert-danger');
       }
     }
   };
 
   $scope.solvedProblem = function() {
-    $scope.diffUserInputClass = 'game-cleared';
+    $scope.cleared = true;
+    $scope.diffUserInputClass = 'alert alert-success game-cleared';
     endTime = new Date().getTime();
     $scope.score[$scope.problemIndex].responseTimeMs = endTime - startTime;
     $scope.problemIndex++;
@@ -120,6 +140,11 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngSanitize'])
     GameFactory.setScore($scope.score);
     $location.path('/result');
   };
+
+  /**
+   * Start game!
+   */
+  $scope.initializeGame();
 })
 
 .controller('ResultController', function($scope, $http, GameFactory) {

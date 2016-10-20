@@ -28,7 +28,7 @@ class Command(BaseCommand):
                 package.save()
                 for line in lines[2:]:
                     Problem.objects.create(
-                        question_text=line,
+                        problem_text=line,
                         package=package
                     )
                 self.stdout.write('Add package: %s' % (title,))

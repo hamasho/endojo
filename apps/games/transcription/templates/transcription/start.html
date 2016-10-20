@@ -1,29 +1,24 @@
-<div class="row" ng-controller="GameController">
-
-  <div class="center-block">
-
+<div class="row" ng-controller="InitializeController">
+  <div ng-show="package" class="center-block">
     <h1 style="margin-bottom: 70px;" class="text-center">
-      [[ getPackage().title ]]
+      [[ title ]]
     </h1>
-    <button ng-click="initializeGame()"
-            style="width:200px;"
-            class="btn btn-info btn-lg center-block"
-            ng-hide="started"
-            ng-disable="problems == null">
+    <a ng-href="#/main"
+       style="width:200px;"
+       class="btn btn-info btn-lg center-block slide">
       Start!
-    </button>
-
-    <div ng-show="started">
-      <!-- Problem or diff with user input -->
-      <div
-         ng-bind-html="diffUserInput"
-         ng-class="diffUserInputClass" class="well" ng-cloak>
-      </div>
-      <input class="form-control answer-form"
-             ng-change="updateGameState()"
-             ng-model="form.userInput" type="text" autofocus>
-    </div>
-
+    </a>
   </div>
 
+  <div ng-hide="package">
+    <p>
+      You may reload this page.
+      Please back to the package selection page.
+    </p>
+    <div>
+      <a href="#/" class="btn btn-info">
+        Back
+      </a>
+    </div>
+  </div>
 </div>

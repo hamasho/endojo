@@ -5,6 +5,9 @@ $color2: #BBADA0;
 $color3: #8F7A66;
 $color4: #776E65;
 
+$color-blue: #261758;
+$color-green: #3c763d;
+
 $success-bg: #DFF0D8;
 $info-bg: #D9EDF7;
 $warning-bg: #FCF8E3;
@@ -17,9 +20,12 @@ $danger-bg: #F2DEDE;
 body {
   font-family: 'Lato', arial;
   font-weight: 400;
-  font-size: 20px;
-  color: $color3;
+  font-size: 18px;
+  color: $color4;
   background-color: $bgcolor1;
+}
+a {
+  color: $color-blue;
 }
 
 .navbar.navbar-default {
@@ -52,17 +58,38 @@ $danger1: #d32f2f;
   font-size: 18px;
   height: 40px;
 }
-.game-cleared {
-  color: green;
-}
 .answer-correct-part {
-  background-color: $success-bg;
 }
 .answer-incorrect-part {
   background-color: $danger-bg;
   text-decoration: line-through;
 }
 .answer-blank-part {
+}
+.view {
+  position: absolute;
+  width: 100%;
+  top: 30px;
+}
+.slide {
+  transition: 300ms;
+}
+.slide.ng-enter {
+  left: 100%;
+}
+.slide.ng-leave, .slide.ng-enter-active {
+  left: 0%;
+}
+.slide.ng-leave-active {
+  left: -100%;
+}
+.game-cleared {
+}
+.result-display {
+  font-size: 24px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 30px;
 }
 
 // Navbar config

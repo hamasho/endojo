@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'transcription.apps.TranscriptionConfig',
     'mypage.apps.MypageConfig',
 
+    'bootstrap3',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

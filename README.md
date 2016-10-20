@@ -33,3 +33,5 @@
     - Donate
   - Create donation system
   - Create test
+
+# INSTALL

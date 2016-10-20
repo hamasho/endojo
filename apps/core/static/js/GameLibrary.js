@@ -5,6 +5,7 @@ var GameFactory = function($http, $sce) {
 
   var packages = null;
   var selectedPackage = null;
+  var problems = null;
   var gameScore = null;
 
   return {
@@ -13,6 +14,12 @@ var GameFactory = function($http, $sce) {
     },
     getSelectedPackage: function() {
       return selectedPackage;
+    },
+    setProblems: function(probs) {
+      problems = probs;
+    },
+    getProblems: function() {
+      return problems;
     },
     setScore: function(score) {
       gameScore = score;
@@ -26,18 +33,26 @@ var GameFactory = function($http, $sce) {
      */
     diff: function(str1, str2) {
       var diffs = JsDiff.diffChars(str1, str2);
+      var correct = true;
       var result = '';
       for (var i = 0; i < diffs.length; i++) {
         if (( ! diffs[i].added) && ( ! diffs[i].removed)) {
           result += '<span class="answer-correct-part">' + diffs[i].value + '</span>';
         } else if (diffs[i].removed) {
-          result += '<span class="answer-blank-part">' +
-            diffs[i].value.replace(/[a-zA-Z0-9'\.\?\!]/g, '_') + '</span>';
+          if (diffs[i].value === ' ') {
+            correct = false;
+            result += '<span class="answer-incorrect-part">&nbsp;&nbsp;</span>';
+          } else {
+            correct = (i === diffs.length - 1 ? correct : false);
+            result += '<span class="answer-blank-part">' +
+              diffs[i].value.replace(/[a-zA-Z0-9'\.\?\!]/g, '_') + '</span>';
+          }
         } else if (diffs[i].added) {
+          correct = false;
           result += '<span class="answer-incorrect-part">' + diffs[i].value + '</span>';
         }
       }
-      return $sce.trustAsHtml(result);
+      return [correct, $sce.trustAsHtml(result)];
     },
     /**
      * Trim spaces at beginning and end of sentence.
@@ -48,5 +63,9 @@ var GameFactory = function($http, $sce) {
     },
 
   };
+
+};
+
+var TimerDirective = function($interval, dateFilter) {
 
 };
