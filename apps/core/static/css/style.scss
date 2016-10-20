@@ -16,6 +16,13 @@ $danger-bg: #F2DEDE;
 .vertical-space-30 {
   margin-top: 30px;
 }
+.vertical-center {
+  float:none;
+  display:inline-block;
+  vertical-align:middle;
+  margin-right:-4px;
+
+}
 
 body {
   font-family: 'Lato', arial;
@@ -91,14 +98,21 @@ $danger1: #d32f2f;
   margin-bottom: 50px;
   padding: 30px;
 }
+.game-info {
+  width: 50%;
+  margin-top: 80px;
+  border: $color1 solid 2px;
+  padding: 10px;
+}
 
 // Navbar config
 
 $bgDefault      : $color3;
-$bgHighlight    : $color1;
+$bgHighlight    : $color2;
 $colDefault     : $bgcolor1;
-$colHighlight   : $bgcolor2;
+$colHighlight   : $bgcolor1;
 $dropDown       : false;
+
 .navbar-default {
   background-color: $bgDefault;
   border-color: $bgHighlight;

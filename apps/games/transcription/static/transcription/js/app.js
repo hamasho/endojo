@@ -68,7 +68,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 /**
  * Start game, repeat each problems and store user score to GameFactory
  */
-.controller('GameController', function($scope, $http, $timeout, $location, $animate, GameFactory) {
+.controller('GameController', function($scope, $http, $timeout, $interval, $location, $animate, GameFactory) {
 
   $scope.package = GameFactory.getSelectedPackage();
   if ($scope.package === null) return;
@@ -82,6 +82,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
     $scope.problemIndex = 0;
     $scope.form = {};
     $scope.score = [];
+    $scope.progress = 0;
     for (var i = 0; i < $scope.problems.length; i++) {
       $scope.score.push({
         id: $scope.problems[i].id,
@@ -91,7 +92,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
     $scope.nextProblem();
   };
 
-  var startTime, endTime;
+  var startTime, endTime, intervalId;
 
   $scope.nextProblem = function() {
     if ($scope.problemIndex >= $scope.problems.length) {
@@ -102,7 +103,11 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
     $scope.diffUserInputClass = "alert alert-info";
     $scope.form.userInput = '';
     $scope.cleared = false;
+    $scope.timer = '0s';
     startTime = new Date().getTime();
+    intevalId = $interval(function() {
+      $scope.timer = Math.round((new Date().getTime() - startTime) / 1000) + 's';
+    }, 1000);
   };
 
   $scope.updateGameState = function() {
@@ -133,7 +138,10 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
     endTime = new Date().getTime();
     $scope.score[$scope.problemIndex].responseTimeMs = endTime - startTime;
     $scope.problemIndex++;
+    $scope.progress = Math.round($scope.problemIndex / $scope.problems.length * 100);
+    $interval.cancel(intervalId);
     $timeout($scope.nextProblem, 1000);
+    console.log($scope.progress);
   };
 
   $scope.finishGame = function() {

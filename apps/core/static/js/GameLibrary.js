@@ -61,11 +61,5 @@ var GameFactory = function($http, $sce) {
     trimSpace: function(str) {
       return str.replace(/^ */, '').replace(/ *$/, '').replace(/ +/g, ' ');
     },
-
   };
-
-};
-
-var TimerDirective = function($interval, dateFilter) {
-
 };
