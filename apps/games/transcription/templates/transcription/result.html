@@ -5,7 +5,7 @@
     <table class="table">
       <tr ng-repeat="item in score">
         <td>[[ item.problem_text ]]</td>
-        <td>[[ item.clearTime ]]</td>
+        <td>[[ item.responseTimeMs | timeFilter ]]</td>
       </tr>
     </table>
     <a href="#/" class="btn btn-primary">
@@ -13,7 +13,7 @@
     </a>
   </div>
 
-  <div ng-hide="package">
+  <div ng-hide="score">
     <p>
     You may reload this page.
     Please back to the package selection page.

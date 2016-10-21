@@ -5,12 +5,9 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>{{ title }}</title>
     {% load static %}
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'components/bootstrap/dist/css/bootstrap.min.css' %}">
     <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-    <!--
-    <link rel="stylesheet" href="{% static 'components/bootstrap/dist/css/bootstrap-theme.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
-    -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'components/jquery/dist/jquery.min.js' %}"></script>
     <script src="{% static 'components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
@@ -73,7 +70,11 @@
 
           <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
-            <li><a href="#">{{ user.username }}'s Page</a></li>
+            {% if current_page == 'mypage' %}
+            <li class="active"><a href="{% url 'mypage:home' %}">{{ user.username }}'s Page</a></li>
+            {% else %}
+            <li><a href="{% url 'mypage:home' %}">{{ user.username }}'s Page</a></li>
+            {% endif %}
             <li><a href="{% url 'registration:logout' %}">Log Out</a></li>
             {% else %}
             <li><a href="{% url 'registration:signup' %}">Sign Up</a></li>

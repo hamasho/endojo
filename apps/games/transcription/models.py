@@ -1,6 +1,10 @@
+import datetime
+from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+
+from core.utils import date_range
 
 
 class Package(models.Model):
@@ -15,6 +19,7 @@ class Package(models.Model):
 class Problem(models.Model):
     problem_text = models.CharField(max_length=200)
     package = models.ForeignKey(Package)
+    level = models.SmallIntegerField()
 
 
 class ProblemScore(models.Model):
@@ -23,11 +28,51 @@ class ProblemScore(models.Model):
     response_time_ms = models.IntegerField()
     update_date = models.DateTimeField(default=timezone.now)
 
-    def save_score(user, problem_id, response_time_ms):
-        problem = Problem.objects.get(id=problem_id)
-        problem_score = ProblemScore.get_or_create(
-            user=user,
-            problem=problem,
-            defaults={'response_time_ms': response_time_ms}
+    def save(self, *args, **kwargs):
+        """
+        When saving scores, also have to update History model.
+        """
+        today, created = History.objects.get_or_create(
+            user=self.user,
+            level=self.problem.level,
+            date=datetime.date.today()
         )
-        problem_score.save()
+        today.problem_count += 1
+        today.average_time_ms = \
+            (today.problem_count * today.average_time_ms + self.response_time_ms) / today.problem_count
+        today.save()
+        super(ProblemScore, self).save(*args, **kwargs)
+
+
+class History(models.Model):
+    user = models.ForeignKey(User)
+    level = models.SmallIntegerField()
+    problem_count = models.IntegerField(default=0)
+    average_time_ms = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add=True)
+
+    @staticmethod
+    def get_stats(user):
+        histories = History.objects.filter(user=user)
+        start_date = histories[0].date
+        end_date = histories[len(histories) - 1].date
+        result = {
+            '1': [],
+            '2': [],
+            '3': [],
+            '4': [],
+            '5': [],
+        }
+        index = 0
+        for date in date_range(start_date, end_date + timedelta(1)):
+            histories_at = histories.filter(date=date)
+            for history in histories_at:
+                result[str(history.level)] += [{
+                    'x': index,
+                    'y': history.average_time_ms,
+                }]
+            index += 1
+        return result
+
+    class Meta:
+        ordering = ['date']

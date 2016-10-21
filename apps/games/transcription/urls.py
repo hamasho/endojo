@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^main/$', TemplateView.as_view(template_name='transcription/main.html')),
     url(r'^result/$', TemplateView.as_view(template_name='transcription/result.html')),
     url(r'^result/store/$', views.ResultStoreApi.as_view(), name='result_store'),
+    url(r'^stats/$', views.StatsApi.as_view(), name='stats'),
 ]

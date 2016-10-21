@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="margin-top:40px;"></div>
+<div class="col-md-2">
+  <div class="sidebar">
+    <div class="row">
+      <div class="list-group">
+        {% if current_mypage == 'home' %}
+        <a class="list-group-item active" href="{% url 'mypage:home' %}">Home</a>
+        {% else %}
+        <a class="list-group-item" href="{% url 'mypage:home' %}">Home</a>
+        {% endif %}
+        {% if current_mypage == 'history' %}
+        <a class="list-group-item active" href="{% url 'mypage:history' %}">History</a>
+        {% else %}
+        <a class="list-group-item" href="{% url 'mypage:history' %}">History</a>
+        {% endif %}
+        {% if current_mypage == 'stats' %}
+        <a class="list-group-item active" href="{% url 'mypage:stats' %}">Stats</a>
+        {% else %}
+        <a class="list-group-item" href="{% url 'mypage:stats' %}">Stats</a>
+        {% endif %}
+        {% if current_mypage == 'profile' %}
+        <a class="list-group-item active" href="{% url 'mypage:profile' %}">Profile</a>
+        {% else %}
+        <a class="list-group-item" href="{% url 'mypage:profile' %}">Profile</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-md-10">
+  <div class="col-md-offset-1 col-md-10">
+    {% block mypage_content %}{% endblock mypage_content %}
+  </div>
+</div>
+
+{% endblock content %}

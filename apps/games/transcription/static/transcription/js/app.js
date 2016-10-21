@@ -36,6 +36,12 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   };
 }])
 
+.filter('timeFilter', function() {
+  return function(input) {
+    return (input / 1000).toFixed(1) + 's';
+  };
+})
+
 /**
  * Select package and store it to GameFactory
  */
@@ -157,9 +163,13 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
 .controller('ResultController', function($scope, $http, GameFactory) {
   $scope.score = GameFactory.getScore();
+  console.log($scope.score);
+  if ($scope.score === null) return;
   $http.post('/game/transcription/result/store/', {
     score: $scope.score,
   })
   .then(function(response) {
+    console.log($scope.score);
+    console.log(response);
   });
 });

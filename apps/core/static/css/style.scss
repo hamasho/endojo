@@ -4,6 +4,7 @@ $color1: #BBAAA0;
 $color2: #BBADA0;
 $color3: #8F7A66;
 $color4: #776E65;
+$hl-color: #ada69f;
 
 $color-blue: #261758;
 $color-green: #3c763d;
@@ -34,6 +35,19 @@ body {
 a {
   color: $color-blue;
 }
+.logo-image {
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 60px;
+  width: 40%;
+  display: block;
+}
+.subtitle {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 80px;
+}
 
 .navbar.navbar-default {
   border-radius: 0px;
@@ -57,6 +71,21 @@ $danger1: #d32f2f;
   border-bottom: 3px solid $color4;
   border-radius: 0;
   background-color: $bgcolor1;
+}
+
+/* Side bar */
+.list-group a.list-group-item {
+  color: $color4;
+  background-color: $bgcolor1;
+  border: 3px solid $color4;
+  border-bottom: none;
+}
+.list-group a.list-group-item.active {
+  color: $bgcolor1;
+  background-color: $color4;
+}
+.list-group a.list-group-item:last-child {
+  border-bottom: 3px solid $color4;
 }
 
 // Game
@@ -107,8 +136,8 @@ $danger1: #d32f2f;
 
 // Navbar config
 
-$bgDefault      : $color3;
-$bgHighlight    : $color2;
+$bgDefault      : $color4;
+$bgHighlight    : $hl-color;
 $colDefault     : $bgcolor1;
 $colHighlight   : $bgcolor1;
 $dropDown       : false;

@@ -2,6 +2,46 @@
 
 {% block content %}
 
-Home page
+{% load static %}
+
+<div>
+  <img class="logo-image" src="{% static 'img/logo.png' %}" alt="English Dojo">
+</div>
+<div class="subtitle">
+  Improve you English skills.
+</div>
+
+<div class="col-md-offset-1 col-md-10">
+  <div class="col-md-4">
+    <h3>Vocabulary</h3>
+    <p>
+    Increase your vocabulary
+    by repeatedly trying to memorize words.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h3>Listening</h3>
+    <p>
+    By checking every words you are listening to,
+    you can obtain a perfect ears
+    which don't miss any word.
+    </p>
+  </div>
+  <div class="col-md-4">
+    <h3>Transcription</h3>
+    <p>
+    Remember sentences perfectly.
+    After that, you have to write the exact sentence again.
+    This improves your reading and writing skills rapidly.
+    </p>
+  </div>
+</div>
+
+<div style="margin-top:80px;" class="col-md-offset-2 col-md-8">
+  <h1>Vocabulary Training</h1>
+  <h1>Listening Training</h1>
+  <h1>Transcription Training</h1>
+
+</div>
 
 {% endblock %}

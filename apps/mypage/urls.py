@@ -1,9 +1,12 @@
-# from django.conf.urls import url
-#
-# from . import views
-#
-# app_name = 'game_transcription'
-#
+from django.conf.urls import url
+
+from . import views
+
+app_name = 'mypage'
+
 urlpatterns = [
-#     url(r'^packages/$', views.TranscriptionGamePackageSelectView.as_view(), name='transcription_game_package_select'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^history/$', views.HistoryView.as_view(), name='history'),
+    url(r'^stats/$', views.StatsView.as_view(), name='stats'),
+    url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
 ]

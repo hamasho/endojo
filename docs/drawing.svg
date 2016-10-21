@@ -30,15 +30,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
      inkscape:cx="434.90948"
-     inkscape:cy="1190.3644"
+     inkscape:cy="618.93583"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1777"
-     inkscape:window-height="1010"
-     inkscape:window-x="31"
-     inkscape:window-y="19"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1055"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -224,7 +224,7 @@
            height="242.85715"
            x="142.14285"
            y="313.07648" /></flowRegion><flowPara
-         id="flowPara4142"></flowPara></flowRoot>    <text
+         id="flowPara4142" /></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:180px;line-height:125%;font-family:'Noto Sans Ethiopic';-inkscape-font-specification:'Noto Sans Ethiopic, Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#776e65;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="31.428591"
@@ -270,5 +270,19 @@
            id="tspan4262">s</tspan><tspan
            style="fill:#003380"
            id="tspan4264">h</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:180px;line-height:125%;font-family:'Noto Sans Ethiopic';-inkscape-font-specification:'Noto Sans Ethiopic, Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#776e65;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="819.11206"
+       y="351.76303"
+       id="text4144-9"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/shinsuke/repos/endojo/apps/core/static/img/icon.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90"><tspan
+         sodipodi:role="line"
+         x="819.11206"
+         y="351.76303"
+         id="tspan4148-9">En</tspan></text>
   </g>
 </svg>
