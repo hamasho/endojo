@@ -3,9 +3,9 @@
     "model": "transcription.history",
     "pk": 1,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 1,
-      "count": 20,
+      "problem_count": 20,
       "average_time_ms": 4000,
       "date": "2016-10-21"
     }
@@ -14,10 +14,10 @@
     "model": "transcription.history",
     "pk": 2,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 1,
-      "count": 30,
-      "average_time_ms": 3420,
+      "problem_count": 30,
+      "average_time_ms": 3000,
       "date": "2016-10-22"
     }
   },
@@ -25,9 +25,9 @@
     "model": "transcription.history",
     "pk": 3,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 1,
-      "count": 10,
+      "problem_count": 10,
       "average_time_ms": 4000,
       "date": "2016-10-24"
     }
@@ -36,9 +36,9 @@
     "model": "transcription.history",
     "pk": 4,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 1,
-      "count": 20,
+      "problem_count": 20,
       "average_time_ms": 2000,
       "date": "2016-10-26"
     }
@@ -47,9 +47,9 @@
     "model": "transcription.history",
     "pk": 5,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 2,
-      "count": 20,
+      "problem_count": 20,
       "average_time_ms": 4000,
       "date": "2016-10-20"
     }
@@ -58,9 +58,9 @@
     "model": "transcription.history",
     "pk": 6,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 2,
-      "count": 30,
+      "problem_count": 30,
       "average_time_ms": 3000,
       "date": "2016-10-23"
     }
@@ -69,9 +69,9 @@
     "model": "transcription.history",
     "pk": 7,
     "fields": {
-      "user": 5,
+      "user": 1,
       "level": 2,
-      "count": 20,
+      "problem_count": 20,
       "average_time_ms": 2000,
       "date": "2016-10-27"
     }

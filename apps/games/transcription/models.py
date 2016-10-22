@@ -37,9 +37,10 @@ class ProblemScore(models.Model):
             level=self.problem.level,
             date=datetime.date.today()
         )
+        avg = today.problem_count * today.average_time_ms
         today.problem_count += 1
         today.average_time_ms = \
-            (today.problem_count * today.average_time_ms + self.response_time_ms) / today.problem_count
+            (avg + self.response_time_ms) / today.problem_count
         today.save()
         super(ProblemScore, self).save(*args, **kwargs)
 
@@ -52,10 +53,10 @@ class History(models.Model):
     date = models.DateField(auto_now_add=True)
 
     @staticmethod
-    def get_stats(user):
-        histories = History.objects.filter(user=user)
-        start_date = histories[0].date
-        end_date = histories[len(histories) - 1].date
+    def get_formatted_stats(user):
+        """
+        Format user's score data to fit Chart.js data structure
+        """
         result = {
             '1': [],
             '2': [],
@@ -63,6 +64,11 @@ class History(models.Model):
             '4': [],
             '5': [],
         }
+        histories = History.objects.filter(user=user)
+        if len(histories) == 0:
+            return result
+        start_date = histories[0].date
+        end_date = histories[len(histories) - 1].date
         index = 0
         for date in date_range(start_date, end_date + timedelta(1)):
             histories_at = histories.filter(date=date)

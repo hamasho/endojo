@@ -22,8 +22,6 @@ class BaseListApi(View):
             objects = self.model.objects.values()
         return JsonResponse(dict(result=list(objects)))
 
-    # TODO: create
-
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
         return super(BaseListApi, self).dispatch(*args, **kwargs)

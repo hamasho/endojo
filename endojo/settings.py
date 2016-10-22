@@ -39,6 +39,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
     'core.apps.CoreConfig',
     'home.apps.HomeConfig',
     'registration.apps.RegistrationConfig',
@@ -46,13 +53,6 @@ INSTALLED_APPS = [
     'listening.apps.ListeningConfig',
     'transcription.apps.TranscriptionConfig',
     'mypage.apps.MypageConfig',
-
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -136,6 +136,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Home page
+LOGIN_URL = '/registration/login/'
 LOGIN_REDIRECT_URL = '/'
 
 if DEBUG:

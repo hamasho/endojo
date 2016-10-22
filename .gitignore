@@ -1,6 +1,7 @@
 *.sqlite3
 *.pyc
 .ropeproject
+.coverage
 __pycache__
 node_modules
 apps/core/static/components
