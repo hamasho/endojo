@@ -1,7 +1,5 @@
 from django.views.generic.base import View, TemplateView
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
 
 
 class BaseTemplateView(TemplateView):
@@ -21,10 +19,6 @@ class BaseListApi(View):
         except AttributeError:
             objects = self.model.objects.values()
         return JsonResponse(dict(result=list(objects)))
-
-    @method_decorator(csrf_exempt)
-    def dispatch(self, *args, **kwargs):
-        return super(BaseListApi, self).dispatch(*args, **kwargs)
 
 
 class BaseDetailApi(View):

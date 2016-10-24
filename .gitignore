@@ -4,7 +4,12 @@
 .coverage
 __pycache__
 node_modules
+# bower components
 apps/core/static/components
+
+# media files
+media/
+game_data/listening/**/*.mp3
 
 # Sensitive information
 secret.py

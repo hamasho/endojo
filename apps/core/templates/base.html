@@ -37,9 +37,9 @@
             <li><a href="{% url 'home:home' %}">Vocabulary</a></li>
             {% endif %}
             {% if current_page == 'listening' %}
-            <li class="active"><a href="{% url 'home:home' %}">Listening</a></li>
+            <li class="active"><a href="{% url 'listening:game' %}">Listening</a></li>
             {% else %}
-            <li><a href="{% url 'home:home' %}">Listening</a></li>
+            <li><a href="{% url 'listening:game' %}">Listening</a></li>
             {% endif %}
             {% if current_page == 'transcription' %}
             <li class="active"><a href="{% url 'transcription:game' %}">Transcription</a></li>

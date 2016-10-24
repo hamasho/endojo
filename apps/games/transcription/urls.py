@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.views.generic.base import TemplateView
+from django.views.decorators.csrf import csrf_exempt
 
 from . import views
 
@@ -19,5 +20,5 @@ urlpatterns = [
     url(r'^packages/(?P<package_id>[0-9]+)/problems/$', views.ProblemListApi.as_view(), name='problem_api'),
     url(r'^stats/$', views.StatsApi.as_view(), name='stats_api'),
 
-    url(r'^result/store/$', views.ResultStoreApi.as_view(), name='result_store_api'),
+    url(r'^result/store/$', csrf_exempt(views.ResultStoreApi.as_view()), name='result_store_api'),
 ]

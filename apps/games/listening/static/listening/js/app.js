@@ -1,7 +1,7 @@
 /**
- * Transcription game module
+ * Listening game module
  */
-angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
+angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -25,7 +25,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   });
 })
 
-.factory('GameFactory', GameFactory)
+.factory('ListeningGameFactory', ListeningGameFactory)
 
 .directive('autofocus', ['$timeout', function($timeout) {
   return {
@@ -38,6 +38,22 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   };
 }])
 
+.directive('audios', function($sce) {
+  return {
+    restrict: 'A',
+    scope: { code:'=' },
+    replace: true,
+    template: '<audio ng-src="{{url}}" controls loop autoplay></audio>',
+    link: function (scope) {
+      scope.$watch('src', function (newVal, oldVal) {
+        if (newVal !== undefined) {
+          scope.url = $sce.trustAsResourceUrl(newVal);
+        }
+      });
+    }
+  };
+})
+
 .filter('timeFilter', function() {
   return function(input) {
     return (input / 1000).toFixed(1) + 's';
@@ -45,42 +61,42 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 })
 
 /**
- * Select package and store it to GameFactory
+ * Select package and store it to ListeningGameFactory
  */
-.controller('PackageSelectController', function($scope, $http, GameFactory) {
+.controller('PackageSelectController', function($scope, $http, ListeningGameFactory) {
   $scope.packages = null;
-  var url = '/game/transcription/packages/';
+  var url = '/game/listening/packages/';
   $http.get(url)
     .then(function(response) {
       $scope.packages = response.data.result;
     });
-  $scope.selectPackage = GameFactory.selectPackage;
+  $scope.selectPackage = ListeningGameFactory.selectPackage;
 })
 
 /**
  * Download and set problems
  */
-.controller('InitializeController', function($scope, $http, GameFactory) {
-  $scope.package = GameFactory.getSelectedPackage();
+.controller('InitializeController', function($scope, $http, ListeningGameFactory) {
+  $scope.package = ListeningGameFactory.getSelectedPackage();
   if ($scope.package === null) return;
   $scope.problems = null;
   $scope.title = $scope.package.title;
-  var problemUrl = '/game/transcription/packages/' + $scope.package.id + '/problems/';
+  var problemUrl = '/game/listening/packages/' + $scope.package.id + '/problems/';
   $http.get(problemUrl)
     .then(function(response) {
       $scope.problems = response.data.result;
-      GameFactory.setProblems($scope.problems);
+      ListeningGameFactory.setProblems($scope.problems);
     });
 })
 
 /**
- * Start game, repeat each problems and store user score to GameFactory
+ * Start game, repeat each problems and store user score to ListeningGameFactory
  */
-.controller('GameController', function($scope, $http, $timeout, $interval, $location, $animate, GameFactory) {
+.controller('GameController', function($scope, $http, $timeout, $interval, $location, $animate, ListeningGameFactory) {
 
-  $scope.package = GameFactory.getSelectedPackage();
+  $scope.package = ListeningGameFactory.getSelectedPackage();
   if ($scope.package === null) return;
-  $scope.problems = GameFactory.getProblems();
+  $scope.problems = ListeningGameFactory.getProblems();
   $scope.started = false;
   $scope.cleared = false;
   $scope.title = $scope.package.title;
@@ -107,9 +123,11 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
       $scope.finishGame();
       return;
     }
-    $scope.diffUserInput = $scope.problems[$scope.problemIndex].problem_text;
+    $scope.diffUserInput = '__';
     $scope.diffUserInputClass = "alert alert-info";
     $scope.form.userInput = '';
+    $scope.audio_url = $scope.problems[$scope.problemIndex].url;
+    console.log($scope.audio_url);
     $scope.cleared = false;
     $scope.timer = '0s';
     startTime = new Date().getTime();
@@ -120,20 +138,20 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
   $scope.updateGameState = function() {
     var answer = $scope.problems[$scope.problemIndex].problem_text;
-    var input = GameFactory.trimSpace($scope.form.userInput);
+    var input = ListeningGameFactory.trimSpace($scope.form.userInput);
     /**
      * If the user doesn't input any characters, then show the problem.
      * Otherwise, show the diff of the correct answer and user input.
      * If the user input is the correct answer, then finish this problem.
      */
     if (input === '') {
-      $scope.diffUserInput = answer;
+      $scope.diffUserInput = '__';
     } else {
       if (input === answer) {
         $scope.diffUserInput = answer;
         $scope.solvedProblem();
       } else {
-        result = GameFactory.diff(answer, input);
+        result = ListeningGameFactory.diff(answer, input);
         $scope.diffUserInput = result[1];
         $scope.diffUserInputClass = (result[0] ? 'alert alert-info' : 'alert alert-danger');
       }
@@ -152,7 +170,7 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   };
 
   $scope.finishGame = function() {
-    GameFactory.setScore($scope.score);
+    ListeningGameFactory.setScore($scope.score);
     $location.path('/result');
   };
 
@@ -162,10 +180,10 @@ angular.module('TranscriptionGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   $scope.initializeGame();
 })
 
-.controller('ResultController', function($scope, $http, GameFactory) {
-  $scope.score = GameFactory.getScore();
+.controller('ResultController', function($scope, $http, ListeningGameFactory) {
+  $scope.score = ListeningGameFactory.getScore();
   if ($scope.score === null) return;
-  $http.post('/game/transcription/result/store/', {
+  $http.post('/game/listening/result/store/', {
     score: $scope.score,
   })
   .then(function(response) {

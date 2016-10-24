@@ -23,7 +23,7 @@ class Problem(models.Model):
 
 
 class ProblemScore(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='transcription_problemscore_user')
     problem = models.ForeignKey(Problem)
     response_time_ms = models.IntegerField()
     update_date = models.DateTimeField(default=timezone.now)
@@ -46,11 +46,14 @@ class ProblemScore(models.Model):
 
 
 class History(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='transcription_history_user')
     level = models.SmallIntegerField()
     problem_count = models.IntegerField(default=0)
     average_time_ms = models.IntegerField(default=0)
     date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['date']
 
     @staticmethod
     def get_formatted_stats(user):
@@ -79,6 +82,3 @@ class History(models.Model):
                 }]
             index += 1
         return result
-
-    class Meta:
-        ordering = ['date']

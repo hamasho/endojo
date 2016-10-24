@@ -6,7 +6,10 @@
     </h1>
 
     <div>
-      <!-- Problem or diff with user input -->
+      <div class="audio-control">
+        <div audios src="[[ audio_url ]]"></div>
+      </div>
+      <!-- diff against user input -->
       <div ng-class="diffUserInputClass"
            ng-cloak id="diff-user-input-box" class="result-display">
         <span class="clear-notation" ng-show="cleared">
