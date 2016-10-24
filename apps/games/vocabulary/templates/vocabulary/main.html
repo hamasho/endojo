@@ -1,0 +1,57 @@
+<div class="row" ng-controller="GameController">
+
+  <div ng-show="package">
+    <h1 style="margin-bottom: 30px;" class="text-center">
+      [[ title ]]
+    </h1>
+
+    <div>
+      <div class="audio-control">
+        <div audios src="[[ audio_url ]]"></div>
+      </div>
+      <!-- diff against user input -->
+      <div ng-class="diffUserInputClass"
+           ng-cloak id="diff-user-input-box" class="result-display">
+        <span class="clear-notation" ng-show="cleared">
+          <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;
+        </span>
+        <span ng-bind-html="diffUserInput" id="diff-user-input-display" class="slide"></span>
+      </div>
+      <input class="form-control answer-form"
+             ng-change="updateGameState()"
+             ng-model="form.userInput" type="text" autofocus>
+    </div>
+
+    <!-- External info -->
+    <div class="game-info pull-right row vertical-center">
+      <div class="">
+        <div style="margin-bottom:0;" class="progress">
+          <div class="progress-bar progress-bar-success progress-bar-striped"
+               ng-style="{width:progress+'%'}"
+               aria-valuenow="50" 
+               role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <span class="sr-only">40% Complete (success)</span>
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <span style="font-size:20px;" class="pull-right">
+          [[ timer ]]
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div ng-hide="package">
+    <p>
+    You may reload this page.
+    Please back to the package selection page.
+    </p>
+    <div>
+      <a href="#/" class="btn btn-info">
+        Back
+      </a>
+    </div>
+  </div>
+
+</div>

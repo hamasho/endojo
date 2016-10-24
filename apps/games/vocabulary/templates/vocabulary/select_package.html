@@ -1,0 +1,25 @@
+<div class="row" ng-controller="PackageSelectController">
+  <h1>Transcription Game Package List</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <td>Title</td>
+        <td>Level</td>
+        <td>Published</td>
+      </tr>
+    </thead>
+    <tbody ng-repeat="package in packages">
+      <tr>
+        <td>
+          <a ng-href="#/start" ng-click="selectPackage(package);">
+            [[ package.title ]]
+          </a>
+        </td>
+        <td>[[ package.level ]]</td>
+        <td>[[ package.pub_date | date ]]</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

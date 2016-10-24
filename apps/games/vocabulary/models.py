@@ -1,3 +1,96 @@
+import os
+import datetime
+from datetime import timedelta
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
 
-# Create your models here.
+from core.utils import date_range
+
+
+class Package(models.Model):
+    title = models.CharField(max_length=200, unique=True)
+    level = models.SmallIntegerField()
+    pub_date = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-pub_date']
+
+
+def upload_directory(instance, filename):
+    basename = os.path.basename(filename)
+    return 'listening_audio/%d/%s' % (instance.package.id, basename)
+
+
+class Problem(models.Model):
+    problem_text = models.CharField(max_length=200)
+    package = models.ForeignKey(Package)
+    audio_file = models.FileField(upload_to=upload_directory)
+    level = models.SmallIntegerField()
+
+    def save(self, *args, **kwargs):
+        super(Problem, self).save(*args, **kwargs)
+
+
+class ProblemScore(models.Model):
+    user = models.ForeignKey(User, related_name='listening_problemscore_user')
+    problem = models.ForeignKey(Problem)
+    response_time_ms = models.IntegerField()
+    failed = models.BooleanField(default=False)
+    update_date = models.DateTimeField(default=timezone.now)
+
+    def save(self, *args, **kwargs):
+        """
+        When saving scores, also have to update History model.
+        """
+        if not self.failed:
+            today, created = History.objects.get_or_create(
+                user=self.user,
+                level=self.problem.level,
+                date=datetime.date.today()
+            )
+            avg = today.problem_count * today.average_time_ms
+            today.problem_count += 1
+            today.average_time_ms = \
+                (avg + self.response_time_ms) / today.problem_count
+            today.save()
+        super(ProblemScore, self).save(*args, **kwargs)
+
+
+class History(models.Model):
+    user = models.ForeignKey(User, related_name='listening_history_user')
+    level = models.SmallIntegerField()
+    problem_count = models.IntegerField(default=0)
+    average_time_ms = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['date']
+
+    @staticmethod
+    def get_formatted_stats(user):
+        """
+        Format user's score data to fit Chart.js data structure
+        """
+        result = {
+            '1': [],
+            '2': [],
+            '3': [],
+            '4': [],
+            '5': [],
+        }
+        histories = History.objects.filter(user=user)
+        if len(histories) == 0:
+            return result
+        start_date = histories[0].date
+        end_date = histories[len(histories) - 1].date
+        index = 0
+        for date in date_range(start_date, end_date + timedelta(1)):
+            histories_at = histories.filter(date=date)
+            for history in histories_at:
+                result[str(history.level)] += [{
+                    'x': index,
+                    'y': history.average_time_ms,
+                }]
+            index += 1
+        return result

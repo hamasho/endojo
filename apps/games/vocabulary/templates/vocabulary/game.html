@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-offset-2 col-md-8" ng-app="ListeningGameApp">
+
+  <div class="view slide" ng-view></div>
+
+</div>
+
+{% load static %}
+<script src="{% static 'listening/js/ListeningGameFactory.js' %}"></script>
+<script src="{% static 'listening/js/app.js' %}"></script>
+
+{% endblock %}
