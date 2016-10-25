@@ -6,6 +6,8 @@ __pycache__
 node_modules
 # bower components
 apps/core/static/components
+# temporaly files
+tmp/
 
 # media files
 media/
