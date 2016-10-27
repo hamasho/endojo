@@ -1,0 +1,40 @@
+<div class="row" ng-controller="WordSelectController">
+
+  <h1 style="margin-bottom:40px;">Select your unknown words</h1>
+
+  <div ng-keypress="keypressHandler($event)">
+    {% load static %}
+    <div class="col-sm-4">
+      <a ng-click="setWordAsKnown()">
+        <img class="img-responsive bottom-align"
+             style="margin-bottom: 30px;"
+             src="{% static 'img/knowing.png' %}" alt="KNOWING">
+      </a>
+      <div ng-repeat="word in knownWords" class="alert alert-info word-item">
+        [[ word.word_text + ' / ' + word.meaning ]]
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div style="margin-bottom: 40px;"></div>
+      <div ng-repeat="word in unselectedWords" class="word-box" ng-animate="'word-item'">
+        [[ word.word_text + ' / ' + word.meaning ]]
+      </div>
+      <div ng-hide="unselectedWords.length">
+        <a class="btn btn-info" href="#/" ng-click="storeUnknownWords()">
+          Store unknown words
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <a ng-click="setWordAsUnknown()">
+        <img class="img-responsive bottom-align"
+             style="margin-bottom: 30px;"
+             src="{% static 'img/unknowing.png' %}" alt="KNOWING">
+      </a>
+      <div ng-repeat="word in unknownWords" class="alert alert-danger word-enter">
+        [[ word.word_text + ' / ' + word.meaning ]]
+      </div>
+    </div>
+  </div>
+
+</div>

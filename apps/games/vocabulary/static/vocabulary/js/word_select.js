@@ -1,7 +1,7 @@
 /**
- * Listening game module
+ * Vocabulary game module
  */
-angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
+angular.module('VocabularyWordSelectApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -11,21 +11,15 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
  * Router
  */
 .config(function($routeProvider) {
-  $routeProvider.when('/start', {
-    templateUrl: 'start/',
-  });
-  $routeProvider.when('/main', {
-    templateUrl: 'main/',
-  });
-  $routeProvider.when('/result', {
-    templateUrl: 'result/',
+  $routeProvider.when('/words', {
+    templateUrl: 'packages/words/select/',
   });
   $routeProvider.otherwise({
     templateUrl: 'packages/select/',
   });
 })
 
-.factory('ListeningGameFactory', ListeningGameFactory)
+.factory('VocabularyGameFactory', VocabularyGameFactory)
 
 .directive('autofocus', ['$timeout', function($timeout) {
   return {
@@ -61,42 +55,42 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 })
 
 /**
- * Select package and store it to ListeningGameFactory
+ * Select package and store it to VocabularyGameFactory
  */
-.controller('PackageSelectController', function($scope, $http, ListeningGameFactory) {
+.controller('PackageSelectController', function($scope, $http, VocabularyGameFactory) {
   $scope.packages = null;
-  var url = '/game/listening/packages/';
+  var url = '/game/vocabulary/packages/';
   $http.get(url)
     .then(function(response) {
       $scope.packages = response.data.result;
     });
-  $scope.selectPackage = ListeningGameFactory.selectPackage;
+  $scope.selectPackage = VocabularyGameFactory.selectPackage;
 })
 
 /**
  * Download and set problems
  */
-.controller('InitializeController', function($scope, $http, ListeningGameFactory) {
-  $scope.package = ListeningGameFactory.getSelectedPackage();
+.controller('InitializeController', function($scope, $http, VocabularyGameFactory) {
+  $scope.package = VocabularyGameFactory.getSelectedPackage();
   if ($scope.package === null) return;
   $scope.problems = null;
   $scope.title = $scope.package.title;
-  var problemUrl = '/game/listening/packages/' + $scope.package.id + '/problems/';
+  var problemUrl = '/game/vocabulary/packages/' + $scope.package.id + '/problems/';
   $http.get(problemUrl)
     .then(function(response) {
       $scope.problems = response.data.result;
-      ListeningGameFactory.setProblems($scope.problems);
+      VocabularyGameFactory.setProblems($scope.problems);
     });
 })
 
 /**
- * Start game, repeat each problems and store user score to ListeningGameFactory
+ * Start game, repeat each problems and store user score to VocabularyGameFactory
  */
-.controller('GameController', function($scope, $http, $timeout, $interval, $location, $animate, ListeningGameFactory) {
+.controller('GameController', function($scope, $http, $timeout, $interval, $location, $animate, VocabularyGameFactory) {
 
-  $scope.package = ListeningGameFactory.getSelectedPackage();
+  $scope.package = VocabularyGameFactory.getSelectedPackage();
   if ($scope.package === null) return;
-  $scope.problems = ListeningGameFactory.getProblems();
+  $scope.problems = VocabularyGameFactory.getProblems();
   $scope.started = false;
   $scope.cleared = false;
   $scope.title = $scope.package.title;
@@ -138,7 +132,7 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
   $scope.updateGameState = function() {
     var answer = $scope.problems[$scope.problemIndex].problem_text;
-    var input = ListeningGameFactory.trimSpace($scope.form.userInput);
+    var input = VocabularyGameFactory.trimSpace($scope.form.userInput);
     /**
      * If the user doesn't input any characters, then show the problem.
      * Otherwise, show the diff of the correct answer and user input.
@@ -151,7 +145,7 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
         $scope.diffUserInput = answer;
         $scope.solvedProblem();
       } else {
-        result = ListeningGameFactory.diff(answer, input);
+        result = VocabularyGameFactory.diff(answer, input);
         $scope.diffUserInput = result[1];
         $scope.diffUserInputClass = (result[0] ? 'alert alert-info' : 'alert alert-danger');
       }
@@ -170,7 +164,7 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   };
 
   $scope.finishGame = function() {
-    ListeningGameFactory.setScore($scope.score);
+    VocabularyGameFactory.setScore($scope.score);
     $location.path('/result');
   };
 
@@ -180,10 +174,10 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   $scope.initializeGame();
 })
 
-.controller('ResultController', function($scope, $http, ListeningGameFactory) {
-  $scope.score = ListeningGameFactory.getScore();
+.controller('ResultController', function($scope, $http, VocabularyGameFactory) {
+  $scope.score = VocabularyGameFactory.getScore();
   if ($scope.score === null) return;
-  $http.post('/game/listening/result/store/', {
+  $http.post('/game/vocabulary/result/store/', {
     score: $scope.score,
   })
   .then(function(response) {

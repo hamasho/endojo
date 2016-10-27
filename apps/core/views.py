@@ -11,6 +11,10 @@ class BaseTemplateView(TemplateView):
         return context
 
 
+class BaseApi(View):
+    pass
+
+
 class BaseListApi(View):
     # TODO: test
     def get(self, request):

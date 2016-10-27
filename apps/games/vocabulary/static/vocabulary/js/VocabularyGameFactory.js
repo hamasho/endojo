@@ -1,11 +1,11 @@
 /**
- * Listening game's factory
+ * Vocabulary game's factory
  */
-var ListeningGameFactory = function($http, $sce) {
+var VocabularyGameFactory = function($http, $sce) {
 
   var packages = null;
   var selectedPackage = null;
-  var problems = null;
+  var words = null;
   var gameScore = null;
 
   return {
@@ -15,11 +15,11 @@ var ListeningGameFactory = function($http, $sce) {
     getSelectedPackage: function() {
       return selectedPackage;
     },
-    setProblems: function(probs) {
-      problems = probs;
+    setWords: function(ws) {
+      words = ws;
     },
-    getProblems: function() {
-      return problems;
+    getWords: function() {
+      return words;
     },
     setScore: function(score) {
       gameScore = score;
@@ -60,6 +60,22 @@ var ListeningGameFactory = function($http, $sce) {
      */
     trimSpace: function(str) {
       return str.replace(/^ */, '').replace(/ *$/, '').replace(/ +/g, ' ');
+    },
+
+    /**
+     * Set selected word as known
+     */
+    setKnown: function() {
+    },
+    /**
+     * Set selected word as unknown
+     */
+    setUnknown: function() {
+    },
+
+    shuffle: function(array) {
+      // TODO: implement
+      return array;
     },
   };
 };

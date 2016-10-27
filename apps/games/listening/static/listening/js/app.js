@@ -27,7 +27,7 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 
 .factory('ListeningGameFactory', ListeningGameFactory)
 
-.directive('autofocus', ['$timeout', function($timeout) {
+.directive('autofocus', function($timeout) {
   return {
     restrict: 'A',
     link : function($scope, $element) {
@@ -36,7 +36,7 @@ angular.module('ListeningGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
       });
     }
   };
-}])
+})
 
 .directive('audios', function($sce) {
   return {

@@ -40,7 +40,7 @@ from django.db import transaction
 
 from endojo import settings
 from registration.models import Language
-from vocabulary.models import Package, Word, TranslatedWord
+from vocabulary.models import Package, Word, TranslatedWord, AvailablePackage
 
 BASE_DIR = os.path.join(settings.BASE_DIR, 'game_data/vocabulary')
 WORD_DIR = os.path.join(BASE_DIR, 'words')
@@ -83,11 +83,11 @@ def import_each_translation(word_file_name):
         for file_name in os.listdir(translation_file_path):
             package_title = file_name[2:].replace('_', ' ')
             package = Package.objects.get(title=package_title)
-            current_translations = TranslatedWord.objects.filter(
-                word__package=package,
+            lang_package, created = AvailablePackage.objects.get_or_create(
+                package=package,
                 language=language,
             )
-            if current_translations.count() > 0:
+            if not created:
                 continue
             words = get_lines(os.path.join(WORD_DIR, file_name))
             translations = get_lines(os.path.join(translation_file_path, file_name))

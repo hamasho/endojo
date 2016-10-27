@@ -38,7 +38,7 @@
           {% endif %}
           <div class="form-group">
             <div class="col-md-3">
-              <label for="id_password">Email Address:</label>
+              <label for="id_password">Email:</label>
             </div>
             <div class="col-md-9">
               <input type="text" id="id_email" class="form-control" name="email" value="{{ form.data.email }}">
@@ -60,7 +60,41 @@
             </div>
           </div>
 
-          <button class="btn btn-default pull-right" type="submit">Submit</button>
+          {% if info_form.language.errors %}
+          <div class="alert alert-danger">
+            <strong>Error: </strong>
+            {{ info_form.language.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_language">Language:</label>
+            </div>
+            <div class="col-md-9">
+              <select id="id_language" name="language" class="form-control">
+                {% for x,y in info_form.fields.language.choices %}
+                  <option value="{{ x }}"{% if info_form.fields.language.value == x %} selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          {% if info_form.age.errors %}
+          <div class="alert alert-danger">
+            <strong>Error: </strong>
+            {{ info_form.age.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_age">Age:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="number" id="id_age" class="form-control" name="age" value="{{ info_form.data.age }}">
+            </div>
+          </div>
+
+          <button class="btn btn-info pull-right" type="submit">Submit</button>
         </form>
       </div>
 

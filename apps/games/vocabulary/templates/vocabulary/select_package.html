@@ -1,4 +1,10 @@
 <div class="row" ng-controller="PackageSelectController">
+
+  <a href="#/start" class="btn btn-info btn-lg" style="margin-right:30px;">
+    Start Vocabulary Game
+  </a>
+  or select your unknown words.
+
   <h1>Transcription Game Package List</h1>
 
   <table class="table">
@@ -12,7 +18,7 @@
     <tbody ng-repeat="package in packages">
       <tr>
         <td>
-          <a ng-href="#/start" ng-click="selectPackage(package);">
+          <a ng-href="#/words" ng-click="selectPackage(package);">
             [[ package.title ]]
           </a>
         </td>

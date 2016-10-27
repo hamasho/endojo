@@ -1,16 +1,21 @@
 <div class="row" ng-controller="InitializeController">
-  <div ng-show="package" class="center-block">
+  <div ng-show="words" class="center-block">
     <h1 style="margin-bottom: 70px;" class="text-center">
-      [[ title ]]
+      Review State 1 words
     </h1>
+    <div>
+      <div ng-repeat="word in state1Words">
+        [[ word.word_text ]] / [[ word.meaning ]]
+      </div>
+    </div>
     <a ng-href="#/main"
-       style="width:200px;"
+       style="width:200px;margin-top:40px;margin-bottom:100px;"
        class="btn btn-info btn-lg center-block slide">
       Start!
     </a>
   </div>
 
-  <div ng-hide="package">
+  <div ng-hide="words">
     <p>
       You may reload this page.
       Please back to the package selection page.
