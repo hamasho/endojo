@@ -121,13 +121,10 @@ a {
   top: -50px; }
 
 .vocabulary-word-display {
-  width: 100%;
-  height: 312px;
   margin-bottom: 50px; }
 
-.vocabulary-word-display .vocabulary-word-item {
-  width: 100%;
-  height: 55px; }
+.vocabulary-word-input {
+  margin-bottom: 50px; }
 
 .navbar-default {
   background-color: #776E65;

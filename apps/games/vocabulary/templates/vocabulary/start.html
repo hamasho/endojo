@@ -1,10 +1,10 @@
-<div class="row" ng-controller="InitializeController">
-  <div ng-show="words" class="center-block">
+<div class="row" ng-controller="InitController as init">
+  <div ng-show="init.words.length" class="center-block">
     <h1 style="margin-bottom: 70px;" class="text-center">
       Review State 1 words
     </h1>
     <div>
-      <div ng-repeat="word in state1Words">
+      <div ng-repeat="word in init.state1Words">
         [[ word.word_text ]] / [[ word.meaning ]]
       </div>
     </div>
@@ -15,7 +15,7 @@
     </a>
   </div>
 
-  <div ng-hide="words">
+  <div ng-hide="init.words.length">
     <p>
       You may reload this page.
       Please back to the package selection page.

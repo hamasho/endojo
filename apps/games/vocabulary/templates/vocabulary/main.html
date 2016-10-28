@@ -1,43 +1,63 @@
 <div class="row" ng-controller="VocabularyGameController as game">
 
-  <div ng-show="game.words">
+  <div ng-show="game.words.length">
     <h1 style="margin-bottom: 30px;" class="text-center">
       Vocabulary Game
     </h1>
 
-    <div class="vocabulary-word-display">
-      <div class="row">
-        <div class="col-sm-6">
-          <div ng-repeat="word in game.wordDisplay | limitTo:3 track by $index"
-               class="alert vocabulary-word-item"
-               ng-class="game.matchClass(word, game.input)">
-            [[ word.meaning ]]
-            <div ng-show="word" class="pull-right">
-              <span class="glyphicon glyphicon-remove"></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-6">
-          <div ng-repeat="word in game.wordDisplay | limitTo:3:3 track by $index"
-               class="alert vocabulary-word-item"
-               ng-class="game.matchClass(word, game.input)">
-            [[ word.meaning ]]
-            <div ng-show="word" class="pull-right">
-              <span class="glyphicon glyphicon-remove"></span>
-            </div>
-          </div>
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        <div class="alert vocabulary-word-display"
+             ng-class="game.matchClass(game.input)">
+          <span ng-show="game.isRightAnswer">
+            <span class="glyphicon glyphicon-ok"></span>
+          </span>
+          [[ game.displayedText ]]
+          <span class="pull-right glyphicon glyphicon-remove"
+                ng-click="game.giveup()">
+          </span>
         </div>
       </div>
     </div>
     <div class="col-md-offset-3 col-md-6">
       <div class="row">
-        <input type="text" class="form-control" ng-model="game.input" ng-change="game.update(game.input)">
+        <input ng-change="game.update(game.input)"
+               class="form-control vocabulary-word-input"
+               ng-disable="game.isRightAnswer"
+               type="text" ng-model="game.input">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-offset-1 col-md-5">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            Answered words
+          </div>
+          <div class="panel-body">
+            <div ng-repeat="word in answeredWords">
+              [[ word.word_text ]] / [[ word.meaning ]]
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            Failed words
+          </div>
+          <div class="panel-body">
+            <div ng-repeat="word in failedWords">
+              [[ word.word_text ]] / [[ word.meaning ]]
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
   </div>
 
-  <div ng-hide="game.words">
+  <div ng-hide="game.words.length">
     <p>
     You may reload this page.
     Please back to the package selection page.

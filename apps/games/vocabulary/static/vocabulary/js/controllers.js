@@ -1,6 +1,41 @@
 /**
  * ==================================================================
- * Main controller for Vocabulary game.
+ * Package select controller.
+ * ==================================================================
+ */
+function PackageSelectController($scope, $http, VocabularyGameFactory) {
+  var that = this;
+  this.packages = [];
+  $http.get('/game/vocabulary/packages/')
+    .then(function(response) {
+      that.packages = response.data.result;
+    });
+  this.selectedPackage = VocabularyGameFactory.setSelectedPackage;
+}
+
+/**
+ * ==================================================================
+ * Initialize controller class for Vocabulary Game.
+ * ==================================================================
+ */
+function InitController($http, VocabularyGameFactory) {
+  this.words = [];
+  this.state1Words = [];
+  $http.get('/game/vocabulary/words/learning/')
+    .then(function(response) {
+      this.words = response.data.result;
+      for (var i = 0; i < this.words.length; i++) {
+        if (this.words[i].state === 1) {
+          this.state1Words.push(this.words[i]);
+        }
+      }
+      VocabularyGameFactory.setWords(this.words);
+    });
+}
+
+/**
+ * ==================================================================
+ * Main controller class for Vocabulary Game.
  * ==================================================================
  *
  * First, init() method is called.
@@ -14,60 +49,57 @@
  *   meaning: <translation string in user's language>
  * }
  */
-function VocabularyGameController($timeout, VocabularyGameFactory) {
-  this.gameService = VocabularyGameFactory;
+function VocabularyGameController($timeout, $location, VocabularyGameFactory) {
   this.$timeout = $timeout;
+  this.$location = $location;
+  this.gameService = VocabularyGameFactory;
   this.init();
 }
 
 VocabularyGameController.prototype.init = function() {
   this.words = this.gameService.getWords();
-  var problems = this.words.concat(this.words).concat(this.words);
-  this.wordQueue = this.gameService.shuffle(problems);
-  this.wordDisplay = Array(6).fill(null);
-  this.setWord();
+  this.wordQueue = this.gameService.setWordQueue(this.words);
+  this.allCount = this.wordQueue.length;
+  this.answeredWords = [];
+  this.failedWords = [];
+  this.next();
+};
+
+VocabularyGameController.prototype.next = function() {
+  this.isRightAnswer = false;
+  this.nextWord();
+  if ( ! this.wordQueue.length) this.finish();
 };
 
 VocabularyGameController.prototype.update = function(input) {
-  // Check if input text matches with one of displayed word,
-  var idx = this.wordDisplay.map(function(word) {
-    return word ? word.word_text : null;
-  }).indexOf(input);
-  if (idx >= 0) {
+  if (this.currentWord.word_text === input) {
     var that = this;
     this.input = '';
-    this.$timeout(function() {
-      that.wordDisplay[idx] = null;
-      if ( ! that.wordQueue.length) that.finish();
-      that.setWord();
-    }, 500);
+    this.isRightAnswer = true;
+    this.$timeout(function() { that.next(); }, 1000);
   }
 };
 
 VocabularyGameController.prototype.finish = function() {
-  VocabularyGameFactory.setFailedWord(this.score);
+  VocabularyGameFactory.setAnsweredWords(this.answeredWords);
+  VocabularyGameFactory.setFailedWords(this.failedWords);
+  console.log(this.answeredWords);
+  console.log(this.failedWords);
   this.$location.path('/result');
 };
 
 /**
- * Pick up a word from this.wordQueue and set to this.wordDisplay.
- * There must be no duplicated words in display.
- * If the first word in this.wordQueue already exists in this.wordDisplay,
- * the next word is tried to put in display, and so forth.
- * If all words in word queue are already exist in display, do nothing.
- * The picked up word is removed from this.wordQueue.
+ * Pick up a word from this.wordQueue, set to this.currentWord
+ * and remove the picked word from word queue.
  */
-VocabularyGameController.prototype.setWord = function() {
+VocabularyGameController.prototype.nextWord = function() {
   if ( ! this.wordQueue.length) return;
-  for (var i = 0; i < this.wordQueue.length; i++) {
-    if (this.wordDisplay.indexOf(this.wordQueue[i]) >= 0) continue;
-    var idx = this.wordDisplay.indexOf(null);
-    if (this.wordDisplay.indexOf(null) >= 0) {
-      this.wordDisplay[idx] = this.wordQueue[i];
-      this.wordQueue.splice(i, 1);
-      i--;
-    }
+  var previousWord = this.currentWord;
+  this.currentWord = this.wordQueue.shift();
+  if (this.wordQueue.indexOf(previousWord) >= 0) {
+    this.answeredWords.push(previousWord);
   }
+  this.displayedText = this.currentWord.meaning;
 };
 
 /**
@@ -75,11 +107,20 @@ VocabularyGameController.prototype.setWord = function() {
  * If the word start with the input string, return 'alert-success'.
  * Otherwise, 'alert-info'.
  */
-VocabularyGameController.prototype.matchClass = function(word, input) {
-  if ( ! word || ! input)
-    return 'alert-info vocabulary-word-match';
-  else if (word.word_text.startsWith(input))
-    return 'alert-success vocabulary-word-match';
+VocabularyGameController.prototype.matchClass = function(input) {
+  if (this.isRightAnswer)
+    return 'alert-success';
+  else if ( ! input && this.currentWord.word_text.startsWith(input))
+    return 'alert-info';
   else
-    return 'alert-info vocabulary-word-match';
+    return 'alert-danger';
+};
+
+/**
+ * Set current word as failed and remove the word from word queue.
+ */
+VocabularyGameController.prototype.giveup = function() {
+  this.failedWords.push(this.currentWord);
+  this.wordQueue = this.gameService.removeWords(this.currentWord, this.wordQueue);
+  this.next();
 };

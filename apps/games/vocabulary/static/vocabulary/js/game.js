@@ -41,18 +41,7 @@ angular.module('VocabularyGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   };
 }])
 
-/**
- * Select package for unknown words
- */
-.controller('PackageSelectController', function($scope, $http, VocabularyGameFactory) {
-  $scope.packages = null;
-  var url = '/game/vocabulary/packages/';
-  $http.get(url)
-    .then(function(response) {
-      $scope.packages = response.data.result;
-    });
-  $scope.selectPackage = VocabularyGameFactory.selectPackage;
-})
+.controller('PackageSelectController', ['$scope', '$http', 'VocabularyGameFactory', PackageSelectController])
 
 /**
  * Select unknown words
@@ -97,29 +86,12 @@ angular.module('VocabularyGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
   };
 })
 
-/**
- * Download and set problem
- */
-.controller('InitializeController', function($scope, $http, VocabularyGameFactory) {
-  $scope.words = null;
-  $scope.state1Words = [];
-  $http.get('/game/vocabulary/words/learning/')
-    .then(function(response) {
-      $scope.words = response.data.result;
-      for (var i = 0; i < $scope.words.length; i++) {
-        if ($scope.words[i].state == 1) {
-          $scope.state1Words.push($scope.words[i]);
-        }
-      }
-      VocabularyGameFactory.setWords($scope.words);
-    });
-})
+.controller('InitController', ['$http', 'VocabularyGameFactory', InitController])
 
 /**
  * Start game, repeat each problems and store user score
  */
-.controller('VocabularyGameController',
-    ['$timeout', 'VocabularyGameFactory', VocabularyGameController])
+.controller('VocabularyGameController', ['$timeout', '$location', 'VocabularyGameFactory', VocabularyGameController])
 
 .controller('ResultController', function($scope, $http, ListeningGameFactory) {
   $scope.score = ListeningGameFactory.getScore();
