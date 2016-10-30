@@ -1,47 +1,63 @@
-<div class="row" ng-controller="GameController">
+<div class="row" ng-controller="GameController as gc">
 
-  <div ng-show="package">
-    <h1 style="margin-bottom: 30px;" class="text-center">
-      [[ title ]]
+  <div ng-show="gc.package">
+    <h1 class="game-display-title text-center">
+      [[ gc.package.title ]]
     </h1>
 
     <div>
-      <!-- Problem or diff with user input -->
-      <div ng-class="diffUserInputClass"
-           ng-cloak id="diff-user-input-box" class="result-display">
-        <span class="clear-notation" ng-show="cleared">
-          <span class="glyphicon glyphicon-ok"></span>&nbsp;&nbsp;
+      <div ng-class="gc.displayClass" class="result-display alert">
+        <span ng-show="gc.isRightAnswer">
+          <span class="glyphicon glyphicon-ok text-success">
+          </span>&nbsp;&nbsp;
         </span>
-        <span ng-bind-html="diffUserInput" id="diff-user-input-display" class="slide"></span>
+        <span ng-bind-html="gc.displayedHtml"></span>
+        <span ng-hide="gc.isRightAnswer" class="pull-right">
+          <div ng-hide="gc.failed">
+            <button class="btn btn-danger" ng-click="gc.giveUp()">
+              <span class="glyphicon glyphicon-remove">
+              </span>
+              Give Up!
+            </button>
+          </div>
+          <div ng-show="gc.failed">
+            <button class="btn btn-default" ng-click="gc.continue()">
+              </span>
+              Continue
+            </button>
+          </div>
+        </span>
       </div>
       <input class="form-control answer-form"
-             ng-change="updateGameState()"
-             ng-model="form.userInput" type="text" autofocus>
+             ng-change="gc.update()"
+             ng-disable="gc.isRightAnswer"
+             ng-model="gc.input" type="text" autofocus>
     </div>
 
     <!-- External info -->
-    <div class="game-info pull-right row vertical-center">
-      <div class="">
+    <div class="row">
+      <div class="game-info col-md-offset-6 col-md-6">
         <div style="margin-bottom:0;" class="progress">
-          <div class="progress-bar progress-bar-success progress-bar-striped"
-               ng-style="{width:progress+'%'}"
-               aria-valuenow="50" 
+          <div class="progress-bar progress-bar-success"
+               ng-style="{ width: gc.progress + '%' }"
+               aria-valuenow="[[ gc.progress ]]" 
                role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <span class="sr-only">40% Complete (success)</span>
+            <span class="sr-only">[[ gc.progress ]]% Complete</span>
           </div>
         </div>
-      </div>
-      <div class="">
-        <span style="font-size:20px;" class="pull-right">
-          [[ timer ]]
-        </span>
+        <div>
+          <span class="pull-right">
+            [[ gc.timer ]]
+          </span>
+        </div>
       </div>
     </div>
   </div>
 
-  <div ng-hide="package">
+  <div ng-hide="gc.package">
     <p>
-    You may reload this page.
+    A problem occered.
+    You may have reloaded this page.
     Please back to the package selection page.
     </p>
     <div>

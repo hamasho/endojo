@@ -1,4 +1,4 @@
-<div class="row" ng-controller="PackageSelectController as ps">
+<div class="row" ng-controller="PackageSelectController as psc">
 
   <a href="#/start" class="btn btn-info btn-lg" style="margin-right:30px;">
     Start Vocabulary Game
@@ -13,17 +13,21 @@
         <td>Title</td>
         <td>Level</td>
         <td>Published</td>
+        <td>Tried</td>
+        <td>Completed</td>
       </tr>
     </thead>
-    <tbody ng-repeat="package in ps.packages">
+    <tbody ng-repeat="package in psc.packages">
       <tr>
         <td>
-          <a ng-href="#/words" ng-click="ps.selectPackage(package);">
+          <a ng-href="#/words" ng-click="psc.selectPackage(package);">
             [[ package.title ]]
           </a>
         </td>
         <td>[[ package.level ]]</td>
         <td>[[ package.pub_date | date ]]</td>
+        <td>[[ package.n_tried ]]</td>
+        <td>[[ package.n_completed ]]</td>
       </tr>
     </tbody>
   </table>

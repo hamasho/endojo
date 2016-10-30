@@ -1,13 +1,14 @@
 $bgcolor1: #FAF8EF;
-$bgcolor2: #E0E0D0;
+$bgcolor2: #D3D0BE;
 $color1: #BBAAA0;
 $color2: #BBADA0;
 $color3: #8F7A66;
 $color4: #776E65;
 $hl-color: #ada69f;
 
-$color-blue: #261758;
-$color-green: #3c763d;
+$blue: #31708f;
+$green: #3c763d;
+$red: #a94442;
 
 $success-bg: #DFF0D8;
 $info-bg: #D9EDF7;
@@ -33,7 +34,7 @@ body {
   background-color: $bgcolor1;
 }
 a {
-  color: $color-blue;
+  color: $blue;
 }
 .logo-image {
   margin-top: 60px;
@@ -48,19 +49,16 @@ a {
   font-size: 40px;
   margin-bottom: 80px;
 }
-
 .navbar.navbar-default {
   border-radius: 0px;
 }
 
-$primary1: #1565c0;
-$success1: #43a047;
-$info1: #81d4fa;
-$warning1: #ffca28;
-$danger1: #d32f2f;
-
 .btn {
   border-radius: 0;
+}
+.btn-default {
+  background-color: $color1;
+  color: $bgcolor1;
 }
 .panel {
   border-radius: 0;
@@ -71,6 +69,7 @@ $danger1: #d32f2f;
   border-bottom: 3px solid $color4;
   border-radius: 0;
   background-color: $bgcolor1;
+  box-shadow: none;
 }
 
 /* Side bar */
@@ -88,20 +87,11 @@ $danger1: #d32f2f;
   border-bottom: 3px solid $color4;
 }
 
-// Game
-
-.answer-form {
-  font-size: 18px;
-  height: 40px;
-}
-.answer-correct-part {
-}
-.answer-incorrect-part {
-  background-color: $danger-bg;
-  text-decoration: line-through;
-}
-.answer-blank-part {
-}
+/**
+ * ==================================================================
+ *  Animation
+ * ==================================================================
+ */
 .view {
   position: absolute;
   width: 100%;
@@ -119,7 +109,16 @@ $danger1: #d32f2f;
 .slide.ng-leave-active {
   left: -100%;
 }
-.game-cleared {
+
+/**
+ * ==================================================================
+ *  Game
+ * ==================================================================
+ */
+// Common
+.game-display-title {
+  margin-top: 100px;
+  margin-bottom: 80px;
 }
 .result-display {
   font-size: 24px;
@@ -127,12 +126,38 @@ $danger1: #d32f2f;
   margin-bottom: 50px;
   padding: 30px;
 }
-.game-info {
-  width: 50%;
-  margin-top: 80px;
-  border: $color1 solid 2px;
-  padding: 10px;
+.answer-incorrect-part {
+  background-color: $danger-bg;
+  text-decoration: line-through;
 }
+.answer-form {
+  font-size: 20px;
+  height: 46px;
+  margin-bottom: 80px;
+}
+.game-info {
+  padding: 10px;
+  background-color: $bgcolor2;
+}
+.alert-display {
+  border: 2px solid $blue;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px $blue;
+}
+.alert-display-success {
+  border-radius: 4px;
+  border: 2px solid $green;
+  box-shadow: 0px 0px 10px $green;
+}
+.alert-display-danger {
+  border-radius: 4px;
+  border: 2px solid $red;
+  box-shadow: 0px 0px 10px $red;
+}
+
+// Transcription game
+
+// Listening game
 
 // Vocabulary game
 .word-box {
@@ -144,26 +169,6 @@ $danger1: #d32f2f;
   padding: 10px;
   margin-bottom: 30px;
 }
-.word-item-enter, .word-item-leave {
-  opacity: 0;
-  position: relative;
-  transition: 300ms;
-  top: -50px;
-}
-.word-item-enter.word-item-enter-active {
-  opacity: 1;
-  top: 0;
-}
-.word-item-leave.word-item-leave-active {
-  opacity: 0;
-  top: -50px;
-}
-.vocabulary-word-display {
-  margin-bottom: 50px;
-}
-.vocabulary-word-input {
-  margin-bottom: 50px;
-}
 .vocabulary-word-display .vocabulary-word-item {
 }
 .vocabulary-start-with {
@@ -171,7 +176,12 @@ $danger1: #d32f2f;
 .vocabulary-match {
 }
 
-// Navbar config
+/**
+ * ==================================================================
+ *  Bootstrap
+ * ==================================================================
+ */
+// Navbar
 
 $bgDefault      : $color4;
 $bgHighlight    : $hl-color;

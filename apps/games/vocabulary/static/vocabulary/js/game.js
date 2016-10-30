@@ -1,7 +1,7 @@
 /**
  * Vocabulary game module
  */
-angular.module('VocabularyGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
+angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -10,95 +10,38 @@ angular.module('VocabularyGameApp', ['ngRoute', 'ngAnimate', 'ngSanitize'])
 /**
  * Router
  */
-.config(function($routeProvider) {
-  $routeProvider.when('/words', {
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+
+  $urlRouterProvider.otherwise('select');
+
+  $stateProvider.state('words', {
+    url: '/words',
     templateUrl: 'packages/words/select/',
   });
-  $routeProvider.when('/start', {
+  $stateProvider.state('start', {
+    url: '/start',
     templateUrl: 'start/',
   });
-  $routeProvider.when('/main', {
+  $stateProvider.state('main', {
+    url: '/main',
     templateUrl: 'main/',
   });
-  $routeProvider.when('/result', {
+  $stateProvider.state('result', {
+    url: '/result',
     templateUrl: 'result/',
   });
-  $routeProvider.otherwise({
+  $stateProvider.state('select', {
+    url: '/select',
     templateUrl: 'packages/select/',
   });
-})
+}])
 
 .factory('VocabularyGameFactory', VocabularyGameFactory)
 
-.directive('autofocus', ['$timeout', function($timeout) {
-  return {
-    restrict: 'A',
-    link : function($scope, $element) {
-      $timeout(function() {
-        $element[0].focus();
-      });
-    }
-  };
-}])
+.directive('autofocus', ['$timeout', autofocusDirective])
 
 .controller('PackageSelectController', ['$scope', '$http', 'VocabularyGameFactory', PackageSelectController])
-
-/**
- * Select unknown words
- */
-.controller('WordSelectController', function($scope, $http, $window, VocabularyGameFactory) {
-  var package = VocabularyGameFactory.getSelectedPackage();
-  $scope.knownWords = [];
-  $scope.unknownWords = [];
-  $http.get('/game/vocabulary/packages/' + package.id + '/words/')
-    .then(function(response) {
-      $scope.unselectedWords = response.data.result;
-    });
-
-  $scope.setWordAsKnown = function() {
-    var word = $scope.unselectedWords.shift();
-    $scope.knownWords.unshift(word);
-  };
-  $scope.setWordAsUnknown = function() {
-    var word = $scope.unselectedWords.shift();
-    $scope.unknownWords.unshift(word);
-  };
-
-  angular.element($window).on('keydown', function(e) {
-    if (e.keyCode === 37) {        // left arrow
-      $scope.$apply(function() {
-        $scope.setWordAsKnown();
-      });
-    } else if (e.keyCode === 39) { // right arrow
-      $scope.$apply(function() {
-        $scope.setWordAsUnknown();
-      });
-    } else if (e.keyCode === 40) { // down arrow
-    }
-  });
-
-  $scope.storeUnknownWords = function() {
-    $http.post('/game/vocabulary/words/unknown/', {
-      words: $scope.unknownWords,
-    })
-    .then(function(response) {
-    });
-  };
-})
-
-.controller('InitController', ['$http', 'VocabularyGameFactory', InitController])
-
-/**
- * Start game, repeat each problems and store user score
- */
+.controller('WordSelectController', ['$scope', '$http', '$window', 'VocabularyGameFactory', WordSelectController])
+.controller('InitController', ['$http', '$timeout', 'VocabularyGameFactory', InitController])
 .controller('VocabularyGameController', ['$timeout', '$location', 'VocabularyGameFactory', VocabularyGameController])
-
-.controller('ResultController', function($scope, $http, ListeningGameFactory) {
-  $scope.score = ListeningGameFactory.getScore();
-  if ($scope.score === null) return;
-  $http.post('/game/listening/result/store/', {
-    score: $scope.score,
-  })
-  .then(function(response) {
-  });
-});
+.controller('ResultStoreController', ['$http', '$timeout', 'VocabularyGameFactory', ResultStoreController]);

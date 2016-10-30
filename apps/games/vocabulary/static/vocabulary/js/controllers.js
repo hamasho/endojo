@@ -3,34 +3,110 @@
  * Package select controller.
  * ==================================================================
  */
-function PackageSelectController($scope, $http, VocabularyGameFactory) {
+function PackageSelectController($scope, $http, VocabularyGame) {
   var that = this;
   this.packages = [];
   $http.get('/game/vocabulary/packages/')
     .then(function(response) {
       that.packages = response.data.result;
     });
-  this.selectedPackage = VocabularyGameFactory.setSelectedPackage;
+  this.selectPackage = VocabularyGame.setSelectedPackage;
 }
 
 /**
  * ==================================================================
- * Initialize controller class for Vocabulary Game.
+ * Word select controller.
  * ==================================================================
  */
-function InitController($http, VocabularyGameFactory) {
+function WordSelectController($scope, $http, $window, VocabularyGame) {
+  this.package = VocabularyGame.getSelectedPackage();
+  if ( ! this.package) return;
+  this.knownWords = [];
+  this.unknownWords = [];
+  this.event = [];
+  this.unselectedWords = [];
+  var that = this;
+
+  $http.get('/game/vocabulary/packages/' + this.package.id + '/words/')
+    .then(function(response) {
+      that.unselectedWords = response.data.result;
+    });
+  this.setWordAsKnown = function() {
+    var word = that.unselectedWords.shift();
+    that.knownWords.unshift(word);
+    that.event.unshift('known');
+  };
+  this.setWordAsUnknown = function() {
+    var word = that.unselectedWords.shift();
+    that.unknownWords.unshift(word);
+    that.event.unshift('unknown');
+  };
+  this.undoSelection = function() {
+    if ( ! that.event.length) return;
+    if (that.event.shift() === 'known') {
+      var knownWord = that.knownWords.shift();
+      that.unselectedWords.unshift(knownWord);
+    } else {
+      var unknownWord = that.unknownWords.shift();
+      that.unselectedWords.unshift(unknownWord);
+    }
+  };
+  this.storeUnknownWords = function() {
+    $http.post('/game/vocabulary/words/unknown/', {
+      words: that.unknownWords,
+    }).then(function(response) { });
+  };
+
+  /**
+   * Set key down event
+   */
+  angular.element($window).on('keydown', function(e) {
+    if (e.keyCode === 37)
+      $scope.$apply(function() {
+        that.setWordAsKnown();
+        e.preventDefault();
+      });
+    else if (e.keyCode === 39)
+      $scope.$apply(function() {
+        that.setWordAsUnknown();
+        e.preventDefault();
+      });
+    else if (e.keyCode === 40)
+      $scope.$apply(function() {
+        that.undoSelection();
+        e.preventDefault();
+      });
+  });
+}
+
+/**
+ * ==================================================================
+ * Initialize controller.
+ * ==================================================================
+ */
+function InitController($http, $timeout, VocabularyGameFactory) {
   this.words = [];
   this.state1Words = [];
+  var that = this;
   $http.get('/game/vocabulary/words/learning/')
     .then(function(response) {
-      this.words = response.data.result;
-      for (var i = 0; i < this.words.length; i++) {
-        if (this.words[i].state === 1) {
-          this.state1Words.push(this.words[i]);
+      that.words = response.data.result.slice(0);
+      for (var i = 0; i < that.words.length; i++) {
+        if (that.words[i].state === 1) {
+          that.state1Words.push(that.words[i]);
         }
       }
-      VocabularyGameFactory.setWords(this.words);
+      VocabularyGameFactory.setWords(that.words);
+      console.log(that.state1Words);
     });
+
+  this.update = function(idx) {
+    var word = this.state1Words[idx];
+    if (word.input === word.word_text) {
+      word.correct = true;
+      $timeout(function() { word.input = ''; }, 500);
+    }
+  };
 }
 
 /**
@@ -53,74 +129,111 @@ function VocabularyGameController($timeout, $location, VocabularyGameFactory) {
   this.$timeout = $timeout;
   this.$location = $location;
   this.gameService = VocabularyGameFactory;
-  this.init();
-}
 
-VocabularyGameController.prototype.init = function() {
   this.words = this.gameService.getWords();
+  if ( ! this.words) {
+    this.$location.path('/select');
+    return;
+  }
   this.wordQueue = this.gameService.setWordQueue(this.words);
-  this.allCount = this.wordQueue.length;
+  this.progress = 0;
+  this.nAnswered = 0;
+  this.nAllWords = this.wordQueue.length;
+  this.failed = false;
   this.answeredWords = [];
   this.failedWords = [];
   this.next();
-};
-
-VocabularyGameController.prototype.next = function() {
-  this.isRightAnswer = false;
-  this.nextWord();
-  if ( ! this.wordQueue.length) this.finish();
-};
-
-VocabularyGameController.prototype.update = function(input) {
-  if (this.currentWord.word_text === input) {
-    var that = this;
-    this.input = '';
-    this.isRightAnswer = true;
-    this.$timeout(function() { that.next(); }, 1000);
-  }
-};
-
-VocabularyGameController.prototype.finish = function() {
-  VocabularyGameFactory.setAnsweredWords(this.answeredWords);
-  VocabularyGameFactory.setFailedWords(this.failedWords);
-  console.log(this.answeredWords);
-  console.log(this.failedWords);
-  this.$location.path('/result');
-};
+}
 
 /**
  * Pick up a word from this.wordQueue, set to this.currentWord
  * and remove the picked word from word queue.
  */
-VocabularyGameController.prototype.nextWord = function() {
-  if ( ! this.wordQueue.length) return;
-  var previousWord = this.currentWord;
-  this.currentWord = this.wordQueue.shift();
-  if (this.wordQueue.indexOf(previousWord) >= 0) {
-    this.answeredWords.push(previousWord);
+VocabularyGameController.prototype.next = function() {
+  if ( ! this.wordQueue.length) {
+    this.finish();
+    return;
   }
-  this.displayedText = this.currentWord.meaning;
+  var previousWord = this.currentWord;
+  this.currentWord = this.wordQueue[0];
+  this.input = '';
+  this.isRightAnswer = false;
+  this.displayedHtml = this.currentWord.meaning;
+  this.displayClass = 'alert-display';
 };
 
-/**
- * Compare a word with user input.
- * If the word start with the input string, return 'alert-success'.
- * Otherwise, 'alert-info'.
- */
-VocabularyGameController.prototype.matchClass = function(input) {
-  if (this.isRightAnswer)
-    return 'alert-success';
-  else if ( ! input && this.currentWord.word_text.startsWith(input))
-    return 'alert-info';
-  else
-    return 'alert-danger';
+VocabularyGameController.prototype.update = function() {
+  var word_text = this.currentWord.word_text;
+  var input = this.gameService.trimSpace(this.input);
+  if (input === '') {
+    this.displayClass = 'alert-display';
+  } else if (input === word_text) {
+    this.giveRightAnswer();
+  } else {
+    var result = this.gameService.diff(word_text, input);
+    this.displayClass = result[0] ? 'alert-display' : 'alert-display-danger';
+  }
 };
 
-/**
- * Set current word as failed and remove the word from word queue.
- */
-VocabularyGameController.prototype.giveup = function() {
+VocabularyGameController.prototype.giveUp = function() {
+  this.displayedHtml = this.currentWord.word_text + '&nbsp;/&nbsp;' +
+    this.currentWord.meaning;
+  this.displayClass = 'alert-display-danger';
   this.failedWords.push(this.currentWord);
-  this.wordQueue = this.gameService.removeWords(this.currentWord, this.wordQueue);
+  this.failed = true;
+  this.nAnswered++;
+  this.progress = Math.round(this.nAnswered / this.nAllWords * 100);
+  this.wordQueue.shift();
+};
+
+VocabularyGameController.prototype.continue = function() {
+  this.failed = false;
   this.next();
 };
+
+VocabularyGameController.prototype.giveRightAnswer = function() {
+  this.displayedHtml = this.currentWord.word_text + '&nbsp;/&nbsp;' +
+    this.currentWord.meaning;
+  this.displayClass = 'alert-display-success';
+  this.isRightAnswer = true;
+  this.nAnswered++;
+  this.progress = Math.round(this.nAnswered / this.nAllWords * 100);
+  if (this.wordQueue.length)
+    this.wordQueue.shift();
+  if (this.gameService.noRemainingWord(this.wordQueue, this.currentWord)) {
+    this.answeredWords.push(this.currentWord);
+  }
+  var that = this;
+  this.$timeout(function() { that.next(); }, 1000);
+};
+
+VocabularyGameController.prototype.finish = function() {
+  this.gameService.setAnsweredWords(this.answeredWords);
+  this.gameService.setFailedWords(this.failedWords);
+  this.$location.path('/result');
+};
+
+/**
+ * ==================================================================
+ * Result store controller.
+ * ==================================================================
+ */
+function ResultStoreController($http, $timeout, VocabularyGame) {
+  this.words = VocabularyGame.getWords();
+  this.answeredWords = VocabularyGame.getAnsweredWords();
+  this.failedWords = VocabularyGame.getFailedWords();
+  var result = this.answeredWords.concat(this.failedWords);
+  if (this.answeredWords === null) return;
+  $http.post('/game/vocabulary/result/store/', {
+    result: result,
+  })
+  .then(function(response) { });
+
+  this.update = function(idx) {
+    var word = this.failed[idx];
+    if (word.input === word.word_text) {
+      word.correct = true;
+      $timeout(function() { word.input = ''; }, 500);
+    }
+  };
+}

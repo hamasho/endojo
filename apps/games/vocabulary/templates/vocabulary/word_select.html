@@ -1,37 +1,38 @@
-<div class="row" ng-controller="WordSelectController">
+<div class="row" ng-controller="WordSelectController as wsc">
 
   <h1 style="margin-bottom:40px;">Select your unknown words</h1>
 
-  <div ng-keypress="keypressHandler($event)">
+  <div ng-keypress="wsc.keypressHandler($event)">
     {% load static %}
     <div class="col-sm-4">
-      <a ng-click="setWordAsKnown()">
+      <a ng-click="wsc.setWordAsKnown()">
         <img class="img-responsive bottom-align"
              style="margin-bottom: 30px;"
              src="{% static 'img/knowing.png' %}" alt="KNOWING">
       </a>
-      <div ng-repeat="word in knownWords" class="alert alert-info word-item">
+      <div ng-repeat="word in wsc.knownWords" class="alert alert-info word-item">
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
     </div>
     <div class="col-sm-4">
       <div style="margin-bottom: 40px;"></div>
-      <div ng-repeat="word in unselectedWords" class="word-box" ng-animate="'word-item'">
+      <div ng-repeat="word in wsc.unselectedWords" class="word-box" ng-animate="'word-item'">
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
-      <div ng-hide="unselectedWords.length">
-        <a class="btn btn-info" href="#/" ng-click="storeUnknownWords()">
+      <div ng-hide="wsc.unselectedWords.length">
+        <a ng-click="wsc.storeUnknownWords()"
+           class="btn btn-info" href="#/">
           Store unknown words
         </a>
       </div>
     </div>
     <div class="col-sm-4">
-      <a ng-click="setWordAsUnknown()">
+      <a ng-click="wsc.setWordAsUnknown()">
         <img class="img-responsive bottom-align"
              style="margin-bottom: 30px;"
              src="{% static 'img/unknowing.png' %}" alt="KNOWING">
       </a>
-      <div ng-repeat="word in unknownWords" class="alert alert-danger word-enter">
+      <div ng-repeat="word in wsc.unknownWords" class="alert alert-danger word-enter">
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
     </div>

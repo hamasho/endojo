@@ -1,16 +1,16 @@
-<div class="row" ng-controller="InitializeController">
-  <div ng-show="package" class="center-block">
+<div class="row" ng-controller="InitController as ic">
+  <div ng-show="ic.package" class="center-block">
     <h1 style="margin-bottom: 70px;" class="text-center">
-      [[ title ]]
+      [[ ic.package.title ]]
     </h1>
     <a ng-href="#/main"
        style="width:200px;"
-       class="btn btn-info btn-lg center-block slide">
+       class="btn btn-info btn-lg center-block">
       Start!
     </a>
   </div>
 
-  <div ng-hide="package">
+  <div ng-hide="ic.package">
     <p>
       You may reload this page.
       Please back to the package selection page.

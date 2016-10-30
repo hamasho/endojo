@@ -4,11 +4,18 @@
 
 <div class="col-md-offset-1 col-md-10" ng-app="VocabularyGameApp">
 
-  <div class="view slide" ng-view></div>
+  <div class="view slide" ui-view></div>
 
 </div>
 
 {% load static %}
+
+<script src="{% static 'components/angular/angular.js' %}"></script>
+<script src="{% static 'components/angular-sanitize/angular-sanitize.js' %}"></script>
+<script src="{% static 'components/angular-animate/angular-animate.js' %}"></script>
+<script src="{% static 'components/angular-ui-router/release/angular-ui-router.js' %}"></script>
+<script src="{% static 'components/jsdiff/diff.min.js' %}"></script>
+<script src="{% static 'js/directives.js' %}"></script>
 <script src="{% static 'vocabulary/js/VocabularyGameFactory.js' %}"></script>
 <script src="{% static 'vocabulary/js/controllers.js' %}"></script>
 <script src="{% static 'vocabulary/js/game.js' %}"></script>

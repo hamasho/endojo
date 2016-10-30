@@ -19,6 +19,7 @@
     "bootstrap": "^3.3.7"
   },
   "devDependencies": {
-    "jsdiff": "^2.2.2"
+    "jsdiff": "^2.2.2",
+    "angular-ui-router": "^0.3.1"
   }
 }

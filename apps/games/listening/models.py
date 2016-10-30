@@ -32,18 +32,29 @@ class Problem(models.Model):
         super(Problem, self).save(*args, **kwargs)
 
 
+class PackageState(models.Model):
+    """
+    A state which shows an user has completed the package or not.
+    If `complete` is `True`, he/she has completed.
+    If `false`, he/she tried but gave up.
+    """
+    user = models.ForeignKey(User, related_name='listening_packagestate_user')
+    package = models.ForeignKey(Package)
+    complete = models.BooleanField(default=True)
+
+
 class ProblemScore(models.Model):
     user = models.ForeignKey(User, related_name='listening_problemscore_user')
     problem = models.ForeignKey(Problem)
-    response_time_ms = models.IntegerField()
-    failed = models.BooleanField(default=False)
+    response_time_ms = models.IntegerField(null=True)
+    complete = models.BooleanField(default=True)
     update_date = models.DateTimeField(default=timezone.now)
 
     def save(self, *args, **kwargs):
         """
         When saving scores, also have to update History model.
         """
-        if not self.failed:
+        if self.complete:
             today, created = History.objects.get_or_create(
                 user=self.user,
                 level=self.problem.level,

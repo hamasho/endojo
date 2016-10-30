@@ -1,30 +1,50 @@
-<div class="row" ng-controller="VocabularyGameController as game">
+<div class="row" ng-controller="VocabularyGameController as gc">
 
-  <div ng-show="game.words.length">
+  <div ng-show="gc.words.length">
     <h1 style="margin-bottom: 30px;" class="text-center">
       Vocabulary Game
     </h1>
 
     <div class="row">
-      <div class="col-md-offset-3 col-md-6">
-        <div class="alert vocabulary-word-display"
-             ng-class="game.matchClass(game.input)">
-          <span ng-show="game.isRightAnswer">
-            <span class="glyphicon glyphicon-ok"></span>
-          </span>
-          [[ game.displayedText ]]
-          <span class="pull-right glyphicon glyphicon-remove"
-                ng-click="game.giveup()">
-          </span>
-        </div>
+      <div class="alert result-display"
+           ng-class="gc.displayClass">
+        <span ng-show="gc.isRightAnswer">
+          <span class="glyphicon glyphicon-ok text-success">
+          </span>&nbsp;&nbsp;
+        </span>
+        <span ng-bind-html="gc.displayedHtml"></span>
+        <span ng-hide="gc.isRightAnswer" class="pull-right">
+          <div ng-hide="gc.failed">
+            <button class="btn btn-danger" ng-click="gc.giveUp()">
+              <span class="glyphicon glyphicon-remove">
+              </span>
+              Give Up!
+            </button>
+          </div>
+          <div ng-show="gc.failed">
+            <button class="btn btn-default" ng-click="gc.continue()">
+              </span>
+              Continue
+            </button>
+          </div>
+        </span>
       </div>
+      <input ng-change="gc.update()"
+             class="form-control answer-form"
+             ng-disable="gc.isRightAnswer"
+             type="text" ng-model="gc.input">
     </div>
-    <div class="col-md-offset-3 col-md-6">
-      <div class="row">
-        <input ng-change="game.update(game.input)"
-               class="form-control vocabulary-word-input"
-               ng-disable="game.isRightAnswer"
-               type="text" ng-model="game.input">
+    <div class="row">
+      <div style="margin-bottom: 20px"
+           class="game-info col-md-offset-6 col-md-6">
+        <div style="margin-bottom:0;" class="progress">
+          <div class="progress-bar progress-bar-success"
+               ng-style="{ width: gc.progress + '%' }"
+               aria-valuenow="[[ gc.progress ]]" 
+               role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <span class="sr-only">[[ gc.progress ]]% Complete</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -35,9 +55,11 @@
             Answered words
           </div>
           <div class="panel-body">
-            <div ng-repeat="word in answeredWords">
-              [[ word.word_text ]] / [[ word.meaning ]]
-            </div>
+            <ul>
+              <li ng-repeat="word in gc.answeredWords">
+                [[ word.word_text ]] / [[ word.meaning ]]
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -47,9 +69,11 @@
             Failed words
           </div>
           <div class="panel-body">
-            <div ng-repeat="word in failedWords">
-              [[ word.word_text ]] / [[ word.meaning ]]
-            </div>
+            <ul>
+              <li ng-repeat="word in gc.failedWords">
+                [[ word.word_text ]] / [[ word.meaning ]]
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -57,7 +81,7 @@
 
   </div>
 
-  <div ng-hide="game.words.length">
+  <div ng-hide="gc.words.length">
     <p>
     You may reload this page.
     Please back to the package selection page.

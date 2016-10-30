@@ -15,7 +15,7 @@ body {
   background-color: #FAF8EF; }
 
 a {
-  color: #261758; }
+  color: #31708f; }
 
 .logo-image {
   margin-top: 60px;
@@ -36,6 +36,10 @@ a {
 .btn {
   border-radius: 0; }
 
+.btn-default {
+  background-color: #BBAAA0;
+  color: #FAF8EF; }
+
 .panel {
   border-radius: 0;
   background-color: #FAF8EF; }
@@ -44,7 +48,8 @@ a {
   border: 3px solid #eee;
   border-bottom: 3px solid #776E65;
   border-radius: 0;
-  background-color: #FAF8EF; }
+  background-color: #FAF8EF;
+  box-shadow: none; }
 
 /* Side bar */
 .list-group a.list-group-item {
@@ -60,14 +65,11 @@ a {
 .list-group a.list-group-item:last-child {
   border-bottom: 3px solid #776E65; }
 
-.answer-form {
-  font-size: 18px;
-  height: 40px; }
-
-.answer-incorrect-part {
-  background-color: #F2DEDE;
-  text-decoration: line-through; }
-
+/**
+ * ==================================================================
+ *  Animation
+ * ==================================================================
+ */
 .view {
   position: absolute;
   width: 100%;
@@ -85,17 +87,48 @@ a {
 .slide.ng-leave-active {
   left: -100%; }
 
+/**
+ * ==================================================================
+ *  Game
+ * ==================================================================
+ */
+.game-display-title {
+  margin-top: 100px;
+  margin-bottom: 80px; }
+
 .result-display {
   font-size: 24px;
   margin-top: 50px;
   margin-bottom: 50px;
   padding: 30px; }
 
+.answer-incorrect-part {
+  background-color: #F2DEDE;
+  text-decoration: line-through; }
+
+.answer-form {
+  font-size: 20px;
+  height: 46px;
+  margin-bottom: 80px; }
+
 .game-info {
-  width: 50%;
-  margin-top: 80px;
-  border: #BBAAA0 solid 2px;
-  padding: 10px; }
+  padding: 10px;
+  background-color: #D3D0BE; }
+
+.alert-display {
+  border: 2px solid #31708f;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px #31708f; }
+
+.alert-display-success {
+  border-radius: 4px;
+  border: 2px solid #3c763d;
+  box-shadow: 0px 0px 10px #3c763d; }
+
+.alert-display-danger {
+  border-radius: 4px;
+  border: 2px solid #a94442;
+  box-shadow: 0px 0px 10px #a94442; }
 
 .word-box {
   background-color: #776E65;
@@ -106,26 +139,11 @@ a {
   padding: 10px;
   margin-bottom: 30px; }
 
-.word-item-enter, .word-item-leave {
-  opacity: 0;
-  position: relative;
-  transition: 300ms;
-  top: -50px; }
-
-.word-item-enter.word-item-enter-active {
-  opacity: 1;
-  top: 0; }
-
-.word-item-leave.word-item-leave-active {
-  opacity: 0;
-  top: -50px; }
-
-.vocabulary-word-display {
-  margin-bottom: 50px; }
-
-.vocabulary-word-input {
-  margin-bottom: 50px; }
-
+/**
+ * ==================================================================
+ *  Bootstrap
+ * ==================================================================
+ */
 .navbar-default {
   background-color: #776E65;
   border-color: #ada69f; }

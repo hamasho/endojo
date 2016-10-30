@@ -1,19 +1,50 @@
-<div class="row" ng-controller="ResultController">
+<div class="row" ng-controller="ResultStoreController as rsc">
 
-  <div ng-show="score">
+  <div ng-show="rsc.answeredWords || rsc.failedWords">
     <h1>Result</h1>
-    <table class="table">
-      <tr ng-repeat="item in score">
-        <td>[[ item.problem_text ]]</td>
-        <td>[[ item.responseTimeMs | timeFilter ]]</td>
-      </tr>
-    </table>
+    <div ng-show="rsc.failedWords">
+      <h2>Review failed words</h2>
+      Repeat typing until you remember.
+      <table class="table">
+        <tr ng-repeat="word in ic.state1Words track by $index">
+          <td>[[ word.meaning ]]</td>
+          <td>
+            <input class="form-control answer-form"
+                   style="margin-bottom:0px;"
+                   ng-model="word.input"
+                   ng-change="ic.update($index)"
+                   type="text" placeholder="[[ word.word_text ]]">
+          </td>
+          <td>
+            <span ng-show="word.correct"
+                  class="glyphicon glyphicon-ok text-success">
+            </span>
+            <span ng-hide="word.correct"
+                  class="glyphicon glyphicon-remove text-danger">
+            </span>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div ng-show="rsc.answeredWords">
+      <h2>Right answered words</h2>
+      <table class="table">
+        <tr ng-repeat="word in rsc.answeredWords">
+          <td>[[ word.word_text ]] / [[ word.meaning ]]</td>
+          <td>
+            [[ word.state ]] &nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-arrow-right"></span>
+            &nbsp;&nbsp;&nbsp; [[ word.state + 1 ]]
+          </td>
+        </tr>
+      </table>
+    </div>
     <a href="#/" class="btn btn-primary">
       Back to package selection
     </a>
   </div>
 
-  <div ng-hide="score">
+  <div ng-hide="rsc.answeredWords || rsc.failedWords">
     <p>
     You may reload this page.
     Please back to the package selection page.

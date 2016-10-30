@@ -1,7 +1,7 @@
 /**
  * Factory to serve functionalities for game
  */
-var GameFactory = function($http, $sce) {
+var TranscriptionGameFactory = function($http, $sce) {
 
   var packages = null;
   var selectedPackage = null;
@@ -9,24 +9,12 @@ var GameFactory = function($http, $sce) {
   var gameScore = null;
 
   return {
-    selectPackage: function(package) {
-      selectedPackage = package;
-    },
-    getSelectedPackage: function() {
-      return selectedPackage;
-    },
-    setProblems: function(probs) {
-      problems = probs;
-    },
-    getProblems: function() {
-      return problems;
-    },
-    setScore: function(score) {
-      gameScore = score;
-    },
-    getScore: function() {
-      return gameScore;
-    },
+    setSelectedPackage: function(package) { selectedPackage = package; },
+    getSelectedPackage: function() { return selectedPackage; },
+    setProblems: function(probs) { problems = probs; },
+    getProblems: function() { return problems; },
+    setScore: function(score) { gameScore = score; },
+    getScore: function() { return gameScore; },
 
     /**
      * Calculate diff and return the result as HTML
@@ -54,6 +42,7 @@ var GameFactory = function($http, $sce) {
       }
       return [correct, $sce.trustAsHtml(result)];
     },
+
     /**
      * Trim spaces at beginning and end of sentence.
      * Also compress continuous spaces.

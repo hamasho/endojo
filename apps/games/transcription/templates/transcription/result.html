@@ -1,11 +1,18 @@
-<div class="row" ng-controller="ResultController">
+<div class="row" ng-controller="ResultStoreController as rsc">
 
-  <div ng-show="score">
+  <div ng-show="rsc.score">
     <h1>Result</h1>
     <table class="table">
-      <tr ng-repeat="item in score">
+      <tr ng-repeat="item in rsc.score">
         <td>[[ item.problem_text ]]</td>
-        <td>[[ item.responseTimeMs | timeFilter ]]</td>
+        <td>
+          <span ng-show="item.complete">
+            [[ item.responseTimeMs | timeFilter ]]
+          </span>
+          <span ng-hide="item.complete">
+            <span class="text-danger">Give up...</span>
+          </span>
+        </td>
       </tr>
     </table>
     <a href="#/" class="btn btn-primary">
@@ -13,9 +20,10 @@
     </a>
   </div>
 
-  <div ng-hide="score">
+  <div ng-hide="rsc.score">
     <p>
-    You may reload this page.
+    A problem occered.
+    You may have reloaded this page.
     Please back to the package selection page.
     </p>
     <div>

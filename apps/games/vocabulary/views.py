@@ -59,7 +59,7 @@ class ResultStoreApi(LoginRequiredMixin, BaseListApi):
     def post(self, request):
         result = json.loads(request.body.decode())['result']
         for item in result:
-            vars(item)
+            print(result)
         return JsonResponse({'status': 'ok'})
 
 

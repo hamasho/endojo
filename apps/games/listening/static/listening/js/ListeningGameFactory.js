@@ -9,24 +9,12 @@ var ListeningGameFactory = function($http, $sce) {
   var gameScore = null;
 
   return {
-    selectPackage: function(package) {
-      selectedPackage = package;
-    },
-    getSelectedPackage: function() {
-      return selectedPackage;
-    },
-    setProblems: function(probs) {
-      problems = probs;
-    },
-    getProblems: function() {
-      return problems;
-    },
-    setScore: function(score) {
-      gameScore = score;
-    },
-    getScore: function() {
-      return gameScore;
-    },
+    setSelectedPackage: function(package) { selectedPackage = package; },
+    getSelectedPackage: function() { return selectedPackage; },
+    setProblems: function(probs) { problems = probs; },
+    getProblems: function() { return problems; },
+    setScore: function(score) { gameScore = score; },
+    getScore: function() { return gameScore; },
 
     /**
      * Calculate diff and return the result as HTML
@@ -45,7 +33,7 @@ var ListeningGameFactory = function($http, $sce) {
           } else {
             correct = (i === diffs.length - 1 ? correct : false);
             result += '<span class="answer-blank-part">' +
-              diffs[i].value.replace(/[a-zA-Z0-9'\.\?\!]/g, '_') + '</span>';
+              diffs[i].value.replace(/[a-zA-Z0-9]/g, '_') + '</span>';
           }
         } else if (diffs[i].added) {
           correct = false;
