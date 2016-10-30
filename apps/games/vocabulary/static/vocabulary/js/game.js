@@ -1,3 +1,12 @@
+/* globals angular: false */
+/* globals GameFactory, autofocusDirective: false */
+/* globals PackageSelectController: false */
+/* globals WordSelectController: false */
+/* globals InitController: false */
+/* globals VocabularyGameController: false */
+/* globals ResultStoreController: false */
+'use strict';
+
 /**
  * Vocabulary game module
  */
@@ -36,12 +45,38 @@ angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
   });
 }])
 
-.factory('VocabularyGameFactory', VocabularyGameFactory)
+.factory('GameFactory', GameFactory)
 
 .directive('autofocus', ['$timeout', autofocusDirective])
 
-.controller('PackageSelectController', ['$scope', '$http', 'VocabularyGameFactory', PackageSelectController])
-.controller('WordSelectController', ['$scope', '$http', '$window', 'VocabularyGameFactory', WordSelectController])
-.controller('InitController', ['$http', '$timeout', 'VocabularyGameFactory', InitController])
-.controller('VocabularyGameController', ['$timeout', '$location', 'VocabularyGameFactory', VocabularyGameController])
-.controller('ResultStoreController', ['$http', '$timeout', 'VocabularyGameFactory', ResultStoreController]);
+.controller('PackageSelectController', [
+    '$scope',
+    '$http',
+    'GameFactory',
+    PackageSelectController
+])
+.controller('WordSelectController', [
+    '$scope',
+    '$http',
+    '$document',
+    'GameFactory',
+    WordSelectController
+])
+.controller('InitController', [
+    '$http',
+    '$timeout',
+    'GameFactory',
+    InitController
+])
+.controller('VocabularyGameController', [
+    '$timeout',
+    '$location',
+    'GameFactory',
+    VocabularyGameController
+])
+.controller('ResultStoreController', [
+    '$http',
+    '$timeout',
+    'GameFactory',
+    ResultStoreController
+]);

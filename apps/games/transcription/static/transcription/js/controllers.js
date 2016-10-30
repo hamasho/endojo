@@ -1,11 +1,13 @@
+'use strict';
+
 /**
  * ==================================================================
  * Package select controller
  * ==================================================================
  */
-function PackageSelectController($http, TranscriptionGame) {
+function PackageSelectController($http, GameService) {
   this.packages = [];
-  this.selectPackage = TranscriptionGame.setSelectedPackage;
+  this.selectPackage = GameService.setSelectedPackage;
   var that = this;
   $http.get('/game/transcription/packages/')
     .then(function(response) {
@@ -18,15 +20,15 @@ function PackageSelectController($http, TranscriptionGame) {
  * Init controller
  * ==================================================================
  */
-function InitController($http, TranscriptionGame) {
-  this.package = TranscriptionGame.getSelectedPackage();
+function InitController($http, GameService) {
+  this.package = GameService.getSelectedPackage();
   if (this.package === null) return;
   this.problems = [];
   var that = this;
   $http.get('/game/transcription/packages/' + this.package.id + '/problems')
     .then(function(response) {
       that.problems = response.data.result;
-      TranscriptionGame.setProblems(that.problems);
+      GameService.setProblems(that.problems);
     });
 }
 
@@ -35,16 +37,16 @@ function InitController($http, TranscriptionGame) {
  * Game controller
  * ==================================================================
  */
-function GameController($http, $timeout, $interval, $location, TranscriptionGame) {
+function TranscriptionGameController($http, $timeout, $interval, $location, GameService) {
   this.$http = $http;
   this.$timeout = $timeout;
   this.$interval = $interval;
   this.$location = $location;
-  this.gameService = TranscriptionGame;
+  this.gameService = GameService;
 
   this.package = this.gameService.getSelectedPackage();
   if (this.package === null) return;
-  this.problems = TranscriptionGame.getProblems();
+  this.problems = GameService.getProblems();
   this.currentProblemIndex = 0;
   this.score = [];
   this.progress = 0;
@@ -52,7 +54,7 @@ function GameController($http, $timeout, $interval, $location, TranscriptionGame
   this.next();
 }
 
-GameController.prototype.next = function() {
+TranscriptionGameController.prototype.next = function() {
   if (this.currentProblemIndex >= this.problems.length) {
     this.finish();
     return;
@@ -70,7 +72,7 @@ GameController.prototype.next = function() {
   }, 1000);
 };
 
-GameController.prototype.update = function() {
+TranscriptionGameController.prototype.update = function() {
   var answer_text = this.currentProblem.problem_text;
   var input = this.gameService.trimSpace(this.input);
   if (input === '') {
@@ -85,7 +87,7 @@ GameController.prototype.update = function() {
   }
 };
 
-GameController.prototype.giveUp = function() {
+TranscriptionGameController.prototype.giveUp = function() {
   this.displayClass = 'alert-display-danger';
   this.score.push({
     id: this.currentProblem.id,
@@ -98,12 +100,12 @@ GameController.prototype.giveUp = function() {
   this.failed = true;
 };
 
-GameController.prototype.continue = function() {
+TranscriptionGameController.prototype.continue = function() {
   this.failed = false;
   this.next();
 };
 
-GameController.prototype.giveRightAnswer = function() {
+TranscriptionGameController.prototype.giveRightAnswer = function() {
   this.displayedHtml = this.currentProblem.problem_text;
   this.isRightAnswer = true;
   this.displayClass = 'alert-display-success';
@@ -119,7 +121,7 @@ GameController.prototype.giveRightAnswer = function() {
   this.$timeout(this.next.bind(this), 1000);
 };
 
-GameController.prototype.finish = function() {
+TranscriptionGameController.prototype.finish = function() {
   this.gameService.setScore(this.score);
   this.$location.path('/result');
 };
@@ -129,11 +131,11 @@ GameController.prototype.finish = function() {
  * Result store controller
  * ==================================================================
  */
-function ResultStoreController($http, TranscriptionGame) {
-  this.score = TranscriptionGame.getScore();
+function ResultStoreController($http, GameService) {
+  this.score = GameService.getScore();
   if (this.score === null) return;
   $http.post('/game/transcription/result/store/', {
     score: this.score,
-    package: TranscriptionGame.getSelectedPackage(),
+    package: GameService.getSelectedPackage(),
   }).then(function(response) {});
 }

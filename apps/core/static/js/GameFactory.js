@@ -1,25 +1,34 @@
+/* globals JsDiff: false */
+'use strict';
+
 /**
- * Vocabulary game's factory
+ * Game factory
+ *
+ * This factory is used by all of Vocabulary, Listening and Transcription
+ * games.
  */
-var VocabularyGameFactory = function($http, $sce) {
+var GameFactory = function($http, $sce) {
 
   var selectedPackage = null;
+  var problems = null;
   var words = null;
-  var gameScore = null;
   var answeredWords = null;
   var failedWords = null;
+  var score = null;
 
   return {
-    setSelectedPackage: function(package) { selectedPackage = package; },
+    setSelectedPackage: function(p) { selectedPackage = p; },
     getSelectedPackage: function() { return selectedPackage; },
+    setProblems: function(ps) { problems = ps; },
+    getProblems: function() { return problems; },
     setWords: function(ws) { words = ws; },
     getWords: function() { return words; },
     setAnsweredWords: function(words) { answeredWords = words; },
     getAnsweredWords: function() { return answeredWords; },
     setFailedWords: function(words) { failedWords = words; },
     getFailedWords: function() { return failedWords; },
-    setScore: function(score) { gameScore = score; },
-    getScore: function() { return gameScore; },
+    setScore: function(s) { score = s; },
+    getScore: function() { return score; },
 
     setWordQueue: function(words) {
       //return words.concat(words).concat(words);

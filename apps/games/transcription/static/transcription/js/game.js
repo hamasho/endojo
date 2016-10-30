@@ -1,3 +1,12 @@
+/* globals angular: false */
+/* globals GameFactory, autofocusDirective, timeFilter: false */
+/* globals PackageSelectController: false */
+/* globals WordSelectController: false */
+/* globals InitController: false */
+/* globals TranscriptionGameController: false */
+/* globals ResultStoreController: false */
+'use strict';
+
 /**
  * Transcription game module
  */
@@ -36,9 +45,28 @@ angular.module('TranscriptionGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 
 .filter('timeFilter', [timeFilter])
 
-.factory('TranscriptionGameFactory', TranscriptionGameFactory)
+.factory('GameFactory', GameFactory)
 
-.controller('PackageSelectController', ['$http', 'TranscriptionGameFactory', PackageSelectController])
-.controller('InitController', ['$http', 'TranscriptionGameFactory', InitController])
-.controller('GameController', ['$http', '$timeout', '$interval', '$location', 'TranscriptionGameFactory', GameController])
-.controller('ResultStoreController', ['$http', 'TranscriptionGameFactory', ResultStoreController]);
+.controller('PackageSelectController', [
+    '$http',
+    'GameFactory',
+    PackageSelectController
+])
+.controller('InitController', [
+    '$http',
+    'GameFactory',
+    InitController
+])
+.controller('GameController', [
+    '$http',
+    '$timeout',
+    '$interval',
+    '$location',
+    'GameFactory',
+    TranscriptionGameController
+])
+.controller('ResultStoreController', [
+    '$http',
+    'GameFactory',
+    ResultStoreController
+]);

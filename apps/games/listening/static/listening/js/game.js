@@ -1,3 +1,13 @@
+/* globals angular: false */
+/* globals GameFactory, timeFilter: false */
+/* globals autofocusDirective, audioDirective: false */
+/* globals PackageSelectController: false */
+/* globals WordSelectController: false */
+/* globals InitController: false */
+/* globals ListeningGameController: false */
+/* globals ResultStoreController: false */
+
+'use strict';
 /**
  * Listening game module
  */
@@ -32,14 +42,33 @@ angular.module('ListeningGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
   });
 }])
 
-.factory('ListeningGameFactory', ListeningGameFactory)
+.factory('GameFactory', GameFactory)
 
 .directive('autofocus', ['$timeout', autofocusDirective])
 .directive('audios', ['$sce', audioDirective])
 
 .filter('timeFilter', [timeFilter])
 
-.controller('PackageSelectController', ['$http', 'ListeningGameFactory', PackageSelectController])
-.controller('InitController', ['$http', 'ListeningGameFactory', InitController])
-.controller('GameController', ['$http', '$timeout', '$interval', '$location', 'ListeningGameFactory', GameController])
-.controller('ResultStoreController', ['$http', 'ListeningGameFactory', ResultStoreController]);
+.controller('PackageSelectController', [
+  '$http',
+  'GameFactory',
+  PackageSelectController
+])
+.controller('InitController', [
+  '$http',
+  'GameFactory',
+  InitController
+])
+.controller('GameController', [
+  '$http',
+  '$timeout',
+  '$interval',
+  '$location',
+  'GameFactory',
+  ListeningGameController
+])
+.controller('ResultStoreController', [
+  '$http',
+  'GameFactory',
+  ResultStoreController
+]);

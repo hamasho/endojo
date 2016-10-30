@@ -1,16 +1,18 @@
+'use strict';
+
 /**
  * ==================================================================
  * Package select controller.
  * ==================================================================
  */
-function PackageSelectController($scope, $http, VocabularyGame) {
+function PackageSelectController($scope, $http, GameService) {
   var that = this;
   this.packages = [];
   $http.get('/game/vocabulary/packages/')
     .then(function(response) {
       that.packages = response.data.result;
     });
-  this.selectPackage = VocabularyGame.setSelectedPackage;
+  this.selectPackage = GameService.setSelectedPackage;
 }
 
 /**
@@ -18,8 +20,8 @@ function PackageSelectController($scope, $http, VocabularyGame) {
  * Word select controller.
  * ==================================================================
  */
-function WordSelectController($scope, $http, $window, VocabularyGame) {
-  this.package = VocabularyGame.getSelectedPackage();
+function WordSelectController($scope, $http, $document, GameService) {
+  this.package = GameService.getSelectedPackage();
   if ( ! this.package) return;
   this.knownWords = [];
   this.unknownWords = [];
@@ -60,7 +62,7 @@ function WordSelectController($scope, $http, $window, VocabularyGame) {
   /**
    * Set key down event
    */
-  angular.element($window).on('keydown', function(e) {
+  $document.bind('keypress', function(e) {
     if (e.keyCode === 37)
       $scope.$apply(function() {
         that.setWordAsKnown();
@@ -84,7 +86,7 @@ function WordSelectController($scope, $http, $window, VocabularyGame) {
  * Initialize controller.
  * ==================================================================
  */
-function InitController($http, $timeout, VocabularyGameFactory) {
+function InitController($http, $timeout, GameService) {
   this.words = [];
   this.state1Words = [];
   var that = this;
@@ -96,7 +98,7 @@ function InitController($http, $timeout, VocabularyGameFactory) {
           that.state1Words.push(that.words[i]);
         }
       }
-      VocabularyGameFactory.setWords(that.words);
+      GameService.setWords(that.words);
       console.log(that.state1Words);
     });
 
@@ -125,10 +127,10 @@ function InitController($http, $timeout, VocabularyGameFactory) {
  *   meaning: <translation string in user's language>
  * }
  */
-function VocabularyGameController($timeout, $location, VocabularyGameFactory) {
+function VocabularyGameController($timeout, $location, GameService) {
   this.$timeout = $timeout;
   this.$location = $location;
-  this.gameService = VocabularyGameFactory;
+  this.gameService = GameService;
 
   this.words = this.gameService.getWords();
   if ( ! this.words) {
@@ -218,10 +220,10 @@ VocabularyGameController.prototype.finish = function() {
  * Result store controller.
  * ==================================================================
  */
-function ResultStoreController($http, $timeout, VocabularyGame) {
-  this.words = VocabularyGame.getWords();
-  this.answeredWords = VocabularyGame.getAnsweredWords();
-  this.failedWords = VocabularyGame.getFailedWords();
+function ResultStoreController($http, $timeout, GameService) {
+  this.words = GameService.getWords();
+  this.answeredWords = GameService.getAnsweredWords();
+  this.failedWords = GameService.getFailedWords();
   var result = this.answeredWords.concat(this.failedWords);
   if (this.answeredWords === null) return;
   $http.post('/game/vocabulary/result/store/', {
