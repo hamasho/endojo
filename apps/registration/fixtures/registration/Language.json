@@ -1,0 +1,9 @@
+[
+{
+  "model": "registration.language",
+  "pk": 1,
+  "fields": {
+    "language_text": "Japanese"
+  }
+}
+]

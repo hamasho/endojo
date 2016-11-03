@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^$', views.GameView.as_view(), name='game'),
 
     # Partial HTML files for angular view
-    url(r'^packages/select/$', TemplateView.as_view(template_name='vocabulary/select_package.html')),
+    url(r'^packages/select/$', views.PackageSelectView.as_view()),
     url(r'^packages/words/select/$', TemplateView.as_view(template_name='vocabulary/word_select.html')),
     url(r'^start/$', TemplateView.as_view(template_name='vocabulary/start.html')),
     url(r'^main/$', TemplateView.as_view(template_name='vocabulary/main.html')),

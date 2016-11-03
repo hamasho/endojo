@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from registration.models import Language
+from core.utils import today
 
 
 class Package(models.Model):
@@ -14,25 +15,94 @@ class Package(models.Model):
     class Meta:
         ordering = ['-pub_date']
 
-
-class Word(models.Model):
-    word_text = models.CharField(max_length=40, unique=True)
-    package = models.ForeignKey(Package)
-
     @staticmethod
-    def get_learning_words(user, count):
-        pass
+    def get_package_list(user, language):
+        packages = Package.objects.filter(
+            availablepackage__language=language,
+        )
+        result = []
+        for package in packages:
+            try:
+                state = PackageState.objects.get(
+                    user=user,
+                    package=package,
+                )
+                state = 'Complete' if state.complete else 'Learning'
+            except PackageState.DoesNotExist:
+                state = 'Yet'
+            n_tried = PackageState.objects.filter(
+                package=package,
+            ).count()
+            n_completed = PackageState.objects.filter(
+                package=package,
+                complete=True,
+            ).count()
+
+            result.append({
+                'id': package.id,
+                'title': package.title,
+                'level': package.level,
+                'pub_date': package.pub_date,
+                'state': state,
+                'n_tried': n_tried,
+                'n_completed': n_completed,
+            })
+
+        return result
 
 
 class AvailablePackage(models.Model):
     package = models.ForeignKey(Package)
     language = models.ForeignKey(Language)
 
+    class Meta:
+        unique_together = ('package', 'language')
+
+
+class PackageState(models.Model):
+    user = models.ForeignKey(User)
+    package = models.ForeignKey(Package)
+    complete = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('user', 'package')
+
+
+class Word(models.Model):
+    word_text = models.CharField(max_length=40, unique=True)
+    package = models.ForeignKey(Package)
+
+    @staticmethod
+    def get_translated_words(package_id, language):
+        """
+        Return translated word objects
+        [{
+            "id": word.id,
+            "word_text": word.word_text,
+            "meaning": meaning
+        }, ...]
+        """
+        t_words = TranslatedWord.objects.filter(
+            word__package_id=package_id,
+            language=language,
+        ).prefetch_related('word')
+        result = []
+        for t_word in t_words:
+            result.append({
+                'id': t_word.word.id,
+                'word_text': t_word.word.word_text,
+                'meaning': t_word.meaning,
+            })
+        return result
+
 
 class TranslatedWord(models.Model):
     word = models.ForeignKey(Word)
     language = models.ForeignKey(Language)
     meaning = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = ('word', 'language')
 
 
 class WordState(models.Model):
@@ -54,12 +124,38 @@ class WordState(models.Model):
     state = models.SmallIntegerField(default=1)
     user = models.ForeignKey(User)
     word = models.ForeignKey(Word)
-    last_appeared = models.DateField(auto_now=True)
-    next_date = models.DateField(default=timezone.now)
+    added = models.DateField(auto_now_add=True)
+    next_date = models.DateField(default=today)
+
+    class Meta:
+        unique_together = ('user', 'word')
 
     def level_up(self):
+        """
+        Count up the state of WordState.
+        If the state become 6, then check other words in the same package
+        and if there is no words with level less than 6,
+        change the user's package state to `complete = True`.
+        Finally, save the current word state.
+        """
         self.state += 1
         if (self.state == 6):
+            self.save()
+            n_remaining_words = WordState.objects.filter(
+                word__package=self.word.package,
+                user=self.user,
+            ).exclude(
+                state=6,
+            ).count()
+            # If all words in the package complete learning,
+            # update the package state as `complete = True.`
+            if n_remaining_words == 0:
+                package_state = PackageState.objects.get(
+                    user=self.user,
+                    package=self.word.package,
+                )
+                package_state.complete = True
+                package_state.save()
             return
 
         if (self.state == 2):
@@ -70,16 +166,20 @@ class WordState(models.Model):
             delta = datetime.timedelta(days=7)
         elif (self.state == 5):
             delta = datetime.timedelta(days=14)
-        self.next_date = timezone.now() + delta
+        self.next_date = today() + delta
+        self.save()
 
     def level_reset(self):
         self.state = 1
+        self.next_date = today()
+        self.save()
 
+    @staticmethod
     def get_learning_words(user, count):
         result = []
         learning_words = WordState.objects.filter(
             user=user,
-            state__lte=6,
+            state__lte=5,
             next_date__lte=timezone.now(),
         ).order_by('-state', '-next_date')[:count]
         for learning_word in learning_words:
@@ -93,9 +193,3 @@ class WordState(models.Model):
                 state=learning_word.state,
             ))
         return result
-
-
-class ClearedPackage(models.Model):
-    package = models.ForeignKey(Package)
-    user = models.ForeignKey(User)
-    cleared_date = models.DateTimeField(default=timezone.now)

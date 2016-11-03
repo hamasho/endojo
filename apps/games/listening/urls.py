@@ -18,7 +18,6 @@ urlpatterns = [
     # APIs
     url(r'^packages/$', views.PackageListApi.as_view(), name='package_api'),
     url(r'^packages/(?P<package_id>[0-9]+)/problems/$', views.ProblemListApi.as_view(), name='problem_api'),
-    url(r'^packages/(?P<package_id>[0-9]+)/problems/audio/$', views.AudioApi.as_view(), name='audio_api'),
     url(r'^stats/$', views.StatsApi.as_view(), name='stats_api'),
 
     url(r'^result/store/$', csrf_exempt(views.ResultStoreApi.as_view()), name='result_store_api'),

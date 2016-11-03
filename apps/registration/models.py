@@ -13,10 +13,3 @@ class UserInfo(models.Model):
     user = models.OneToOneField(User)
     language = models.ForeignKey(Language)
     age = models.SmallIntegerField()
-
-
-class UserScore(models.Model):
-    user = models.OneToOneField(User)
-    vocabulary_score = models.IntegerField(default=0)
-    listening_score = models.IntegerField(default=0)
-    transcription_score = models.IntegerField(default=0)

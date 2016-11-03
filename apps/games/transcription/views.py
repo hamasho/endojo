@@ -1,39 +1,31 @@
 import json
 from django.http import JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
 
-from core.views import BaseTemplateView, BaseListApi
+from core.views import BaseTemplateView, BaseApi
 from .models import Package, Problem, PackageState, ProblemScore, History
 
 
-class GameView(LoginRequiredMixin, BaseTemplateView):
+class GameView(BaseTemplateView):
     template_name = 'transcription/game.html'
     context = {'current_page': 'transcription'}
 
 
-class PackageListApi(LoginRequiredMixin, BaseListApi):
-    def get(self, request):
-        packages = Package.objects.values()
-        for package in packages:
-            package['n_tried'] = PackageState.objects.filter(
-                package_id=package['id'],
-            ).count()
-            package['n_completed'] = PackageState.objects.filter(
-                package_id=package['id'],
-                complete=True,
-            ).count()
-        return JsonResponse(dict(packages=list(packages)))
+class PackageListApi(BaseApi):
+    def get_context_data(self):
+        return {
+            'packages': Package.get_package_list(self.request.user),
+        }
 
 
-class ProblemListApi(LoginRequiredMixin, BaseListApi):
-    model = Problem
+class ProblemListApi(BaseApi):
+    def get_context_data(self):
+        package = Package.objects.get(id=self.kwargs['package_id'])
+        return {
+            'result': list(package.problem_set.values()),
+        }
 
-    def get(self, request, package_id):
-        package = Package.objects.get(id=package_id)
-        return JsonResponse(dict(result=list(package.problem_set.values())))
 
-
-class ResultStoreApi(LoginRequiredMixin, BaseListApi):
+class ResultStoreApi(BaseApi):
     def post(self, request):
         json_data = json.loads(request.body.decode())
         score = json_data['score']
@@ -64,6 +56,6 @@ class ResultStoreApi(LoginRequiredMixin, BaseListApi):
         return JsonResponse({'status': 'ok'})
 
 
-class StatsApi(LoginRequiredMixin, BaseListApi):
-    def get(self, request):
-        return JsonResponse(History.get_formatted_stats(request.user))
+class StatsApi(BaseApi):
+    def get_context_data(self):
+        return History.get_formatted_stats(self.request.user)

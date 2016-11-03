@@ -1,0 +1,26 @@
+[
+{
+  "model": "vocabulary.word",
+  "pk": 1,
+  "fields": {
+    "word_text": "more",
+    "package": 1
+  }
+},
+{
+  "model": "vocabulary.word",
+  "pk": 2,
+  "fields": {
+    "word_text": "some",
+    "package": 1
+  }
+},
+{
+  "model": "vocabulary.word",
+  "pk": 3,
+  "fields": {
+    "word_text": "all",
+    "package": 1
+  }
+}
+]

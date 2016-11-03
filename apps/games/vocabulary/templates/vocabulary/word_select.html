@@ -10,18 +10,27 @@
              style="margin-bottom: 30px;"
              src="{% static 'img/knowing.png' %}" alt="KNOWING">
       </a>
-      <div ng-repeat="word in wsc.knownWords" class="alert alert-info word-item">
+      <div ng-repeat="word in wsc.knownWords"
+           class="alert alert-display-success word-item animated-list">
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
     </div>
     <div class="col-sm-4">
-      <div style="margin-bottom: 40px;"></div>
-      <div ng-repeat="word in wsc.unselectedWords" class="word-box" ng-animate="'word-item'">
+      <div style="margin-bottom: 20px;"></div>
+      <a ng-click="wsc.undoSelection()">
+        <img class="img-responsive bottom-align"
+             style="margin-bottom: 30px;"
+             src="{% static 'img/undo.png' %}" alt="UNDO">
+      </a>
+      <div ng-repeat="word in wsc.unselectedWords"
+           class="word-box alert animated-list"
+           ng-class="{'current-word':$first}">
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
       <div ng-hide="wsc.unselectedWords.length">
         <a ng-click="wsc.storeUnknownWords()"
-           class="btn btn-info" href="#/">
+           style="width:100%"
+           class="btn btn-info btn-lg" href="#/">
           Store unknown words
         </a>
       </div>
@@ -32,7 +41,8 @@
              style="margin-bottom: 30px;"
              src="{% static 'img/unknowing.png' %}" alt="KNOWING">
       </a>
-      <div ng-repeat="word in wsc.unknownWords" class="alert alert-danger word-enter">
+      <div ng-repeat="word in wsc.unknownWords"
+           class="alert alert-display-danger word-enter animated-list">
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
     </div>

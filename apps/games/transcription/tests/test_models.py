@@ -1,3 +1,4 @@
+import datetime
 from django.test import TestCase
 from django.contrib.auth.models import User
 
@@ -5,7 +6,11 @@ from transcription import models
 
 
 class ProblemScoreTest(TestCase):
-    fixtures = ['auth.User.json', 'transcription.Package.json', 'transcription.Problem.json']
+    fixtures = [
+        'auth.User.json',
+        'transcription.Package.json',
+        'transcription.Problem.json'
+    ]
 
     def test_save_works_correctly(self):
         user = User.objects.get(pk=1)
@@ -59,15 +64,15 @@ class HistoryTest(TestCase):
         user = User.objects.get(pk=1)
         stats = models.History.get_formatted_stats(user)
         self.assertEqual(stats['1'], [
-            {'x': 1, 'y': 4000},
-            {'x': 2, 'y': 3000},
-            {'x': 4, 'y': 4000},
-            {'x': 6, 'y': 2000},
+            {'x': datetime.date(2016, 10, 21), 'y': 4.0},
+            {'x': datetime.date(2016, 10, 22), 'y': 3.0},
+            {'x': datetime.date(2016, 10, 24), 'y': 4.0},
+            {'x': datetime.date(2016, 10, 26), 'y': 2.0},
         ])
         self.assertEqual(stats['2'], [
-            {'x': 0, 'y': 4000},
-            {'x': 3, 'y': 3000},
-            {'x': 7, 'y': 2000},
+            {'x': datetime.date(2016, 10, 20), 'y': 4.0},
+            {'x': datetime.date(2016, 10, 23), 'y': 3.0},
+            {'x': datetime.date(2016, 10, 27), 'y': 2.0},
         ])
         self.assertEqual(stats['3'], [])
         self.assertEqual(stats['4'], [])

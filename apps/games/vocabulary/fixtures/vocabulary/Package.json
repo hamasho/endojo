@@ -1,0 +1,11 @@
+[
+{
+  "model": "vocabulary.package",
+  "pk": 1,
+  "fields": {
+    "title": "Basic Words 1",
+    "level": 1,
+    "pub_date": "2016-10-25T06:58:53.509Z"
+  }
+}
+]

@@ -2,17 +2,17 @@
 
   <div ng-show="rsc.answeredWords || rsc.failedWords">
     <h1>Result</h1>
-    <div ng-show="rsc.failedWords">
+    <div ng-show="rsc.failedWords.length">
       <h2>Review failed words</h2>
       Repeat typing until you remember.
       <table class="table">
-        <tr ng-repeat="word in ic.state1Words track by $index">
+        <tr ng-repeat="word in rsc.failedWords track by $index">
           <td>[[ word.meaning ]]</td>
           <td>
             <input class="form-control answer-form"
                    style="margin-bottom:0px;"
                    ng-model="word.input"
-                   ng-change="ic.update($index)"
+                   ng-change="rsc.update($index)"
                    type="text" placeholder="[[ word.word_text ]]">
           </td>
           <td>
@@ -26,8 +26,8 @@
         </tr>
       </table>
     </div>
-    <div ng-show="rsc.answeredWords">
-      <h2>Right answered words</h2>
+    <div ng-show="rsc.answeredWords.length">
+      <h2>Answered words</h2>
       <table class="table">
         <tr ng-repeat="word in rsc.answeredWords">
           <td>[[ word.word_text ]] / [[ word.meaning ]]</td>

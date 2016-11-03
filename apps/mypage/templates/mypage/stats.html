@@ -10,23 +10,27 @@
 
 <div class="tab-content">
   <div id="vocabulary" class="tab-pane fade">
-    <h3>Vocabulary</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <h2>Listening Game Stats</h2>
   </div>
   <div id="listening" class="tab-pane fade">
-    <h3>Listening</h3>
-    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-  </div>
-  <div id="transcription" class="tab-pane fade in active">
-    <h2>Transcription Game Stats</h2>
+    <h2>Listening Game Stats</h2>
+    <h3>Average Time to Answer Problem</h3>
     <div style="margin-top:40px;">
-      <canvas id="myChart" width="700" height="500"></canvas>
+      <canvas id="listening-chart" width="700" height="500"></canvas>
+    </div>
+  </div>
+  <div id="transcription" class="tab-pane fade">
+    <h2>Transcription Game Stats</h2>
+    <h3>Average Time to Answer Problem</h3>
+    <div style="margin-top:40px;">
+      <canvas id="transcription-chart" width="700" height="500"></canvas>
     </div>
   </div>
 </div>
 
 {% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
-<script src="{% static 'mypage/js/chart.js' %}"></script>
+<script src="{% static 'mypage/js/stats.js' %}"></script>
 
 {% endblock %}

@@ -1,0 +1,11 @@
+[
+{
+  "model": "registration.userinfo",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "language": 1,
+    "age": 26
+  }
+}
+]

@@ -1,9 +1,20 @@
 <div class="row" ng-controller="PackageSelectController as psc">
 
-  <a href="#/start" class="btn btn-info btn-lg" style="margin-right:30px;">
-    Start Vocabulary Game
-  </a>
-  or select your unknown words.
+  <div class="well">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-6">
+        <ul style="margin-bottom:0">
+          <li>Learning words: {{ n_learning_words }}</li>
+          <li>Today's words: {{ n_todays_words }}</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <a href="#/start" class="btn btn-info btn-lg" style="width:100%">
+          Start Vocabulary Game
+        </a>
+      </div>
+    </div>
+  </div>
 
   <h1>Transcription Game Package List</h1>
 
@@ -12,12 +23,13 @@
       <tr>
         <td>Title</td>
         <td>Level</td>
+        <td>State</td>
         <td>Published</td>
         <td>Tried</td>
         <td>Completed</td>
       </tr>
     </thead>
-    <tbody ng-repeat="package in psc.packages">
+    <tbody ng-repeat="package in psc.packages | orderBy:'state':true">
       <tr>
         <td>
           <a ng-href="#/words" ng-click="psc.selectPackage(package);">
@@ -25,6 +37,7 @@
           </a>
         </td>
         <td>[[ package.level ]]</td>
+        <td>[[ package.state ]]</td>
         <td>[[ package.pub_date | date ]]</td>
         <td>[[ package.n_tried ]]</td>
         <td>[[ package.n_completed ]]</td>

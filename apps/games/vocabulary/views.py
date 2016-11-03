@@ -1,68 +1,99 @@
 import json
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils import timezone
+from django.db import transaction
 from django.http import JsonResponse
 
-from core.views import BaseTemplateView, BaseListApi, BaseApi
-from .models import Package, Word, WordState, TranslatedWord
+from core.views import BaseTemplateView, BaseApi
+from .models import Package, Word, PackageState, WordState
 
 
-class GameView(LoginRequiredMixin, BaseTemplateView):
+class GameView(BaseTemplateView):
     template_name = 'vocabulary/game.html'
     context = {'current_page': 'vocabulary'}
 
 
-class PackageListApi(LoginRequiredMixin, BaseApi):
-    def get(self, request):
-        packages = Package.objects.filter(
-            availablepackage__language=request.user.userinfo.language,
-        )
-        return JsonResponse(dict(result=list(packages.values())))
+class PackageSelectView(BaseTemplateView):
+    template_name = 'vocabulary/select_package.html'
+    context = {'current_page': 'vocabulary'}
+
+    def get_context_data(self):
+        context = {
+            'n_learning_words': WordState.objects.filter(
+                user=self.request.user,
+                state__lte=5,
+            ).count(),
+            'n_todays_words': WordState.objects.filter(
+                user=self.request.user,
+                state__lte=5,
+                next_date__lte=timezone.now(),
+            ).count(),
+        }
+        return context
 
 
-class WordListApi(LoginRequiredMixin, BaseListApi):
-    model = Word
-
-    def get(self, request, package_id):
-        package = Package.objects.get(id=package_id)
-        translated_words = TranslatedWord.objects.filter(
-            word__package=package
-        )
-        result = []
-        for translated_word in translated_words:
-            result.append(dict(
-                id=translated_word.word.id,
-                word_text=translated_word.word.word_text,
-                meaning=translated_word.meaning,
-            ))
-        return JsonResponse(dict(result=result))
-
-
-class LearningWordListApi(LoginRequiredMixin, BaseApi):
-    def get(self, request):
-        words = WordState.get_learning_words(request.user, 10)
-        return JsonResponse({'result': words})
-
-
-class UnknownWordsStoreApi(LoginRequiredMixin, BaseListApi):
-    def post(self, request):
-        words = json.loads(request.body.decode())['words']
-        for word in words:
-            state, created = WordState.objects.get_or_create(
-                user=request.user,
-                word_id=int(word['id']),
+class PackageListApi(BaseApi):
+    def get_context_data(self):
+        return {
+            'packages': Package.get_package_list(
+                user=self.request.user,
+                language=self.request.user.userinfo.language,
             )
-            state.save()
-        return JsonResponse({'status': 'ok'})
+        }
 
 
-class ResultStoreApi(LoginRequiredMixin, BaseListApi):
+class WordListApi(BaseApi):
+    def get_context_data(self):
+        return {
+            'words': Word.get_translated_words(
+                self.kwargs['package_id'],
+                self.request.user.userinfo.language,
+            )
+        }
+
+
+class LearningWordListApi(BaseApi):
+    def get_context_data(self):
+        words = WordState.get_learning_words(self.request.user, 10)
+        return {'words': words}
+
+
+class UnknownWordsStoreApi(BaseApi):
     def post(self, request):
-        result = json.loads(request.body.decode())['result']
-        for item in result:
-            print(result)
+        json_data = json.loads(request.body.decode())
+        package = json_data['package']
+        unknown_words = json_data['words']
+        with transaction.atomic():
+            WordState.objects.filter(
+                user=request.user,
+                word__package_id=package['id'],
+            ).delete()
+            for word in unknown_words:
+                state, created = WordState.objects.get_or_create(
+                    user=request.user,
+                    word_id=word['id'],
+                )
+                state.save()
+            complete = len(unknown_words) == 0
+            PackageState.objects.update_or_create(
+                user=request.user,
+                package_id=package['id'],
+                defaults={'complete': complete}
+            )
         return JsonResponse({'status': 'ok'})
 
 
-class StatsApi(LoginRequiredMixin, BaseListApi):
+class ResultStoreApi(BaseApi):
+    def post(self, request):
+        json_data = json.loads(request.body.decode())
+        for word in json_data['failed']:
+            state = WordState.objects.get(id=word['id'])
+            state.level_reset()
+        for word in json_data['answered']:
+            state = WordState.objects.get(id=word['id'])
+            state.level_up()
+        return JsonResponse({'status': 'ok'})
+
+
+class StatsApi(BaseApi):
     def get(self, request):
         pass

@@ -1,0 +1,29 @@
+[
+{
+  "model": "vocabulary.translatedword",
+  "pk": 1,
+  "fields": {
+    "word": 1,
+    "language": 1,
+    "meaning": "\u3088\u308a\u591a\u304f\u306e"
+  }
+},
+{
+  "model": "vocabulary.translatedword",
+  "pk": 2,
+  "fields": {
+    "word": 2,
+    "language": 1,
+    "meaning": "\u3044\u304f\u3064\u304b\u306e"
+  }
+},
+{
+  "model": "vocabulary.translatedword",
+  "pk": 3,
+  "fields": {
+    "word": 3,
+    "language": 1,
+    "meaning": "\u3059\u3079\u3066"
+  }
+}
+]

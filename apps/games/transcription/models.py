@@ -15,6 +15,39 @@ class Package(models.Model):
     class Meta:
         ordering = ['-pub_date']
 
+    @staticmethod
+    def get_package_list(user):
+        packages = Package.objects.all()
+        result = []
+        for package in packages:
+            try:
+                state = PackageState.objects.get(
+                    user=user,
+                    package=package,
+                )
+                state = 'Complete' if state.complete else 'Learning'
+            except PackageState.DoesNotExist:
+                state = 'Yet'
+            n_tried = PackageState.objects.filter(
+                package=package,
+            ).count()
+            n_completed = PackageState.objects.filter(
+                package=package,
+                complete=True,
+            ).count()
+
+            result.append({
+                'id': package.id,
+                'title': package.title,
+                'level': package.level,
+                'pub_date': package.pub_date,
+                'state': state,
+                'n_tried': n_tried,
+                'n_completed': n_completed,
+            })
+
+        return result
+
 
 class Problem(models.Model):
     problem_text = models.CharField(max_length=200)
@@ -31,6 +64,9 @@ class PackageState(models.Model):
     user = models.ForeignKey(User, related_name='transcription_packagestate_user')
     package = models.ForeignKey(Package)
     complete = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ('user', 'package')
 
 
 class ProblemScore(models.Model):
@@ -85,13 +121,11 @@ class History(models.Model):
             return result
         start_date = histories[0].date
         end_date = histories[len(histories) - 1].date
-        index = 0
         for date in date_range(start_date, end_date + timedelta(1)):
             histories_at = histories.filter(date=date)
             for history in histories_at:
                 result[str(history.level)] += [{
-                    'x': index,
-                    'y': history.average_time_ms,
+                    'x': date,
+                    'y': history.average_time_ms / 1000,
                 }]
-            index += 1
         return result

@@ -27,7 +27,7 @@ function InitController($http, GameService) {
   var that = this;
   $http.get('/game/listening/packages/' + this.package.id + '/problems')
     .then(function(response) {
-      that.problems = response.data.result;
+      that.problems = response.data.problems;
       GameService.setProblems(that.problems);
     });
 }

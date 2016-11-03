@@ -2,6 +2,16 @@
 
 {% block mypage_content %}
 
-Home
+<h2>Score</h2>
+<div style="margin-top:40px;">
+  <canvas id="user-score-chart" width="700" height="100"></canvas>
+</div>
+<div style="margin-top:40px;">
+  <canvas id="score-chart" width="700" height="300"></canvas>
+</div>
+
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+<script src="{% static 'mypage/js/home.js' %}"></script>
 
 {% endblock %}

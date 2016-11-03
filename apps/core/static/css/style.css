@@ -7,22 +7,31 @@
   vertical-align: middle;
   margin-right: -4px; }
 
+/**
+ * ==================================================================
+ *  Documents
+ * ==================================================================
+ */
 body {
   font-family: 'Lato', arial;
   font-weight: 400;
   font-size: 18px;
   color: #776E65;
-  background-color: #FAF8EF; }
+  background-color: #FAF8EF;
+  line-height: 1.5; }
+
+p {
+  color: #909090; }
 
 a {
   color: #31708f; }
 
 .logo-image {
-  margin-top: 60px;
+  margin-top: 70px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 60px;
-  width: 40%;
+  width: 45%;
   display: block; }
 
 .subtitle {
@@ -37,7 +46,7 @@ a {
   border-radius: 0; }
 
 .btn-default {
-  background-color: #BBAAA0;
+  background-color: #909090;
   color: #FAF8EF; }
 
 .panel {
@@ -87,6 +96,34 @@ a {
 .slide.ng-leave-active {
   left: -100%; }
 
+.animated-list {
+  opacity: 1; }
+
+.animated-list-enter {
+  -webkit-transition: 500ms;
+  transition: 500ms;
+  opacity: 0; }
+
+.animated-list-enter-active {
+  opacity: 1; }
+
+.animated-list.ng-enter,
+.animated-list.ng-leave {
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  position: relative;
+  display: block; }
+
+.animated-list.ng-enter.animated-list.ng-enter-active,
+.animated-list.ng-leave {
+  opacity: 1;
+  top: 0; }
+
+.animated-list.ng-leave.animated-list.ng-leave-active,
+.animated-list.ng-enter {
+  opacity: 0;
+  top: -50px; }
+
 /**
  * ==================================================================
  *  Game
@@ -131,13 +168,14 @@ a {
   box-shadow: 0px 0px 10px #a94442; }
 
 .word-box {
-  background-color: #776E65;
-  color: #FAF8EF;
-  width: 100%;
-  border-radius: 5px;
+  color: #776E65;
+  border-radius: 4px;
+  border: 2px solid #776E65; }
+
+.current-word {
   font-size: 20px;
-  padding: 10px;
-  margin-bottom: 30px; }
+  border: 2px solid #31708f;
+  box-shadow: 0px 0px 10px #31708f; }
 
 /**
  * ==================================================================

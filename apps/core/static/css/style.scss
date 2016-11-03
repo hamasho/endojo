@@ -1,6 +1,7 @@
 $bgcolor1: #FAF8EF;
 $bgcolor2: #D3D0BE;
-$color1: #BBAAA0;
+//$color1: #A1978D;
+$color1: #909090;
 $color2: #BBADA0;
 $color3: #8F7A66;
 $color4: #776E65;
@@ -26,22 +27,31 @@ $danger-bg: #F2DEDE;
 
 }
 
+/**
+ * ==================================================================
+ *  Documents
+ * ==================================================================
+ */
 body {
   font-family: 'Lato', arial;
   font-weight: 400;
   font-size: 18px;
   color: $color4;
   background-color: $bgcolor1;
+  line-height: 1.5;
+}
+p {
+  color: $color1;
 }
 a {
   color: $blue;
 }
 .logo-image {
-  margin-top: 60px;
+  margin-top: 70px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 60px;
-  width: 40%;
+  width: 45%;
   display: block;
 }
 .subtitle {
@@ -109,6 +119,38 @@ a {
 .slide.ng-leave-active {
   left: -100%;
 }
+.animated-list {
+  opacity: 1;
+}
+.animated-list-enter {
+  -webkit-transition: 500ms;
+  transition: 500ms;
+  opacity: 0;
+}
+.animated-list-enter-active {
+  opacity: 1;
+}
+
+.animated-list.ng-enter, 
+.animated-list.ng-leave
+{ 
+  -webkit-transition: 200ms;
+  transition: 200ms;
+  position: relative;
+  display: block;
+} 
+
+.animated-list.ng-enter.animated-list.ng-enter-active, 
+.animated-list.ng-leave {
+  opacity: 1;
+  top: 0;
+}
+
+.animated-list.ng-leave.animated-list.ng-leave-active,
+.animated-list.ng-enter {
+  opacity: 0;
+  top: -50px;
+}
 
 /**
  * ==================================================================
@@ -161,19 +203,14 @@ a {
 
 // Vocabulary game
 .word-box {
-  background-color: $color4;
-  color: $bgcolor1;
-  width: 100%;
-  border-radius: 5px;
+  color: $color4;
+  border-radius: 4px;
+  border: 2px solid $color4;
+}
+.current-word {
   font-size: 20px;
-  padding: 10px;
-  margin-bottom: 30px;
-}
-.vocabulary-word-display .vocabulary-word-item {
-}
-.vocabulary-start-with {
-}
-.vocabulary-match {
+  border: 2px solid $blue;
+  box-shadow: 0px 0px 10px $blue;
 }
 
 /**
