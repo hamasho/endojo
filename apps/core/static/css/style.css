@@ -50,15 +50,7 @@ a {
   color: #FAF8EF; }
 
 .panel {
-  border-radius: 0;
-  background-color: #FAF8EF; }
-
-.form-control, .form-control:focus {
-  border: 3px solid #eee;
-  border-bottom: 3px solid #776E65;
-  border-radius: 0;
-  background-color: #FAF8EF;
-  box-shadow: none; }
+  border-radius: 0; }
 
 /* Side bar */
 .list-group a.list-group-item {
@@ -143,7 +135,12 @@ a {
   background-color: #F2DEDE;
   text-decoration: line-through; }
 
-.answer-form {
+.answer-form, .answer-form:focus {
+  border: 3px solid #eee;
+  border-bottom: 3px solid #776E65;
+  border-radius: 0;
+  background-color: #FAF8EF;
+  box-shadow: none;
   font-size: 20px;
   height: 46px;
   margin-bottom: 80px; }

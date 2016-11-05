@@ -5,12 +5,19 @@
  * Package select controller.
  * ==================================================================
  */
-function PackageSelectController($scope, $http, GameService) {
+function PackageSelectController($http, GameService) {
   var that = this;
   this.packages = [];
+  this.nLearningWords = 0;
+  this.nTodaysWords = 0;
   $http.get('/game/vocabulary/packages/')
     .then(function(response) {
       that.packages = response.data.packages;
+    });
+  $http.get('/game/vocabulary/words/learning/count/')
+    .then(function(response) {
+      that.nLearningWords = response.data.n_learning_words;
+      that.nTodaysWords = response.data.n_todays_words;
     });
   this.selectPackage = GameService.setSelectedPackage;
 }
@@ -20,9 +27,12 @@ function PackageSelectController($scope, $http, GameService) {
  * Word select controller.
  * ==================================================================
  */
-function WordSelectController($scope, $http, $document, GameService) {
+function WordSelectController($scope, $location, $http, $window, $document, GameService) {
   this.package = GameService.getSelectedPackage();
-  if ( ! this.package) return;
+  if ( ! this.package) {
+    $location.path('/select');
+    return;
+  }
   this.knownWords = [];
   this.unknownWords = [];
   this.event = [];
@@ -59,7 +69,9 @@ function WordSelectController($scope, $http, $document, GameService) {
     $http.post('/game/vocabulary/words/unknown/', {
       package: that.package,
       words: that.unknownWords,
-    }).then(function(response) { });
+    }).then(function(response) {
+      $window.location.reload();
+    });
   };
 
   /**
@@ -205,7 +217,7 @@ VocabularyGameController.prototype.giveRightAnswer = function() {
   if (this.wordQueue.length)
     this.wordQueue.shift();
   if ((this.gameService.noRemainingWord(this.wordQueue, this.currentWord)) &&
-      (this.failedWorsd.indexOf(this.currentWord) < 0))
+      (this.failedWords.indexOf(this.currentWord) < 0))
     this.answeredWords.push(this.currentWord);
   var that = this;
   this.$timeout(function() { that.next(); }, 1000);
@@ -222,10 +234,13 @@ VocabularyGameController.prototype.finish = function() {
  * Result store controller.
  * ==================================================================
  */
-function ResultStoreController($http, $timeout, GameService) {
+function ResultStoreController($http, $location, $timeout, GameService) {
   this.answeredWords = GameService.getAnsweredWords();
   this.failedWords = GameService.getFailedWords();
-  if (this.answeredWords === null) return;
+  if (this.answeredWords === null) {
+    $location.path('/select');
+    return;
+  }
   $http.post('/game/vocabulary/result/store/', {
     answered: this.answeredWords,
     failed: this.failedWords,

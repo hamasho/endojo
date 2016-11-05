@@ -57,6 +57,23 @@ class LearningWordListApi(BaseApi):
         return {'words': words}
 
 
+class LearningWordCountApi(BaseApi):
+    def get_context_data(self):
+        n_learning_words = WordState.objects.filter(
+            user=self.request.user,
+            state__lte=5,
+        ).count()
+        n_todays_words = WordState.objects.filter(
+            user=self.request.user,
+            state__lte=5,
+            next_date__lte=timezone.now(),
+        ).count()
+        return {
+            'n_learning_words': n_learning_words,
+            'n_todays_words': n_todays_words,
+        }
+
+
 class UnknownWordsStoreApi(BaseApi):
     def post(self, request):
         json_data = json.loads(request.body.decode())

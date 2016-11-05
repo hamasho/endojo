@@ -54,6 +54,7 @@ angular.module('TranscriptionGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 ])
 .controller('InitController', [
     '$http',
+    '$location',
     'GameFactory',
     InitController
 ])
@@ -67,6 +68,7 @@ angular.module('TranscriptionGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 ])
 .controller('ResultStoreController', [
     '$http',
+    '$location',
     'GameFactory',
     ResultStoreController
 ]);

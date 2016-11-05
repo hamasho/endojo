@@ -8,6 +8,6 @@ app_name = 'registration'
 urlpatterns = [
     url(r'^signup/$', SignUpView.as_view(), name='signup'),
     url(r'^login/$', views.login, name='login'),
-    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^logout/$', views.logout_then_login, name='logout'),
     # TODO: password reset
 ]

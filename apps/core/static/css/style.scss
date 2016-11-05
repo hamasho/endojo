@@ -72,14 +72,8 @@ a {
 }
 .panel {
   border-radius: 0;
-  background-color: $bgcolor1;
 }
 .form-control, .form-control:focus {
-  border: 3px solid #eee;
-  border-bottom: 3px solid $color4;
-  border-radius: 0;
-  background-color: $bgcolor1;
-  box-shadow: none;
 }
 
 /* Side bar */
@@ -172,7 +166,12 @@ a {
   background-color: $danger-bg;
   text-decoration: line-through;
 }
-.answer-form {
+.answer-form, .answer-form:focus {
+  border: 3px solid #eee;
+  border-bottom: 3px solid $color4;
+  border-radius: 0;
+  background-color: $bgcolor1;
+  box-shadow: none;
   font-size: 20px;
   height: 46px;
   margin-bottom: 80px;

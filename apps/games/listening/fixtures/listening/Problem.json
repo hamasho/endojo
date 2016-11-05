@@ -1,0 +1,38 @@
+[
+  {
+    "model": "listening.problem",
+    "pk": 1,
+    "fields": {
+      "problem_text": "This is a pen.",
+      "package": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "listening.problem",
+    "pk": 2,
+    "fields": {
+      "problem_text": "Cats are cute.",
+      "package": 1,
+      "level": 1
+    }
+  },
+  {
+    "model": "listening.problem",
+    "pk": 3,
+    "fields": {
+      "problem_text": "Cats are cute.",
+      "package": 1,
+      "level": 2
+    }
+  },
+  {
+    "model": "listening.problem",
+    "pk": 4,
+    "fields": {
+      "problem_text": "Cats are cute.",
+      "package": 1,
+      "level": 2
+    }
+  }
+]

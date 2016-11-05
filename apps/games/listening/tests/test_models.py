@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-from transcription import models
+from listening import models
 
 
 def create_time(y, m, d):
@@ -141,8 +141,8 @@ class PackageTest(TestCase):
 class ProblemScoreTest(TestCase):
     fixtures = [
         'auth.User.json',
-        'transcription/Package.json',
-        'transcription/Problem.json'
+        'listening/Package.json',
+        'listening/Problem.json'
     ]
 
     def test_save_works_correctly(self):
@@ -191,7 +191,7 @@ class ProblemScoreTest(TestCase):
 
 
 class HistoryTest(TestCase):
-    fixtures = ['auth.User.json', 'transcription/History.json']
+    fixtures = ['auth.User.json', 'listening/History.json']
 
     def test_with_normal_data(self):
         user = User.objects.get(pk=1)

@@ -20,9 +20,12 @@ function PackageSelectController($http, GameService) {
  * Init controller
  * ==================================================================
  */
-function InitController($http, GameService) {
+function InitController($http, $location, GameService) {
   this.package = GameService.getSelectedPackage();
-  if (this.package === null) return;
+  if (this.package === null) {
+    $location.path('/select');
+    return;
+  }
   this.problems = [];
   var that = this;
   $http.get('/game/transcription/packages/' + this.package.id + '/problems')
@@ -45,7 +48,10 @@ function TranscriptionGameController($http, $timeout, $interval, $location, Game
   this.gameService = GameService;
 
   this.package = this.gameService.getSelectedPackage();
-  if (this.package === null) return;
+  if (this.package === null) {
+    $location.path('/select');
+    return;
+  }
   this.problems = GameService.getProblems();
   this.currentProblemIndex = 0;
   this.score = [];
@@ -131,9 +137,12 @@ TranscriptionGameController.prototype.finish = function() {
  * Result store controller
  * ==================================================================
  */
-function ResultStoreController($http, GameService) {
+function ResultStoreController($http, $location, GameService) {
   this.score = GameService.getScore();
-  if (this.score === null) return;
+  if (this.score === null) {
+    $location.path('/select');
+    return;
+  }
   $http.post('/game/transcription/result/store/', {
     score: this.score,
     package: GameService.getSelectedPackage(),

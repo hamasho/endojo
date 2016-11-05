@@ -1,0 +1,11 @@
+[
+  {
+    "model": "listening.package",
+    "pk": 1,
+    "fields": {
+      "title": "Easy sentences 1",
+      "level": 1,
+      "pub_date": "2016-10-21T23:15:13.912Z"
+    }
+  }
+]

@@ -1,6 +1,6 @@
 <div class="row" ng-controller="PackageSelectController as psc">
 
-  <div class="well">
+  <div class="well" ng-show="psc.nLearningWords">
     <div class="row">
       <div class="col-md-offset-1 col-md-6">
         <ul style="margin-bottom:0">
@@ -9,7 +9,8 @@
         </ul>
       </div>
       <div class="col-md-4">
-        <a href="#/start" class="btn btn-info btn-lg" style="width:100%">
+        <a ng-disable="psc.nTodaysWords === 0"
+           href="#/start" class="btn btn-info btn-lg" style="width:100%">
           Start Vocabulary Game
         </a>
       </div>

@@ -28,11 +28,11 @@
         [[ word.word_text + ' / ' + word.meaning ]]
       </div>
       <div ng-hide="wsc.unselectedWords.length">
-        <a ng-click="wsc.storeUnknownWords()"
-           style="width:100%"
-           class="btn btn-info btn-lg" href="#/">
+        <button ng-click="wsc.storeUnknownWords()"
+                style="width:100%"
+                class="btn btn-info btn-lg">
           Store unknown words
-        </a>
+        </button>
       </div>
     </div>
     <div class="col-sm-4">

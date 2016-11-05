@@ -10,30 +10,29 @@
     <div class="panel panel-info">
       <div class="panel-heading">Log In</div>
       <div class="panel-body">
-        <form action="{% url 'registration:login' %}" method="post" class="form-horizontal">
+        <form action="{% url 'registration:login' %}"
+              method="post" class="form-horizontal">
           {% csrf_token %}
 
-          {% if form.username.errors %}
+          {% if form.errors %}
           <div class="alert alert-danger">
             <strong>Error: </strong>
-            {{ form.username.errors }}
+            Your username and password didn't match.
+            Please try again.
           </div>
           {% endif %}
+
           <div class="form-group">
             <div class="col-md-3">
               <label for="id_username">Username:</label>
             </div>
             <div class="col-md-9">
-              <input type="text" id="id_username" class="form-control" name="username" value="{{ form.data.username }}">
+              <input 
+                 value="{{ form.data.username }}"
+                 type="text" id="id_username" class="form-control" name="username">
             </div>
           </div>
 
-          {% if form.password.errors %}
-          <div class="alert alert-danger">
-            <strong>Error: </strong>
-            {{ form.password.errors }}
-          </div>
-          {% endif %}
           <div class="form-group">
             <div class="col-md-3">
               <label for="id_password">Password:</label>

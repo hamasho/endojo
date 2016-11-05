@@ -2,15 +2,11 @@ import json
 from django.test import TestCase
 from django.urls import reverse
 
-from transcription import models
+from listening import models
 
 
 class ResultStoreApiTest(TestCase):
-    fixtures = [
-        'auth.User.json',
-        'transcription/Package.json',
-        'transcription/Problem.json',
-    ]
+    fixtures = ['auth.User.json', 'listening/Package.json', 'listening/Problem.json']
 
     def setUp(self):
         self.client.login(username='user1', password='password')
@@ -20,7 +16,7 @@ class ResultStoreApiTest(TestCase):
             'status': 'ok',
         }
         response = self.client.post(
-            reverse('transcription:result_store_api'),
+            reverse('listening:result_store_api'),
             json.dumps({
                 'package': {
                     'id': 1,

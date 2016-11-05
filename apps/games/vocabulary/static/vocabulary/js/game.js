@@ -50,14 +50,15 @@ angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 .directive('autofocus', ['$timeout', autofocusDirective])
 
 .controller('PackageSelectController', [
-    '$scope',
     '$http',
     'GameFactory',
     PackageSelectController
 ])
 .controller('WordSelectController', [
     '$scope',
+    '$location',
     '$http',
+    '$window',
     '$document',
     'GameFactory',
     WordSelectController
@@ -76,6 +77,7 @@ angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 ])
 .controller('ResultStoreController', [
     '$http',
+    '$location',
     '$timeout',
     'GameFactory',
     ResultStoreController

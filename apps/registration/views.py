@@ -1,3 +1,4 @@
+import datetime
 from django.views.generic.base import TemplateView
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -32,16 +33,19 @@ class SignUpView(TemplateView):
                 language = Language.objects.get(
                     language_text=info_form.cleaned_data['language']
                 )
+                birth_date = datetime.datetime(
+                    int(info_form.cleaned_data['birth_year']),
+                    int(info_form.cleaned_data['birth_month']),
+                    int(info_form.cleaned_data['birth_day']),
+                )
                 UserInfo.objects.create(
                     user=user,
                     language=language,
-                    age=info_form.cleaned_data['age'],
+                    birth_date=birth_date,
                 )
             login(request, user)
             return redirect(reverse('home:home'))
         else:
-            print(vars(form))
-            print(vars(info_form))
             return render(request, self.template_name, {
                 'form': form,
                 'info_form': info_form,

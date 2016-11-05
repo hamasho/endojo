@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^packages/$', views.PackageListApi.as_view(), name='package_api'),
     url(r'^packages/(?P<package_id>[0-9]+)/words/$', views.WordListApi.as_view(), name='word_api'),
     url(r'^words/learning/$', views.LearningWordListApi.as_view(), name='learning_word_api'),
+    url(r'^words/learning/count/$', views.LearningWordCountApi.as_view(), name='learning_word_count_api'),
     url(r'^stats/$', views.StatsApi.as_view(), name='stats_api'),
 
     url(r'^words/unknown/$', csrf_exempt(views.UnknownWordsStoreApi.as_view()), name='unknown_words_store_api'),

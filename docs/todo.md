@@ -17,19 +17,13 @@
 - Vocabulary
   - Add 'n missing packages in your language' message
   - Add stats page
-  - Add 'review display' for words which appear as first time
-  - Add undo function in word select page
-  - Add 'done' column to list table
-  - Add 'done by' column to list table
+  - Add ordering in package list page
 
 - Listening
-  - Add repeat_count column to result store table
-  - Add 'done' column to list table
-  - Add 'done by' column to list table
+  - Add ordering in package list page
 
 - Transcription
-  - Add 'done' column to list table
-  - Add 'done by' column to list table
+  - Add ordering in package list page
 
 - Chat
   - Add Chat service
