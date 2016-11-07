@@ -14,4 +14,4 @@ media/
 game_data/listening/**/*.mp3
 
 # Sensitive information
-secret.py
+secrets.py

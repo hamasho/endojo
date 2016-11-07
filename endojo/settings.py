@@ -14,7 +14,7 @@ import os
 import sys
 
 # Sensitive information
-import secret
+import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +28,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps/games'))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret.secret_key
+SECRET_KEY = secrets.secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
