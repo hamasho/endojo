@@ -1,7 +1,103 @@
 {% extends 'base.html' %}
 
+{% block title %}Vocabulary{% endblock %}
+
 {% block content %}
 
-Vocabulary doc
+{% load static %}
 
+<div class="col-md-offset-2 col-md-8">
+  <div class="row">
+    <h1>Vocabulary Game</h1>
+    
+    <p>
+    Vocabulary is the foundation of English.
+    Without a good vocabulary,
+    if you have enough knowledge of grammer,
+    you cannot read and listen to anything.
+    Besides you cannot write or speak your ideas.
+    To increase your vocabulary,
+    your English skills improve in every way.
+    </p>
+    
+    <p>
+    In this game, we use the brain process of memorization.
+    </p>
+    <div style="margin-left:15px;" class="pull-right">
+      <img src="{% static 'img/forgetting_curve1.png' %}"
+           width="200"
+           alt="Forgetting Curve">
+      <img src="{% static 'img/forgetting_curve2.png' %}"
+           width="200"
+           alt="Forgetting Curve with Memorizing Process">
+    </div>
+    <p>
+    Your brain lost memory about you remember over time.
+    Things you just remember at first are forgotten rapidly.
+    But if you remember again before you completely forget it,
+    the speed of forgetting is reduced.
+    By repeating this process,
+    your memory become strong and finally
+    you will never forget it.
+    </p>
+
+    <p>
+    The system manages all learning words.
+    In the first period of a learning word,
+    the word appears frequently to make strong memorization.
+    So you can easily remember the word.
+    As time proceeds, the frequency reduces.
+    Because you remember the word in this phase,
+    it's no problem.
+    Finally, you remember the word.
+    </p>
+
+    <p>
+    In this game,
+    all words are separated into 'known' or 'unknown' state.
+    And all 'unknown' words are separated into 5 state.
+    First, the unknown word is classified as 'state 1',
+    which means it's the first period of memorizing process.
+    If you answer this word correctly,
+    then the word state becomes 2 and it will appears after 1 day.
+    If you also answer the word,
+    the state increases to 3 and it will appears after 2 day.
+    As the state increases,
+    the duration between appearing gets longer.
+    Finally, you remember the word.
+    </p>
+
+    <h2>How to Play</h2>
+
+    <dl>
+      <dt>1. Select a package</dt>
+      <dd>
+      Packages are organized in 5 levels.
+      You can choose one suite for you.
+      </dd>
+      <dt>2. Select unknowing words in the package</dt>
+      <dd>
+      To remember only unknowning words,
+      you judge which words you have to learn.
+      In this page, you can use arrow keys:
+      left arrow key to mark the word as known,
+      right arrow key to mark the word as unknown and
+      down arrow key to undo operation.
+      </dd>
+      <dt>3. Review state 1 words</dt>
+      <dd>
+      Before starting game,
+      you can review state 1 words to make sure
+      you know all words appearing at first.
+      </dd>
+      <dt>4. Start game</dt>
+      <dd>
+      In game page,
+      you answer the correct word from the meaning
+      written in your selected language.
+      </dd>
+    </dl>
+
+  </div>
+</div>
 {% endblock %}

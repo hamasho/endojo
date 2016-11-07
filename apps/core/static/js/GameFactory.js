@@ -30,9 +30,16 @@ var GameFactory = function($http, $sce) {
     setScore: function(s) { score = s; },
     getScore: function() { return score; },
 
+    /**
+     * Set vocabulary game's word queue.
+     */
     setWordQueue: function(words) {
-      //return words.concat(words).concat(words);
-      return words.slice(0);
+      var state1Words = [];
+      for (var i = 0; i < words.length; i++) {
+        if (words[i].state === 1) state1Words.push(words[i]);
+      }
+      console.log(state1Words);
+      return words.concat(words).concat(state1Words);
     },
     /**
      * Trim spaces at beginning and end of sentence.

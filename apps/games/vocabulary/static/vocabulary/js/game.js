@@ -51,6 +51,7 @@ angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 
 .controller('PackageSelectController', [
     '$http',
+    '$location',
     'GameFactory',
     PackageSelectController
 ])

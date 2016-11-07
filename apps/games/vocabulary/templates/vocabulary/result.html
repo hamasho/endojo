@@ -31,10 +31,18 @@
       <table class="table">
         <tr ng-repeat="word in rsc.answeredWords">
           <td>[[ word.word_text ]] / [[ word.meaning ]]</td>
-          <td>
+          <td class="text-success">
             [[ word.state ]] &nbsp;&nbsp;&nbsp;
             <span class="glyphicon glyphicon-arrow-right"></span>
             &nbsp;&nbsp;&nbsp; [[ word.state + 1 ]]
+          </td>
+        </tr>
+        <tr ng-repeat="word in rsc.failedWords">
+          <td>[[ word.word_text ]] / [[ word.meaning ]]</td>
+          <td class="text-danger">
+            [[ word.state ]] &nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-arrow-right"></span>
+            &nbsp;&nbsp;&nbsp; 1
           </td>
         </tr>
       </table>

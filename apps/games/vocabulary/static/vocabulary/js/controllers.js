@@ -5,7 +5,7 @@
  * Package select controller.
  * ==================================================================
  */
-function PackageSelectController($http, GameService) {
+function PackageSelectController($http, $location, GameService) {
   var that = this;
   this.packages = [];
   this.nLearningWords = 0;
@@ -20,6 +20,9 @@ function PackageSelectController($http, GameService) {
       that.nTodaysWords = response.data.n_todays_words;
     });
   this.selectPackage = GameService.setSelectedPackage;
+  this.goToGameView = function() {
+    $location.path('/start');
+  };
 }
 
 /**
