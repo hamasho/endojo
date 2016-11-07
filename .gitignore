@@ -4,6 +4,8 @@
 .coverage
 __pycache__
 node_modules
+# virtual env
+venv
 # bower components
 apps/core/static/components
 # temporaly files

@@ -17,7 +17,9 @@ import sys
 import secrets
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__)
+)))
 
 # Add subdirectory 'apps' and 'apps/games' to search path
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
@@ -29,9 +31,6 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps/games'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = secrets.secret_key
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -86,17 +85,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'endojo.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 
@@ -143,36 +131,3 @@ MEDIA_URL = '/media/'
 # Home page
 LOGIN_URL = '/registration/login/'
 LOGIN_REDIRECT_URL = '/'
-
-if DEBUG:
-    INTERNAL_IPS = ('127.0.0.1')
-
-    INSTALLED_APPS += [
-        'debug_toolbar',
-        'django_nose',
-    ]
-
-    MIDDLEWARE += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ]
-
-    DEBUG_TOOLBAR_PANELS = [
-        'debug_toolbar.panels.versions.VersionsPanel',
-        'debug_toolbar.panels.timer.TimerPanel',
-        'debug_toolbar.panels.settings.SettingsPanel',
-        'debug_toolbar.panels.headers.HeadersPanel',
-        'debug_toolbar.panels.request.RequestPanel',
-        'debug_toolbar.panels.sql.SQLPanel',
-        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-        'debug_toolbar.panels.templates.TemplatesPanel',
-        'debug_toolbar.panels.cache.CachePanel',
-        'debug_toolbar.panels.signals.SignalsPanel',
-        'debug_toolbar.panels.logging.LoggingPanel',
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-    ]
-
-    DEBUG_TOOLBAR_CONFIG = {
-        'INTERCEPT_REDIRECTS': False,
-    }
-
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
