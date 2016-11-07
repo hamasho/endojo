@@ -3,13 +3,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 
 
-class BaseTemplateView(LoginRequiredMixin, TemplateView):
+class BaseNoLoginTemplateView(TemplateView):
     def get_context_data(self):
-        context = super(BaseTemplateView, self).get_context_data()
+        context = super(BaseNoLoginTemplateView, self).get_context_data()
         context['user'] = self.request.user
         extras = getattr(self, 'context', {})
         context = dict(list(context.items()) + list(extras.items()))
         return context
+
+
+class BaseTemplateView(LoginRequiredMixin, BaseNoLoginTemplateView):
+    pass
 
 
 class BaseApi(LoginRequiredMixin, View):

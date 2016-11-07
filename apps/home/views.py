@@ -1,33 +1,33 @@
-from core.views import BaseTemplateView
+from core.views import BaseNoLoginTemplateView
 
 
-class HomeView(BaseTemplateView):
+class HomeView(BaseNoLoginTemplateView):
     template_name = 'home/home.html'
     context = {'current_page': 'home'}
 
 
-class AboutView(BaseTemplateView):
+class AboutView(BaseNoLoginTemplateView):
     template_name = 'home/about.html'
 
 
-class DonateView(BaseTemplateView):
+class DonateView(BaseNoLoginTemplateView):
     template_name = 'home/donate.html'
 
 
-class DonateThanksView(BaseTemplateView):
+class DonateThanksView(BaseNoLoginTemplateView):
     template_name = 'home/donate_thanks.html'
 
 
-class VocabularyDocumentView(BaseTemplateView):
+class VocabularyDocumentView(BaseNoLoginTemplateView):
     template_name = 'home/vocabulary_document.html'
     context = {'current_page': 'vocabulary_document'}
 
 
-class ListeningDocumentView(BaseTemplateView):
+class ListeningDocumentView(BaseNoLoginTemplateView):
     template_name = 'home/listening_document.html'
     context = {'current_page': 'listening_document'}
 
 
-class TranscriptionDocumentView(BaseTemplateView):
+class TranscriptionDocumentView(BaseNoLoginTemplateView):
     template_name = 'home/transcription_document.html'
     context = {'current_page': 'transcription_document'}
