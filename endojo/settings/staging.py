@@ -2,6 +2,12 @@ from endojo.settings.base import *
 import secrets
 
 DEBUG = False
+
+ALLOWED_HOSTS = [
+    'localhost',
+    'dev.endojo.hama.sh',
+]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',

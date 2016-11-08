@@ -8,12 +8,21 @@ node_modules
 venv
 # bower components
 apps/core/static/components
+# socket file
+run/
+
 # temporaly files
 tmp/
+
+# static files
+static/
 
 # media files
 media/
 game_data/listening/**/*.mp3
+
+# log files
+logs/
 
 # Sensitive information
 secrets.py
