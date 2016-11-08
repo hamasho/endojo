@@ -132,3 +132,32 @@ MEDIA_URL = '/media/'
 # Home page
 LOGIN_URL = '/registration/login/'
 LOGIN_REDIRECT_URL = '/'
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/debug.log'),
+        },
+        'applogfile': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/app.debug.log'),
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'endojo': {
+            'handlers': ['applogfile'],
+            'level': 'DEBUG',
+        },
+    },
+}
