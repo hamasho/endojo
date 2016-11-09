@@ -1,5 +1,7 @@
 from endojo.settings.base import *
 
+AWS_STORAGE_BUCKET_NAME = 'endojo-local'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

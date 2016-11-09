@@ -7,7 +7,7 @@
 
     <div>
       <div class="audio-control">
-        <div audios src="[[ gc.currentProblem.url ]]"></div>
+        <div audios src="[[ gc.currentProblem.url | trustedFilter ]]"></div>
       </div>
       <div ng-class="gc.displayClass" class="result-display alert">
         <span ng-show="gc.isRightAnswer">

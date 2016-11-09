@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'Import listening game\'s problem files'
 
     def handle(self, *args, **options):
-        base_dir = os.path.join(settings.BASE_DIR, 'game_data/listening')
+        base_dir = os.path.join(settings.base.BASE_DIR, 'game_data/listening')
         dirs = os.listdir(base_dir)
 
         for dirname in dirs:

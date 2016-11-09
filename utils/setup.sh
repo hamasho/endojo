@@ -25,3 +25,8 @@ bower install
 virtualenv -p python3 venv
 source venv/bin/activate
 venv/bin/pip3 install -r requirements.txt
+
+# DB setup
+# Don't forget to execute the following SQL
+# ALTER TABLE vocabulary_translatedword MODIFY COLUMN meaning
+# VARCHAR(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

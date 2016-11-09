@@ -42,7 +42,7 @@ from endojo import settings
 from registration.models import Language
 from vocabulary.models import Package, Word, TranslatedWord, AvailablePackage
 
-BASE_DIR = os.path.join(settings.BASE_DIR, 'game_data/vocabulary')
+BASE_DIR = os.path.join(settings.base.BASE_DIR, 'game_data/vocabulary')
 WORD_DIR = os.path.join(BASE_DIR, 'words')
 TRANSLATION_DIR = os.path.join(BASE_DIR, 'translations')
 

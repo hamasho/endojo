@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'storages',
+
     'core.apps.CoreConfig',
     'home.apps.HomeConfig',
     'registration.apps.RegistrationConfig',
@@ -126,8 +128,11 @@ STATIC_ROOT = '/home/ubuntu/endojo/static/'
 
 
 # Media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_ACCESS_KEY_ID = secrets.aws_access_key_id
+AWS_SECRET_ACCESS_KEY = secrets.aws_secret_access_key
 
 # Home page
 LOGIN_URL = '/registration/login/'

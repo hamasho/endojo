@@ -1,5 +1,5 @@
 /* globals angular: false */
-/* globals GameFactory, timeFilter: false */
+/* globals GameFactory, timeFilter, trustedFilter: false */
 /* globals autofocusDirective, audioDirective: false */
 /* globals PackageSelectController: false */
 /* globals WordSelectController: false */
@@ -48,6 +48,7 @@ angular.module('ListeningGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 .directive('audios', ['$sce', audioDirective])
 
 .filter('timeFilter', [timeFilter])
+.filter('trustedFilter', ['$sce', trustedFilter])
 
 .controller('PackageSelectController', [
   '$http',

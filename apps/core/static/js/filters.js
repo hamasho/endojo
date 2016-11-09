@@ -8,3 +8,12 @@ function timeFilter() {
     return (input / 1000).toFixed(1) + 's';
   };
 }
+
+/**
+ * Trust resource URL
+ */
+function trustedFilter($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+}
