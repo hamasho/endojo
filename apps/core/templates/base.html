@@ -3,7 +3,10 @@
 
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>{{ title }}</title>
+    <title>{% block title %}{% endblock %} - EnDojo</title>
+    <meta name="keywords" content="{% block keywords %}{% endblock %}">
+    <meta name="description" content="{% block description %}{% endblock %}">
+
     {% load static %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'components/bootstrap/dist/css/bootstrap.min.css' %}">

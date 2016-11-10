@@ -4,7 +4,8 @@ from django.db import transaction
 from django.http import JsonResponse
 
 from core.views import BaseTemplateView, BaseApi
-from .models import Package, Word, PackageState, WordState
+from core.utils import get_today
+from .models import Package, Word, PackageState, WordState, History
 
 
 class GameView(BaseTemplateView):
@@ -102,15 +103,31 @@ class UnknownWordsStoreApi(BaseApi):
 class ResultStoreApi(BaseApi):
     def post(self, request):
         json_data = json.loads(request.body.decode())
+        n_failed = 0
+        n_complete = 0
+        n_levelup = 0
         for word in json_data['failed']:
             state = WordState.objects.get(id=word['id'])
             state.level_reset()
+            n_failed += 1
         for word in json_data['answered']:
             state = WordState.objects.get(id=word['id'])
             state.level_up()
+            if state.state == 6:
+                n_complete += 1
+            else:
+                n_levelup += 1
+        today, created = History.objects.get_or_create(
+            user=request.user,
+            date=get_today(),
+        )
+        today.n_failed += n_failed
+        today.n_complete += n_complete
+        today.n_levelup += n_levelup
+        today.save()
         return JsonResponse({'status': 'ok'})
 
 
 class StatsApi(BaseApi):
-    def get(self, request):
-        pass
+    def get_context_data(self):
+        return History.get_formatted_stats(self.request.user)

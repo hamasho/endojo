@@ -1,7 +1,61 @@
 {% extends 'mypage/base.html' %}
 
+{% block title %}History{% endblock %}
+
 {% block mypage_content %}
 
-History
+<div ng-app="HistoryApp" ng-controller="HistoryController as hc">
+  <h2>History</h2>
+
+  <div class="history-month-box ng-cloak"
+       ng-repeat="month in hc.histories">
+    <div class="row" style="margin:0;">
+
+      <div class="col-md-5 history-calendar-box">
+        <h3>[[ month.year + '/' + month.month ]]</h3>
+        <div class="history-calendar-day-box"
+             ng-repeat="day in month.month_history">
+          <div ng-if="(! day.day)"
+               class="history-day-none"></div><!--
+               --><div ng-if="day.day && (! day.vocabulary)"
+               class="history-day-blank"></div><!--
+               --><div ng-if="day.day && day.vocabulary"
+               class="history-day-vocabulary"></div><!--
+               --><div ng-if="day.day && (! day.listening)"
+               class="history-day-blank"></div><!--
+               --><div ng-if="day.day && day.listening"
+               class="history-day-listening"></div><!--
+               --><div ng-if="day.day && (! day.transcription)"
+               class="history-day-blank"></div><!--
+               --><div ng-if="day.day && day.transcription"
+               class="history-day-transcription"></div>
+        </div>
+      </div>
+
+      <div class="col-md-7"
+           style="margin-top:30px;">
+        <div class="history-text-vocabulary">
+          Vocabulary Words:
+          [[ month.n_vocabulary_words ]]
+        </div>
+        <div class="history-text-listening">
+          Listening Problems: 
+          [[ month.n_listening_problems ]]
+        </div>
+        <div class="history-text-transcription">
+          Transcription Problems: 
+          [[ month.n_transcription_problems ]]
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% load static %}
+<script src="{% static 'components/angular/angular.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+<script src="{% static 'mypage/js/history.js' %}"></script>
 
 {% endblock %}

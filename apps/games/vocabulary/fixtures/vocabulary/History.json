@@ -1,0 +1,35 @@
+[
+{
+  "model": "vocabulary.history",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "n_failed": 1,
+    "n_complete": 0,
+    "n_levelup": 2,
+    "date": "2016-10-22"
+  }
+},
+{
+  "model": "vocabulary.history",
+  "pk": 2,
+  "fields": {
+    "user": 1,
+    "n_failed": 1,
+    "n_complete": 2,
+    "n_levelup": 2,
+    "date": "2016-10-24"
+  }
+},
+{
+  "model": "vocabulary.history",
+  "pk": 3,
+  "fields": {
+    "user": 1,
+    "n_failed": 1,
+    "n_complete": 0,
+    "n_levelup": 2,
+    "date": "2016-10-26"
+  }
+}
+]

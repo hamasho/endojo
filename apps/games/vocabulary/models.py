@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from registration.models import Language
-from core.utils import today
+from core.utils import get_today
 
 
 class Package(models.Model):
@@ -125,7 +125,7 @@ class WordState(models.Model):
     user = models.ForeignKey(User)
     word = models.ForeignKey(Word)
     added = models.DateField(auto_now_add=True)
-    next_date = models.DateField(default=today)
+    next_date = models.DateField(default=get_today)
 
     class Meta:
         unique_together = ('user', 'word')
@@ -166,12 +166,12 @@ class WordState(models.Model):
             delta = datetime.timedelta(days=7)
         elif (self.state == 5):
             delta = datetime.timedelta(days=14)
-        self.next_date = today() + delta
+        self.next_date = get_today() + delta
         self.save()
 
     def level_reset(self):
         self.state = 1
-        self.next_date = today()
+        self.next_date = get_today()
         self.save()
 
     @staticmethod
@@ -192,4 +192,21 @@ class WordState(models.Model):
                 ).meaning,
                 state=learning_word.state,
             ))
+        return result
+
+
+class History(models.Model):
+    user = models.ForeignKey(User, related_name='vocabulary_history_user')
+    n_failed = models.SmallIntegerField(default=0)
+    n_complete = models.SmallIntegerField(default=0)
+    n_levelup = models.SmallIntegerField(default=0)
+    date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['date']
+
+    @staticmethod
+    def get_formatted_stats(user):
+        result = {
+        }
         return result

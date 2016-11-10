@@ -2,7 +2,7 @@ from datetime import timedelta
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from core.utils import today
+from core.utils import get_today
 from vocabulary import models
 from registration.models import Language
 
@@ -49,19 +49,19 @@ class WordStateTest(TestCase):
             word=models.Word.objects.get(pk=1),
         )
         self.assertEqual(state.state, 1)
-        self.assertEqual(state.next_date, today())
+        self.assertEqual(state.next_date, get_today())
 
         state.level_up()
-        self.assertEqual(state.next_date, today() + timedelta(days=1))
+        self.assertEqual(state.next_date, get_today() + timedelta(days=1))
         self.assertEqual(state.state, 2)
         state.level_up()
-        self.assertEqual(state.next_date, today() + timedelta(days=3))
+        self.assertEqual(state.next_date, get_today() + timedelta(days=3))
         self.assertEqual(state.state, 3)
         state.level_up()
-        self.assertEqual(state.next_date, today() + timedelta(days=7))
+        self.assertEqual(state.next_date, get_today() + timedelta(days=7))
         self.assertEqual(state.state, 4)
         state.level_up()
-        self.assertEqual(state.next_date, today() + timedelta(days=14))
+        self.assertEqual(state.next_date, get_today() + timedelta(days=14))
         self.assertEqual(state.state, 5)
 
     def test_level_up_update_package_state(self):
@@ -96,7 +96,7 @@ class WordStateTest(TestCase):
         )
         state.level_reset()
         self.assertEqual(state.state, 1)
-        self.assertEqual(state.next_date, today())
+        self.assertEqual(state.next_date, get_today())
 
     def test_get_learning_words(self):
         state1 = models.WordState.objects.create(

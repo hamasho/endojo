@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^stats/$', views.StatsView.as_view(), name='stats'),
     url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
 
+    url(r'^histories/$', views.HistoryApi.as_view(), name='history_api'),
     url(r'^score/$', views.ScoreApi.as_view(), name='score_api'),
 ]

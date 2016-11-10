@@ -1,10 +1,9 @@
-import datetime
 from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-from core.utils import date_range
+from core.utils import date_range, get_today
 
 
 class Package(models.Model):
@@ -84,7 +83,7 @@ class ProblemScore(models.Model):
             today, created = History.objects.get_or_create(
                 user=self.user,
                 level=self.problem.level,
-                date=datetime.date.today()
+                date=get_today()
             )
             avg = today.problem_count * today.average_time_ms
             today.problem_count += 1

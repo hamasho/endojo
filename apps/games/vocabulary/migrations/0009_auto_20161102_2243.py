@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='wordstate',
             name='next_date',
-            field=models.DateField(default=core.utils.today),
+            field=models.DateField(default=core.utils.get_today),
         ),
     ]

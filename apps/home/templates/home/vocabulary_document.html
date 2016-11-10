@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}Vocabulary{% endblock %}
+{% block title %}Vocabulary Doc{% endblock %}
+
+{% block keywords %}English, Vocabulary skill, Improve{% endblock %}
+
+{% block description %}
+Improve your English vocabulary skill by playing game.
+{% endblock %}
 
 {% block content %}
 
@@ -20,9 +26,6 @@
     your English skills improve in every way.
     </p>
     
-    <p>
-    In this game, we use the brain process of memorization.
-    </p>
     <div style="margin-left:15px;" class="pull-right">
       <img src="{% static 'img/forgetting_curve1.png' %}"
            width="200"
@@ -32,6 +35,7 @@
            alt="Forgetting Curve with Memorizing Process">
     </div>
     <p>
+    In this game, we use the brain process of memorization.
     Your brain lost memory about you remember over time.
     Things you just remember at first are forgotten rapidly.
     But if you remember again before you completely forget it,

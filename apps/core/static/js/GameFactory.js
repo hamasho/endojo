@@ -38,7 +38,6 @@ var GameFactory = function($http, $sce) {
       for (var i = 0; i < words.length; i++) {
         if (words[i].state === 1) state1Words.push(words[i]);
       }
-      console.log(state1Words);
       return words.concat(words).concat(state1Words);
     },
     /**
@@ -65,7 +64,7 @@ var GameFactory = function($http, $sce) {
           } else {
             correct = (i === diffs.length - 1 ? correct : false);
             result += '<span class="answer-blank-part">' +
-              diffs[i].value.replace(/[a-zA-Z0-9]/g, '_') + '</span>';
+              diffs[i].value.replace(/[a-zA-Z0-9'\.]/g, '_') + '</span>';
           }
         } else if (diffs[i].added) {
           correct = false;

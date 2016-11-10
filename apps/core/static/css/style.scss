@@ -1,7 +1,8 @@
 $bgcolor1: #FAF8EF;
 $bgcolor2: #D3D0BE;
+$bgcolor-light: #FFFFFC;
 //$color1: #A1978D;
-$color1: #909090;
+$color1: #777777;
 $color2: #BBADA0;
 $color3: #8F7A66;
 $color4: #776E65;
@@ -10,6 +11,10 @@ $hl-color: #ada69f;
 $blue: #31708f;
 $green: #3c763d;
 $red: #a94442;
+$pastel-blue: #BFFFFF;
+$pastel-green: #ABE8AC;
+$pastel-red: #FF6861;
+$grey: #DDDDDD;
 
 $success-bg: #DFF0D8;
 $info-bg: #D9EDF7;
@@ -24,7 +29,6 @@ $danger-bg: #F2DEDE;
   display:inline-block;
   vertical-align:middle;
   margin-right:-4px;
-
 }
 
 /**
@@ -40,8 +44,18 @@ body {
   background-color: $bgcolor1;
   line-height: 1.5;
 }
+h1 {
+  margin-bottom: 20px;
+  margin-top: 30px;
+}
 p {
+  margin-bottom: 20px;
   color: $color1;
+}
+.p-ul {
+  color: $color1;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 a {
   color: $blue;
@@ -210,6 +224,69 @@ a {
   font-size: 20px;
   border: 2px solid $blue;
   box-shadow: 0px 0px 10px $blue;
+}
+
+/**
+ * Mypage
+ */
+// History
+.history-month-box {
+  background-color: $bgcolor-light;
+  margin: 20px;
+  padding: 0;
+}
+.history-calendar-box {
+  width: 185px;
+  padding: 5px;
+  line-height: 0;
+  h3 {
+    margin-top: 10px;
+  }
+}
+.history-calendar-day-box {
+  display: inline-block;
+  margin: 2px;
+  width: 21px;
+  height: 10px;
+}
+.history-day-base {
+  display: inline-block;
+  width: 33%;
+  height: 100%;
+}
+.history-day-none {
+  display: inline-block;
+  background-color: $bgcolor-light;
+  width: 100%;
+  height: 100%;
+}
+.history-day-blank {
+  @extend .history-day-base;
+  background-color: $grey;
+}
+.history-day-vocabulary {
+  @extend .history-day-base;
+  background-color: $pastel-green;
+}
+.history-day-listening {
+  @extend .history-day-base;
+  background-color: $pastel-blue;
+}
+.history-day-transcription {
+  @extend .history-day-base;
+  background-color: $pastel-red;
+}
+.history-text-vocabulary {
+  font-size: 16px;
+  color: $green;
+}
+.history-text-listening {
+  font-size: 16px;
+  color: $blue;
+}
+.history-text-transcription {
+  font-size: 16px;
+  color: $red;
 }
 
 /**
