@@ -11,8 +11,12 @@
 </ul>
 
 <div class="tab-content">
-  <div id="vocabulary" class="tab-pane fade">
-    <h2>Listening Game Stats</h2>
+  <div id="vocabulary" class="tab-pane fade in active">
+    <h2>Vocabulary Game Stats</h2>
+    <h3>Number of Each State's Words</h3>
+    <div style="margin-top:40px;">
+      <canvas id="vocabulary-chart" width="700" height="500"></canvas>
+    </div>
   </div>
   <div id="listening" class="tab-pane fade">
     <h2>Listening Game Stats</h2>
@@ -32,7 +36,7 @@
 
 {% load static %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
 <script src="{% static 'mypage/js/stats.js' %}"></script>
 
 {% endblock %}

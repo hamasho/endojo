@@ -124,6 +124,30 @@ class ResultStoreApi(BaseApi):
         today.n_failed += n_failed
         today.n_complete += n_complete
         today.n_levelup += n_levelup
+        today.n_state1 = WordState.objects.filter(
+            user=request.user,
+            state=1,
+        ).count()
+        today.n_state2 = WordState.objects.filter(
+            user=request.user,
+            state=2,
+        ).count()
+        today.n_state3 = WordState.objects.filter(
+            user=request.user,
+            state=3,
+        ).count()
+        today.n_state4 = WordState.objects.filter(
+            user=request.user,
+            state=4,
+        ).count()
+        today.n_state5 = WordState.objects.filter(
+            user=request.user,
+            state=5,
+        ).count()
+        today.n_state6 = WordState.objects.filter(
+            user=request.user,
+            state=6,
+        ).count()
         today.save()
         return JsonResponse({'status': 'ok'})
 

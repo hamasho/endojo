@@ -1,10 +1,10 @@
-import datetime
+from datetime import timedelta
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
 from registration.models import Language
-from core.utils import get_today
+from core.utils import date_range, get_today
 
 
 class Package(models.Model):
@@ -159,13 +159,13 @@ class WordState(models.Model):
             return
 
         if (self.state == 2):
-            delta = datetime.timedelta(days=1)
+            delta = timedelta(days=1)
         elif (self.state == 3):
-            delta = datetime.timedelta(days=3)
+            delta = timedelta(days=3)
         elif (self.state == 4):
-            delta = datetime.timedelta(days=7)
+            delta = timedelta(days=7)
         elif (self.state == 5):
-            delta = datetime.timedelta(days=14)
+            delta = timedelta(days=14)
         self.next_date = get_today() + delta
         self.save()
 
@@ -200,6 +200,12 @@ class History(models.Model):
     n_failed = models.SmallIntegerField(default=0)
     n_complete = models.SmallIntegerField(default=0)
     n_levelup = models.SmallIntegerField(default=0)
+    n_state1 = models.IntegerField(default=0)
+    n_state2 = models.IntegerField(default=0)
+    n_state3 = models.IntegerField(default=0)
+    n_state4 = models.IntegerField(default=0)
+    n_state5 = models.IntegerField(default=0)
+    n_state6 = models.IntegerField(default=0)
     date = models.DateField(auto_now_add=True)
 
     class Meta:
@@ -208,5 +214,45 @@ class History(models.Model):
     @staticmethod
     def get_formatted_stats(user):
         result = {
+            'state1': [],
+            'state2': [],
+            'state3': [],
+            'state4': [],
+            'state5': [],
+            'state6': [],
         }
+        histories = History.objects.filter(user=user)
+        if len(histories) == 0:
+            return result
+        start_date = histories[0].date
+        end_date = histories[len(histories) - 1].date
+        for date in date_range(start_date, end_date + timedelta(1)):
+            that_day = histories.filter(date=date)
+            if not that_day.exists():
+                continue
+            that_day = that_day[0]
+            result['state1'].append({
+                'x': date,
+                'y': that_day.n_state1,
+            })
+            result['state2'].append({
+                'x': date,
+                'y': that_day.n_state2,
+            })
+            result['state3'].append({
+                'x': date,
+                'y': that_day.n_state3,
+            })
+            result['state4'].append({
+                'x': date,
+                'y': that_day.n_state4,
+            })
+            result['state5'].append({
+                'x': date,
+                'y': that_day.n_state5,
+            })
+            result['state6'].append({
+                'x': date,
+                'y': that_day.n_state6,
+            })
         return result
