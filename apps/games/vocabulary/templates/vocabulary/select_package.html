@@ -31,7 +31,7 @@
         <td>Completed</td>
       </tr>
     </thead>
-    <tbody ng-repeat="package in psc.packages | orderBy:'state':true">
+    <tbody ng-repeat="package in psc.filteredPackages">
       <tr>
         <td>
           <a ng-href="#/words" ng-click="psc.selectPackage(package);">
@@ -46,5 +46,14 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- TODO: fix total-items not working -->
+  <pagination ng-model="psc.currentPage"
+              class="pagination-sm"
+              total-items="psc.packages.length"
+              max-size="psc.maxSize"
+              class="pagination-sm"
+              boundary-links="true">
+  </pagination>
 
 </div>

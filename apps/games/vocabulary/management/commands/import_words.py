@@ -80,24 +80,24 @@ def import_each_translation(word_file_name):
             continue
 
         translation_file_path = os.path.join(TRANSLATION_DIR, lang)
-        for file_name in os.listdir(translation_file_path):
-            package_title = file_name[2:].replace('_', ' ')
-            package = Package.objects.get(title=package_title)
-            lang_package, created = AvailablePackage.objects.get_or_create(
-                package=package,
+        package_title = word_file_name[2:].replace('_', ' ')
+        print(package_title)
+        package = Package.objects.get(title=package_title)
+        lang_package, created = AvailablePackage.objects.get_or_create(
+            package=package,
+            language=language,
+        )
+        if not created:
+            continue
+        words = get_lines(os.path.join(WORD_DIR, word_file_name))
+        translations = get_lines(os.path.join(translation_file_path, word_file_name))
+        for i in range(len(words)):
+            TranslatedWord.objects.create(
+                word=Word.objects.get(word_text=words[i]),
                 language=language,
+                meaning=translations[i],
             )
-            if not created:
-                continue
-            words = get_lines(os.path.join(WORD_DIR, file_name))
-            translations = get_lines(os.path.join(translation_file_path, file_name))
-            for i in range(len(words)):
-                TranslatedWord.objects.create(
-                    word=Word.objects.get(word_text=words[i]),
-                    language=language,
-                    meaning=translations[i],
-                )
-            print('Add translation %s (%s)' % (package_title, lang))
+        print('Add translation %s (%s)' % (package_title, lang))
 
 
 class Command(BaseCommand):

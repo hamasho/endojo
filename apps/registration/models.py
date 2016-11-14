@@ -12,10 +12,12 @@ def calculate_age(born):
 
 
 class Language(models.Model):
+    JAPANESE = 'ja'
     LANGUAGE_CHOICES = (
-        ('Japanese', 'Japanese'),
+        (JAPANESE, 'Japanese'),
     )
-    language_text = models.CharField(max_length=30, unique=True)
+    language_text = models.CharField(
+        max_length=30, choices=LANGUAGE_CHOICES, unique=True)
 
 
 class UserInfo(models.Model):

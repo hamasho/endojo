@@ -19,7 +19,7 @@ class Package(models.Model):
     def get_package_list(user, language):
         packages = Package.objects.filter(
             availablepackage__language=language,
-        )
+        ).order_by('level', 'title')
         result = []
         for package in packages:
             try:

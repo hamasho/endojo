@@ -5,14 +5,26 @@
  * Package select controller.
  * ==================================================================
  */
-function PackageSelectController($http, $location, GameService) {
-  var that = this;
+function PackageSelectController($scope, $http, $location, GameService) {
   this.packages = [];
   this.nLearningWords = 0;
   this.nTodaysWords = 0;
+  this.filteredPackages = [];
+  this.currentPage = 1;
+  this.numPerPage = 15;
+  this.maxSize = 10;
+
+  var that = this;
+  var setFilteredPackages = function() {
+    var start = (that.currentPage - 1) * that.numPerPage;
+    var end = start + that.numPerPage;
+    that.filteredPackages = that.packages.slice(start, end);
+  };
+
   $http.get('/game/vocabulary/packages/')
     .then(function(response) {
       that.packages = response.data.packages;
+      setFilteredPackages();
     });
   $http.get('/game/vocabulary/words/learning/count/')
     .then(function(response) {
@@ -23,6 +35,8 @@ function PackageSelectController($http, $location, GameService) {
   this.goToGameView = function() {
     $location.path('/start');
   };
+
+  $scope.$watch('psc.currentPage + psc.numPerPage', setFilteredPackages);
 }
 
 /**

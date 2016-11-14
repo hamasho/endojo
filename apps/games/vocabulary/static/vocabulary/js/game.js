@@ -10,7 +10,12 @@
 /**
  * Vocabulary game module
  */
-angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
+angular.module('VocabularyGameApp', [
+    'ui.bootstrap',
+    'ngAnimate',
+    'ngSanitize',
+    'ui.router',
+])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -50,6 +55,7 @@ angular.module('VocabularyGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 .directive('autofocus', ['$timeout', autofocusDirective])
 
 .controller('PackageSelectController', [
+    '$scope',
     '$http',
     '$location',
     'GameFactory',

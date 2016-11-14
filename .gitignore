@@ -17,6 +17,9 @@ tmp/
 # static files
 static/
 
+# packages and problems
+game_data/
+
 # media files
 media/
 game_data/listening/**/*.mp3
