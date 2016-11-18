@@ -5,14 +5,28 @@
  * Package select controller
  * ==================================================================
  */
-function PackageSelectController($http, GameService) {
+function PackageSelectController($scope, $http, GameService) {
   this.packages = [];
+  this.filteredPackages = [];
+  this.currentPage = 1;
+  this.numPerPage = 10;
+  this.maxSize = 10;
   this.selectPackage = GameService.setSelectedPackage;
+
   var that = this;
+  var setFilteredPackages = function() {
+    var start = (that.currentPage - 1) * that.numPerPage;
+    var end = start + that.numPerPage;
+    that.filteredPackages = that.packages.slice(start, end);
+  };
+
   $http.get('/game/transcription/packages/')
     .then(function(response) {
       that.packages = response.data.packages;
+      setFilteredPackages();
     });
+
+  $scope.$watch('psc.currentPage + psc.numPerPage', setFilteredPackages);
 }
 
 /**

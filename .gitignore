@@ -1,5 +1,6 @@
 *.sqlite3
 *.pyc
+*.ogv
 .ropeproject
 .coverage
 __pycache__

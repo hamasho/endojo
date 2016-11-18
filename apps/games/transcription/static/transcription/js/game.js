@@ -10,7 +10,12 @@
 /**
  * Transcription game module
  */
-angular.module('TranscriptionGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
+angular.module('TranscriptionGameApp', [
+    'ui.router',
+    'ngAnimate',
+    'ngSanitize',
+    'ui.bootstrap',
+])
 
 .config(['$interpolateProvider', function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -48,6 +53,7 @@ angular.module('TranscriptionGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 .factory('GameFactory', GameFactory)
 
 .controller('PackageSelectController', [
+    '$scope',
     '$http',
     'GameFactory',
     PackageSelectController

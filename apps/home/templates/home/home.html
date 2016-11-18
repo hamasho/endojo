@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block title %}Home{% endblock %}
+
+{% block keywords %}Improve, English skills{% endblock %}
+
+{% block description %}
+Improve your English skills. English reading, writting, listening, speaking.
+{% endblock %}
+
 {% block content %}
 
 {% load static %}
@@ -9,23 +17,21 @@
        src="{% static 'img/logo.png' %}" alt="English Dojo">
 </div>
 <div class="subtitle">
-  Improve your English skills
+  Improve Your English skills
 </div>
 
 <div class="row col-md-offset-1 col-md-10">
   <div class="col-md-4">
-    <h3>Improve English Skills by Games</h3>
+    <h3>Improve English by Games</h3>
     <p>
-    Three games improve your English skills;
-    vocabulary, listening, reading and writing.
+    You can play three games to improve your English skills.
     </p>
   </div>
   <div class="col-md-4">
     <h3>Many Problems</h3>
     <p>
-    There are many problems for each level's educater.
-    No matter how high your English skills are,
-    you can choose problems which fit for your level.
+    There are problems for each level's educater.
+    You can choose good problems which suit for your level.
     </p>
   </div>
   <div class="col-md-4">
@@ -33,14 +39,70 @@
     <p>
     All works done are tracked and summarized.
     You can always check your work.
-    This helps to continue your daily work.
     </p>
   </div>
 </div>
 
-<div class="row col-md-offset-1 col-md-10" style="margin-top:100px;">
+<div class="home row col-md-offset-1 col-md-10"
+     style="margin-top:80px;">
 
+  <h1>Improve English by Three Games</h1>
+
+  <div class="row">
+    <div class="col-md-4">
+      <img src="{% static 'gif/vocabulary_word_select.gif' %}"
+           class="img-responsive"
+           alt="Vocabulary Game">
+      <h3>Vocabulary Game</h3>
+      <p>
+      Increase your vocabulary by
+      checking unknowing words repeatedly.
+      </p>
+      <a href="{% url 'home:vocabulary_document' %}">Learn more.</a>
+    </div>
+    <div class="col-md-4">
+      <img src="{% static 'gif/listening_answer_problems.gif' %}"
+           class="img-responsive"
+           alt="Listening Game">
+      <h3>Listening Game</h3>
+      <p>
+      Improve your listening skills by
+      hearing until you completely understand.
+      </p>
+      <a href="{% url 'home:listening_document' %}">Learn more.</a>
+    </div>
+    <div class="col-md-4">
+      <img src="{% static 'gif/transcription_answer_problems.gif' %}"
+           class="img-responsive"
+           alt="Transcription Game">
+      <h3>Transcription Game</h3>
+      <p>
+      Improve all of your English
+      by remembering entire forms of English sentences completely.
+      </p>
+      <a href="{% url 'home:transcription_document' %}">Learn more.</a>
+    </div>
+  </div>
+
+  <h1>Summarize Your Work</h1>
+
+  <div class="row">
+    <div class="col-md-7">
+      <p>
+      Your activities are recorded, so it can be reviewed later.
+      You can check how improved your English skills are and
+      your history about daily tasks.
+      </p>
+    </div>
+    <div class="col-md-5">
+      <img src="{% static 'gif/mypage.gif' %}"
+           class="img-responsive"
+           alt="Mypage">
+    </div>
+  </div>
 
 </div>
+
+<div class="row" style="margin-bottom:50px"></div>
 
 {% endblock %}

@@ -17,6 +17,7 @@ class Command(BaseCommand):
 
         for dirname in dirs:
             with transaction.atomic():
+                print('import: {0}'.format(dirname))
                 dirpath = os.path.join(base_dir, dirname)
                 info_filepath = os.path.join(dirpath, 'info.txt')
                 lines = [line.rstrip('\n') for line in open(info_filepath)]
@@ -27,7 +28,7 @@ class Command(BaseCommand):
 
                 audio_files = sorted(glob.glob('%s/*.mp3' % (dirpath)))
                 if len(problems) != len(audio_files):
-                    raise CommandError("Info file does not match actual audio files")
+                    raise CommandError("Info file ({0}) does not match actual audio files".format(dirname))
 
                 package = Package.objects.create(
                     title=title,

@@ -2,13 +2,13 @@
 
   <div class="well" ng-show="psc.nLearningWords">
     <div class="row">
-      <div class="col-md-offset-1 col-md-6">
+      <div class="col-sm-offset-1 col-sm-6">
         <ul style="margin-bottom:0">
           <li>Learning words: {{ n_learning_words }}</li>
           <li>Today's words: {{ n_todays_words }}</li>
         </ul>
       </div>
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <button ng-disabled="psc.nTodaysWords === 0"
                 ng-click="psc.goToGameView()"
                 class="btn btn-info btn-lg" style="width:100%">
@@ -23,12 +23,12 @@
   <table class="table">
     <thead>
       <tr>
-        <td>Title</td>
-        <td>Level</td>
-        <td>State</td>
-        <td>Published</td>
-        <td>Tried</td>
-        <td>Completed</td>
+        <th>Title</th>
+        <th>Level</th>
+        <th>State</th>
+        <th>Published</th>
+        <th>Tried</th>
+        <th>Completed</th>
       </tr>
     </thead>
     <tbody ng-repeat="package in psc.filteredPackages">

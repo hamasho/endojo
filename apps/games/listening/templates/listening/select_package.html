@@ -4,14 +4,14 @@
   <table class="table">
     <thead>
       <tr>
-        <td>Title</td>
-        <td>Level</td>
-        <td>Published</td>
-        <td>Tried</td>
-        <td>Completed</td>
+        <th>Title</th>
+        <th>Level</th>
+        <th>Published</th>
+        <th>Tried</th>
+        <th>Completed</th>
       </tr>
     </thead>
-    <tbody ng-repeat="package in psc.packages">
+    <tbody ng-repeat="package in psc.filteredPackages">
       <tr>
         <td>
           <a ng-href="#/start" ng-click="psc.selectPackage(package);">
@@ -25,5 +25,14 @@
       </tr>
     </tbody>
   </table>
+
+  <!-- TODO: fix total-items not working -->
+  <pagination ng-model="psc.currentPage"
+              class="pagination-sm"
+              total-items="psc.packages.length"
+              max-size="psc.maxSize"
+              class="pagination-sm"
+              boundary-links="true">
+  </pagination>
 
 </div>

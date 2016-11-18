@@ -11,7 +11,7 @@ function PackageSelectController($scope, $http, $location, GameService) {
   this.nTodaysWords = 0;
   this.filteredPackages = [];
   this.currentPage = 1;
-  this.numPerPage = 15;
+  this.numPerPage = 10;
   this.maxSize = 10;
 
   var that = this;

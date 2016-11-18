@@ -18,7 +18,7 @@ class Package(models.Model):
 
     @staticmethod
     def get_package_list(user):
-        packages = Package.objects.all()
+        packages = Package.objects.all().order_by('level', 'title')
         result = []
         for package in packages:
             try:

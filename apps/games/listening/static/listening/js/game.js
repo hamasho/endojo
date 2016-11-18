@@ -11,7 +11,12 @@
 /**
  * Listening game module
  */
-angular.module('ListeningGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
+angular.module('ListeningGameApp', [
+  'ui.router',
+  'ngAnimate',
+  'ngSanitize',
+  'ui.bootstrap',
+])
 
 .config(function($interpolateProvider){
   $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -51,6 +56,7 @@ angular.module('ListeningGameApp', ['ui.router', 'ngAnimate', 'ngSanitize'])
 .filter('trustedFilter', ['$sce', trustedFilter])
 
 .controller('PackageSelectController', [
+  '$scope',
   '$http',
   'GameFactory',
   PackageSelectController

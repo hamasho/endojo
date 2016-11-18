@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+<div class="col-md-offset-1 col-md-10">
+  <div class="row">
+
+    <div class="panel panel-info">
+
+      <div class="panel-heading">Contact</div>
+
+      <div class="panel-body">
+        <form action="{% url 'home:contact' %}"
+              method="post" class="form-horizontal">
+          {% csrf_token %}
+
+          {% if form.contact_name.errors %}
+          <div class="alert alert-danger">
+            {{ form.contact_name.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_contact_name">Contact Name:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="text"
+                     id="id_contact_name"
+                     class="form-control"
+                     name="contact_name"
+                     value="{{ form.contact_name.value | default_if_none:""}}">
+            </div>
+          </div>
+
+          {% if form.contact_email.errors %}
+          <div class="alert alert-danger">
+            {{ form.contact_email.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_contact_email">Contact Email:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="text"
+                     id="id_contact_email"
+                     class="form-control"
+                     name="contact_email"
+                     value="{{ form.contact_email.value | default_if_none:"" }}">
+            </div>
+          </div>
+
+          {% if form.contact_text.errors %}
+          <div class="alert alert-danger">
+            {{ form.contact_text.errors }}
+          </div>
+          {% endif %}
+          <div class="form-group">
+            <div class="col-md-3">
+              <label for="id_contact_text">Text:</label>
+            </div>
+            <div class="col-md-9">
+              <textarea id="id_contact_text"
+                        class="form-control"
+                        name="contact_text" cols="30" rows="10">{{ form.contact_text.value | default_if_none:"" }}</textarea>
+            </div>
+          </div>
+
+          <button class="btn btn-info pull-right" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
