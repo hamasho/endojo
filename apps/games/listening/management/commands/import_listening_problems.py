@@ -54,7 +54,8 @@ class Command(BaseCommand):
                         package=package,
                         level=level,
                     )
-                    audio_filepath = audio_files[i]
+                    audio_filename = '%d.mp3' % (i + 1)
+                    audio_filepath = os.path.join(dirpath, audio_filename)
                     audio_file = File(open(audio_filepath, mode='rb'))
                     problem.audio_file = audio_file
                     problem.save()
