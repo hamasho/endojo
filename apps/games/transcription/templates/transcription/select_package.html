@@ -6,6 +6,7 @@
       <tr>
         <th>Title</th>
         <th>Level</th>
+        <th>State</th>
         <th>Published</th>
         <th>Tried</th>
         <th>Completed</th>
@@ -19,6 +20,9 @@
           </a>
         </td>
         <td>[[ package.level ]]</td>
+        <td ng-class="psc.stateClass(package.state)">
+          [[ package.state ]]
+        </td>
         <td>[[ package.pub_date | date ]]</td>
         <td>[[ package.n_tried ]]</td>
         <td>[[ package.n_completed ]]</td>

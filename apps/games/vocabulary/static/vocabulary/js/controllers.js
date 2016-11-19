@@ -35,6 +35,11 @@ function PackageSelectController($scope, $http, $location, GameService) {
   this.goToGameView = function() {
     $location.path('/start');
   };
+  this.stateClass = function(state) {
+    if (state === 'Yet') return 'text-danger';
+    else if (state === 'Learning') return 'text-primary';
+    else return 'text-success';
+  };
 
   $scope.$watch('psc.currentPage + psc.numPerPage', setFilteredPackages);
 }

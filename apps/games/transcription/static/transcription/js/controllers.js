@@ -13,6 +13,12 @@ function PackageSelectController($scope, $http, GameService) {
   this.maxSize = 10;
   this.selectPackage = GameService.setSelectedPackage;
 
+  this.stateClass = function(state) {
+    if (state === 'Yet') return 'text-danger';
+    else if (state === 'Learning') return 'text-primary';
+    else return 'text-success';
+  };
+
   var that = this;
   var setFilteredPackages = function() {
     var start = (that.currentPage - 1) * that.numPerPage;
