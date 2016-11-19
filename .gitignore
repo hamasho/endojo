@@ -12,11 +12,12 @@ apps/core/static/components
 # socket file
 run/
 
+# JS concat and uglified files
+concat.js
+uglify.js
+
 # temporaly files
 tmp/
-
-# static files
-static/
 
 # packages and problems
 game_data/

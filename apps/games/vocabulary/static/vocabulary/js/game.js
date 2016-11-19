@@ -11,10 +11,10 @@
  * Vocabulary game module
  */
 angular.module('VocabularyGameApp', [
-    'ui.bootstrap',
     'ngAnimate',
     'ngSanitize',
     'ui.router',
+    'ui.bootstrap',
 ])
 
 .config(function($interpolateProvider){
@@ -50,7 +50,7 @@ angular.module('VocabularyGameApp', [
   });
 }])
 
-.factory('GameFactory', GameFactory)
+.factory('GameFactory', ['$http', '$sce', GameFactory])
 
 .directive('autofocus', ['$timeout', autofocusDirective])
 

@@ -8,7 +8,7 @@
       <a ng-click="wsc.setWordAsKnown()">
         <img class="img-responsive bottom-align"
              style="margin-bottom: 30px;"
-             src="{% static 'img/knowing.png' %}" alt="KNOWING">
+             src="{% static 'img/known.png' %}" alt="KNOWING">
       </a>
       <div ng-repeat="word in wsc.knownWords"
            class="alert alert-display-success word-item animated-list">
@@ -39,7 +39,7 @@
       <a ng-click="wsc.setWordAsUnknown()">
         <img class="img-responsive bottom-align"
              style="margin-bottom: 30px;"
-             src="{% static 'img/unknowing.png' %}" alt="KNOWING">
+             src="{% static 'img/unknown.png' %}" alt="KNOWING">
       </a>
       <div ng-repeat="word in wsc.unknownWords"
            class="alert alert-display-danger word-enter animated-list">
