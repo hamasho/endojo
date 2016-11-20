@@ -1,4 +1,4 @@
-# TODOs
+# TODOs after pull
 ```sh
 export DJANGO_SETTINGS_MODULE=endojo.settings.staging
 venv/bin/python3 manage.py collectstatics

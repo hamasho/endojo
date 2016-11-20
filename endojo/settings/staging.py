@@ -3,6 +3,8 @@ import secrets
 
 DEBUG = False
 
+AWS_STORAGE_BUCKET_NAME = 'endojo-staging'
+
 ALLOWED_HOSTS = [
     'localhost',
     'dev.endojo.hama.sh',
