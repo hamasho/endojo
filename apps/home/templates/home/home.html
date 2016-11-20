@@ -12,12 +12,19 @@ Improve your English reading, writing, listening and speaking skills.
 
 {% load static %}
 
-<div>
-  <img class="logo-image"
-       src="{% static 'img/logo.png' %}" alt="English Dojo">
+<div class="row">
+  <div class="hidden-sm" style="margin-top:80px;"></div>
+  <div class="col-md-offset-3 col-md-6">
+    <img class="img-responsive"
+         src="{% static 'img/logo.png' %}" alt="English Dojo">
+  </div>
+  <div class="hidden-sm" style="margin-top:80px;"></div>
 </div>
-<div class="subtitle">
-  Improve Your English skills
+
+<div class="row">
+  <div class="subtitle">
+    Improve Your English skills
+  </div>
 </div>
 
 <div class="row col-md-offset-1 col-md-10">
@@ -44,43 +51,43 @@ Improve your English reading, writing, listening and speaking skills.
 </div>
 
 <div class="home row col-md-offset-1 col-md-10"
-     style="margin-top:80px;">
+     style="margin-top:50px;">
 
   <h1>Improve English by Three Games</h1>
 
   <div class="row">
     <div class="col-md-4">
+      <h3>Vocabulary Game</h3>
       <img src="{% static 'gif/vocabulary_word_select.gif' %}"
            class="img-responsive"
            alt="Vocabulary Game">
-      <h3>Vocabulary Game</h3>
       <p>
       Increase your vocabulary by
       checking unknown words repeatedly.
-      </p>
       <a href="{% url 'home:vocabulary_document' %}">Learn more.</a>
+      </p>
     </div>
     <div class="col-md-4">
+      <h3>Listening Game</h3>
       <img src="{% static 'gif/listening_answer_problems.gif' %}"
            class="img-responsive"
            alt="Listening Game">
-      <h3>Listening Game</h3>
       <p>
       Improve your listening skills by
       listening until you completely understand.
-      </p>
       <a href="{% url 'home:listening_document' %}">Learn more.</a>
+      </p>
     </div>
     <div class="col-md-4">
+      <h3>Transcription Game</h3>
       <img src="{% static 'gif/transcription_answer_problems.gif' %}"
            class="img-responsive"
            alt="Transcription Game">
-      <h3>Transcription Game</h3>
       <p>
       Improve all of your English skills
       by remembering entire forms of English sentences completely.
-      </p>
       <a href="{% url 'home:transcription_document' %}">Learn more.</a>
+      </p>
     </div>
   </div>
 
