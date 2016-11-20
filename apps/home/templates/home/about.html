@@ -4,19 +4,46 @@
 
 {% block content %}
 
-<h1>About This Site</h1>
+<div class="col-md-offset-2 col-md-8">
+  <h1>About Me and This Site</h1>
+  
+  <p>
+  Hello, I'm Shinsuke Hamasho, a Japanese learning English and
+  the developer of this site.
+  </p>
+  
+  <p>
+  This site is first created to improve my English skills.
+  I have learned English for several years and
+  found that there are three exercises
+  which improved my English skills dramatically.
+  It's the following exercises;
+  <ul>
+    <li>Vocabulary exercise,</li>
+    <li>Listening exercise and</li>
+    <li>Transcription exercise.</li>
+  </ul>
+  So I have developed this web site
+  to help me improve my English skills
+  throug these exercises.
+  And then I realized that this site can help all people
+  who learn English.
+  </p>
 
-This site is developed to help improve English skills.
-There are three games to improve all English skills;
-<ul>
-  <li>Vocabulary,</li>
-  <li>Listening,</li>
-  <li>Transcription.</li>
-</ul>
-But in developing, I realize that these games can also
-be applied to any languages.
-So I'm now planning to develop an web site,
-which is not only for English, but also any languages.
-This site will move to the site after I complete to develop.
+  <p>
+  I'm trying to make this web site better.
+  But because I'm the only one developer and
+  I don't have enough time and money,
+  there may be some bugs and performance issues.
+  If you find such, please 
+  <a href="{% url 'home:contact' %}">contact me</a>.
+  </p>
+
+  <p>
+  I'm happy if you play these exercises and
+  improve your skills.
+  Enjoy!
+  </p>
+</div>
 
 {% endblock %}
